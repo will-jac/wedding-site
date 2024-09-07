@@ -1,7 +1,8 @@
-import { Rouge_Script } from 'next/font/google'
+// import { Rouge_Script } from 'next/font/google'
+import { Tangerine } from 'next/font/google'
  
-const rougeScript = Rouge_Script({ 
-    weight: "400",
+const font = Tangerine({ 
+    weight: "700",
     subsets: ['latin'],
 });
 
@@ -13,7 +14,7 @@ export default function Title(props: React.PropsWithChildren<TitleProps>) {
 
     return (
         <span 
-            className={rougeScript.className + " text-9xl text-teal-700 font-bold"}
+            className={font.className + " text-6xl md:text-8xl text-emerald-600 font-bold"}
         >
             {props.children}
         </span>
