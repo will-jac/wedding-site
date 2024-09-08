@@ -24,27 +24,57 @@ function WillAttend(props: any) {
     </FormControl>;
 }
 
+function Diet(props: any) {
+    const {diet, setDiet} = props;
+
+    return <FormControl>
+        <InputLabel>Diet</InputLabel>
+        <Select
+            value={diet}
+            label="Diet"
+            onChange={(e) => {e.preventDefault(); setDiet(e.target.value);}}
+        >
+            <MenuItem value={"none"}>None</MenuItem>
+            <MenuItem value={"vegetarian"}>Vegetarian</MenuItem>
+            <MenuItem value={"vegan"}>Vegan</MenuItem>
+            <MenuItem value={"gluten"}>Gluten Free</MenuItem>
+            <MenuItem value={"dairy"}>Dairy Free</MenuItem>
+            <MenuItem value={"other"}>Other</MenuItem>
+        </Select>
+    </FormControl>;
+}
+
 
 function Form(props: any) {
-    const [attending, setAttending] = useState('');
-    const [attendees, setAttendees] = useState(['']);
+    const [attending, setAttending] = useState('yes');
+    const [attendees, setAttendees] = useState([{name: '', diet:'none'}]);
 
-    function handleAttendees(value: string, index: number) {
-
-        const nextAttendees = attendees.map((a, i) => {
-            console.log(index, value);
+    function updateAttendees(index: number, name: string | null, diet: string | null) {
+        let nextAttendees = attendees;
+        
+        // add the new input only if we need to
+        if (name !== '' && attendees[index].name === '' && index === attendees.length-1) {
+            nextAttendees = [...attendees, {name: '', diet: ''}];
+        }
+        // update the attendee we're editing
+        nextAttendees = nextAttendees.map((a, i) => {
             if (i === index) {
-                console.log(index, a, value);
-                return value;
+                return {name: name ?? a.name, diet: diet ?? a.diet};
             }
             return a;
-        }).filter(
-            (v) => v !== ''
-        );
-        console.log(nextAttendees);
+        })
 
-        // setAttendees(nextAttendees);
-        setAttendees([...nextAttendees, '']);
+        setAttendees(nextAttendees);
+    }
+
+    function filterAttendees() {
+        const nextAttendees = attendees.filter(
+            (a) => a.name !== ''
+        ); // remove empty ones if we're filtering
+        
+        // always keep a blank one at the end
+        setAttendees([...nextAttendees, {name: '', diet: ''}]);
+
     }
 
     return <Stack spacing={1}>
@@ -53,17 +83,26 @@ function Form(props: any) {
         <p><span className="font-bold">Date: </span>June 1, 2025</p>
         <WillAttend attending={attending} setAttending={setAttending} />
 
-        <p>Please list the names of everyone who is RSVP'ing</p>
+        <p>Please list the names of everyone who is RSVP'ing, along with any dietary restrictions:</p>
         {attendees.map((a, index) => {
-            return <TextField 
-                key={index} fullWidth label="Name" variant="outlined" className="p-20"
-                value={a}
-                onChange={(e) => {
-                    e.preventDefault();
-                    handleAttendees(e.target.value, index);
-                }}
-            />
+            return <Stack spacing={1} direction="row" key={index}>
+                <TextField 
+                    label="Name" variant="outlined"
+                    value={a.name}
+                    onChange={(e) => {
+                        e.preventDefault();
+                        updateAttendees(index, e.target.value, null);
+                    }}
+                    onBlur={(e) => {
+                        e.preventDefault();
+                        filterAttendees();
+                    }}
+                />
+                <Diet diet={a.diet} setDiet={(d: string) => updateAttendees(index, null, d)}/>
+            </Stack>
         })}
+
+
         
 
         {props.children}
