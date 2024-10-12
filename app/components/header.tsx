@@ -5,7 +5,7 @@ import Menu from './menu';
 function Layout(props: any) {
     return (
         <div className="flex justify-center items-center">
-            <div className="bg-white max-w-xs md:max-w-md lg:max-w-lg lg:max-w-2xl">
+            <div className="bg-white max-w-xs md:max-w-md lg:max-w-2xl">
                 {props.children}
             </div>
         </div>
