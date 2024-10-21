@@ -9,20 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.674.0",
+    "@aws-sdk/client-ses": "^3.670.0",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.0.2",
     "@mui/material-nextjs": "^6.0.2",
-    "next": "14.2.7",
+    "@vercel/kv": "^3.0.0",
+    "aws-sdk": "^2.1691.0",
+    "next": "^14.2.15",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^10.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "postcss": "^8",
