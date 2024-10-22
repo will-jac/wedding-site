@@ -66,7 +66,6 @@ let idValue = 0;
 
 function newAttendee(): Attendee {
     idValue += 1;
-    console.log('new attendee', idValue);
     return {
         id: idValue,
         first_name: '',
@@ -110,7 +109,6 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
     // const [email, setEmail] = useState('');
     // const [comment, setComment] = useState('');
     // const [attendees, setAttendees] = useState([] as Attendee[]);
-    console.log('form for', attendeeGroup);
 
     function updateAttendee(id: number) {
         return (attendee: Attendee) => {
