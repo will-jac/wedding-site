@@ -1,6 +1,7 @@
 'use server'
 import { kv } from "@vercel/kv";
 import { writeFileSync } from "fs";
+import { sendEmail } from './email';
 
 export interface Attendee {
   id: number,
@@ -89,6 +90,9 @@ export async function submitRsvp(attendeeGroup: AttendeeGroup)
   });
   uploadAttendees(attendeeGroups);
   console.log('form submitted');
+
+  sendEmail(attendeeGroup);
+
   // // first, submit the session and get an id back from the server
   // // then use that as a FK for the attendees
   // let formResp: string;
