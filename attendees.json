@@ -1,0 +1,14 @@
+{
+    "attendeeGroups": [
+        {
+            "email": "",
+            "plus_one": 0,
+            "attendees": [
+                {
+                    "first_name": "test",
+                    "last_name": "mcgee"
+                }
+            ]
+        }
+    ]
+}
