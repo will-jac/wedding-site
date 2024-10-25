@@ -56,7 +56,7 @@ Unsubscribe
         },
         Source: fromAddress
     });
-
+    console.log('email command created...')
     // send the email
     try {
         let res = await sesClient.send(command);
@@ -69,7 +69,7 @@ Unsubscribe
             const messageRejectedError = error;
             return messageRejectedError;
         }
-        throw error;
+        // throw error;
     }
 };
 
