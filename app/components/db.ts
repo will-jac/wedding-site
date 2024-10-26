@@ -91,7 +91,19 @@ export async function submitRsvp(attendeeGroup: AttendeeGroup)
   uploadAttendees(attendeeGroups);
   console.log('form submitted');
 
-  sendEmail(attendeeGroup);
+  let email_result = '';
+  try {
+    if (await sendEmail(attendeeGroup)) {
+      email_result = 'success';
+    }
+    else {
+      email_result = 'failed to send email';
+    }
+  } catch (err) {
+    email_result = (err as Error).message;
+  }
+
+  return email_result;
 
   // // first, submit the session and get an id back from the server
   // // then use that as a FK for the attendees

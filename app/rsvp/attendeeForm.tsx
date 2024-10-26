@@ -89,22 +89,22 @@ function AddAttendeeButton(props: any) {
     </Button>
 }
 
-function SubmitButton(props: {form: AttendeeGroup}) {
+
+function SubmitButton(props: {form: AttendeeGroup, setResult: any}) {
     let submitAction = submitRsvp.bind(null, props.form); 
 
     return <Button variant='contained'
         onClick={async () => {
             console.log('submitting', props.form);
-            await submitAction();
-            // await submitRSVP(null);
+            props.setResult(await submitAction());
         }}
     >
         Submit RSVP
     </Button>
 }
 
-export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttendeeGroup: any}) {
-    const {attendeeGroup, setAttendeeGroup} = props;
+export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttendeeGroup: any, setResult: any}) {
+    const {attendeeGroup, setAttendeeGroup, setResult} = props;
     const {id, email, comment, attendees} = attendeeGroup;
     // const [email, setEmail] = useState('');
     // const [comment, setComment] = useState('');
@@ -154,15 +154,16 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
                 onChange={(e) => setAttendeeGroup({...attendeeGroup, comment: e.target.value})}
             />
 
-            <SubmitButton form={
-            {
-                id: id,
-                attendees: attendees,
-                email: email,
-                comment: comment,
-                hotel: null
-            }
-            }/>
+            <SubmitButton 
+                form={{
+                    id: id,
+                    attendees: attendees,
+                    email: email,
+                    comment: comment,
+                    hotel: null
+                }}
+                setResult={setResult}
+            />
         </Stack>
 
     </>
