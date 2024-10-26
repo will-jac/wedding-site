@@ -4,17 +4,14 @@ import { AttendeeGroup } from './db';
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
 
-// Set the AWS Region.
-const REGION = "us-east-2";
 // Create SES service object.
-const sesClient = new SESClient({ region: REGION });
+const sesClient = new SESClient({});
 
 const fromAddress = "noreply@jackwilliams.dev";
 const bccAddresses = [
     "jackawilliams13@gmail.com",
     // "hannah.nc.10@gmail.com"
 ];
-
 
 
 export async function sendEmail(attendeeGroup: AttendeeGroup)
@@ -61,16 +58,17 @@ Unsubscribe
     try {
         let res = await sesClient.send(command);
         console.log('result', res);
-        return;
+        return true;
     } catch (error) {
         console.log('error', error);
         if (error instanceof Error && error.name === "MessageRejected") {
             /** @type { import('@aws-sdk/client-ses').MessageRejected} */
             const messageRejectedError = error;
-            return messageRejectedError;
+            throw messageRejectedError;
         }
-        // throw error;
+        throw error;
     }
+    return false;
 };
 
 
