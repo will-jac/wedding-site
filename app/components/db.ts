@@ -100,7 +100,7 @@ export async function submitRsvp(attendeeGroup: AttendeeGroup)
       email_result = 'failed to send email';
     }
   } catch (err) {
-    email_result = (err as Error).message;
+    email_result = 'error message: ' + (err as Error).message;
   }
 
   return email_result;

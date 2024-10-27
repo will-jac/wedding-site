@@ -4,6 +4,29 @@ import { AttendeeGroup } from './db';
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
 
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+// read the email
+
+// let email_text = null;
+// fs.readFile('./email/email.txt', (err,data) => {
+//     if (err) {
+//         console.error(err);
+//         return;
+//     }
+//     email_text = data as string;
+// });
+
+// let email_html = null;
+// fs.readFile('./email/email.html', (err,data) => {
+//     if (err) {
+//         console.error(err);
+//         return;
+//     }
+//     email_html = data;
+// });
+
 // Create SES service object.
 const sesClient = new SESClient({});
 
@@ -16,18 +39,20 @@ const bccAddresses = [
 
 export async function sendEmail(attendeeGroup: AttendeeGroup)
 {
-    const email_text = `Congratulations, you've successfully RSVP'd!!
+    // this is run from the __dirname of rsvp, so escape that
+    const email_text = await fs.readFile(
+        path.resolve(process.cwd(), './app/components/email/email.txt'),
+        { encoding: 'utf8' }
+    );
+    const email_html = await fs.readFile(
+        path.resolve(process.cwd(), './app/components/email/email.html'), 
+        { encoding: 'utf8' }
+    );
+    console.log('loaded email text');
 
-We can't wait to see you at our wedding. In the meantime:
-* Book your hotel
-* Check out things to do in Madison
-* Browse our registry
+    email_text.replace('${name}', attendeeGroup.attendees[0].first_name)
+    email_html.replace('${name}', attendeeGroup.attendees[0].first_name)
 
--Hannah and Jack
-
-Issues? Let me know! I don't monitor this email address, so please email me directly or reply-all (I'm CC'd)
-Unsubscribe
-`
     console.log('test sending email!!')
     let command = new SendEmailCommand({
         Destination: {
@@ -39,7 +64,7 @@ Unsubscribe
             Body: {
                 Html: {
                     Charset: "UTF-8",
-                    Data: email_text,
+                    Data: email_html,
                 },
                 Text: {
                     Charset: "UTF-8",
@@ -48,7 +73,7 @@ Unsubscribe
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: "RSVP for Hannah and Jack Williams Wedding (June 1, 2025)",
+                Data: "RSVP for Hannah and Jack Williams Wedding",
             },
         },
         Source: fromAddress
