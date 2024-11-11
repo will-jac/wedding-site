@@ -6,12 +6,7 @@ export function LinkButton(props: any) {
   const { link, text } = props;
   return (
     <a href={link}>
-      <Button 
-        // onClick={(e) => {
-        //   e.preventDefault();
-        //   window.location.href = link;
-        // }}
-      >
+      <Button>
         {text}
       </Button>
     </a>
@@ -20,7 +15,7 @@ export function LinkButton(props: any) {
 
 export default function Menu() {
   return (
-    <Stack className="justify-center" direction="row" spacing={2}>
+    <Stack className="justify-center" direction="row" spacing={1}>
       <LinkButton text="Story" link="#story"/>
       <LinkButton text="Location" link="#location"/>
       <LinkButton text="Attire" link="#attire"/>

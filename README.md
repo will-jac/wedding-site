@@ -3,8 +3,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## TODO
 
 - [x] vercel kv db connection
-- [ ] figure out user sessionid (answer: vercel streams)
-- [ ] figure out 
+- [x] email
+- [x] fix the css
+- [x] proper loading fields and status indicators (mostly done?)
+- [x] fix the links in the title/headers and probably make them not sticky to the top
+- [x] fix the mailto link in the reservation not found
+- [x] make email contain all the necessary information
+- [x] be resilient to concurrent edits by changing to hashes by attendee groups and grabbing all of them with a full table scan
+- [ ] copy text
+- [ ] make email pretty
+- [ ] make attendee lookup faster by storing a lookup table
+- [ ] registry links/integrations and cash contributions
+- [ ] make attendee forms a subpage that can be directly linked to
+- [ ] validate user input so that people can't just have infinite attendees
+- [ ] actually have proper pages for hotel and things
+- [ ] probably get people's hotel preference on the attendee form? And song requests
 
 upload the attendees:
 

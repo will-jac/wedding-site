@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { FormGroup, FormControl, FormLabel, TextField, Button, CircularProgress } from '@mui/material';
 import { InputLabel, Select, MenuItem, Stack, Grid2} from '@mui/material';
-import Header from '../components/header';
+import HomeLayout from '../components/header';
 import { LinkButton } from '../components/menu';
 import Title from '../components/title';
 
@@ -132,7 +132,7 @@ export default function RSVP() {
         });
     }
 
-    return <Header>
+    return <HomeLayout>
         <div className='top-0 pt-8 md:px-20 text-center bg-white'>
             <Title>RSVP</Title>
         </div>
@@ -156,5 +156,5 @@ export default function RSVP() {
                     : null}
             </Form>
         </form>
-    </Header>;
+    </HomeLayout>;
 }

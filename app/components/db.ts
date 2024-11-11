@@ -17,14 +17,50 @@ export interface AttendeeGroup {
   email: string,
   comment: string | null,
   hotel: string | null,
+  num_attendees: number
 }
 
-export async function getAttendees() {
-  const attendees = await kv.get('rsvp:attendees');
-  writeFileSync("attendees.json", JSON.stringify({"attendeeGroups": attendees}), {
-    flag: "w"
-   });
-  console.log(attendees);
+export async function getAttendees(first_name: string, last_name: string, password: string) {
+  if (password !== process.env.PASSWORD) {
+    return null;
+  }
+  
+  first_name = first_name.toLowerCase();
+  last_name = last_name.toLowerCase();
+
+  let attendeeGroups = [] as AttendeeGroup[];
+  // search for the first_name and last_name on the database.
+  let key_cursor = "0";
+  
+  while (true) {
+    // technically this could have 
+    const resp = await kv.scan(key_cursor, {match: "attendees:*", count: 1000});
+    console.log('found:', resp);
+    key_cursor = resp[0]; // probably won't need to iterate but you never know
+    // technically should stop the search after we find a hit but I'm not optimizing this yet
+    attendeeGroups = attendeeGroups.concat(await Promise.all(
+      resp[1].map(async (k) => await kv.get(k) as AttendeeGroup)
+    ));
+    console.log('attendeeGroups:', attendeeGroups.map((ag) => ag.attendees.map((a) => a.first_name + ' ' + a.last_name)));
+    // find the matching attendee group, if one exists
+    const matching_ags = attendeeGroups.filter((ag) => 
+      ag.attendees.some((a) => 
+        (a.first_name.toLowerCase() === first_name) && (a.last_name.toLowerCase() === last_name)
+      )
+    );
+
+    if (matching_ags.length > 0) {
+      return matching_ags;
+    }
+    if (key_cursor === "0") {
+      if (first_name === process.env.ADMIN_PASSWORD) {
+        console.log(attendeeGroups);
+        return attendeeGroups;
+      }
+      // full loop
+      return [];
+    }
+  }
 }
 
 async function readAttendeeGroupsFromFile() {
@@ -39,7 +75,14 @@ async function readAttendeeGroupsFromFile() {
         id: i,
         attendees: ag.attendees.map((a) => {
           j += 1;
-          return {...a, id: j};
+          return {
+            id: j,
+            first_name: a.first_name ? a.first_name : '',
+            last_name: a.last_name ? a.last_name : '',
+            is_attending: a.is_plus_one ? false : true,
+            diet: '',
+            is_plus_one: a.is_plus_one ? a.is_plus_one : false,
+          };
         })
       }
     });
@@ -47,48 +90,27 @@ async function readAttendeeGroupsFromFile() {
   });
 }
 
-export async function uploadAttendees(attendeeGroups: AttendeeGroup[]) {  
+async function uploadAttendee(ag: AttendeeGroup) {  
+  return kv.set(`attendees:${ag.id}`, JSON.stringify(ag))
+}
+
+async function uploadAttendees(attendeeGroups: AttendeeGroup[]) {  
   console.log('uploading: ', JSON.stringify(attendeeGroups));
-  const res = await kv.set('rsvp:attendees', JSON.stringify(attendeeGroups));
-  console.log('upload status', res);  
+  attendeeGroups.map((ag) => uploadAttendee(ag));
+  // const res = await kv.set('rsvp:attendees', JSON.stringify(attendeeGroups));
+  // console.log('upload status', res);  
 }
 
 export async function uploadAttendeesFromFile() {
   uploadAttendees(await readAttendeeGroupsFromFile());
 }
 
-async function getAttendeeGroups() {
-  const attendeeString = await kv.get('rsvp:attendees') as AttendeeGroup[];
-  console.log('downloaded:', attendeeString);
-  return attendeeString
-}
-
-export async function lookupRsvpByName(first_name: string, last_name: string) {
-  first_name = first_name.toLowerCase();
-  last_name = last_name.toLowerCase();
-
-  const attendeeGroups = await getAttendeeGroups();
-
-  return attendeeGroups.filter((ag) => {
-    return ag.attendees.some((a) => {
-      // TODO: predicate / fuzzy match
-      return (a.first_name.toLowerCase() === first_name) && (a.last_name.toLowerCase() == last_name);
-    })
-  })
-}
-
-
-// TODO: not resilient to concurrent edits. I suggest not doing those.
 export async function submitRsvp(attendeeGroup: AttendeeGroup)
 {
   // TODO: validate the user input
-  console.log('submitting form...')
-  let attendeeGroups = await getAttendeeGroups();
-  attendeeGroups = attendeeGroups.map((ag) => {
-    if (ag.id === attendeeGroup.id) return attendeeGroup;
-    return ag;
-  });
-  uploadAttendees(attendeeGroups);
+  console.log('submitting form...', attendeeGroup);
+
+  await uploadAttendee(attendeeGroup);
   console.log('form submitted');
 
   let email_result = '';
@@ -104,39 +126,4 @@ export async function submitRsvp(attendeeGroup: AttendeeGroup)
   }
 
   return email_result;
-
-  // // first, submit the session and get an id back from the server
-  // // then use that as a FK for the attendees
-  // let formResp: string;
-  // try {
-  //   formResp = await kv.xadd('rsvp:submit', "*", {
-  //     email: form.email,
-  //     comment: form.comment
-  //   });
-  //   console.log('form', formResp);
-  // } catch (error) {
-  //   // Handle errors
-  //   console.log(error);
-  //   return;
-  // }
-  // console.log('submitting attendees')
-  // // stream users
-  // form.attendees.map(async (a) => {
-  //   try {
-  //     //TODO: format string with the session id
-  //     let resp = await kv.xadd(`attendees:${formResp}`, "*", {
-  //       firstName: a.first_name,
-  //       lastName: a.last_name,
-  //       diet: a.diet,
-  //       attending: a.is_attending,
-  //       plusOne: a.is_plus_one,
-  //     });
-  //     console.log('attendee:', resp);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // });
-
-  // TODO: send an email telling them that they successfully submitted it
-
 }
