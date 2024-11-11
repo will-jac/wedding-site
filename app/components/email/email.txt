@@ -5,6 +5,14 @@ We can't wait to see you at our wedding. In the meantime:
 * Check out things to do in Madison
 * Browse our registry
 
+Here's a copy of your RSVP for your reference:
+${rsvp}
+
+${comment}
+
+Need to make a change? Just RSVP again.
+
+See you soon!
 -Hannah and Jack
 
 Issues? Let me know! I don't monitor this email address, so please email me directly or reply-all (I'm CC'd)

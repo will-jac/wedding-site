@@ -14,7 +14,7 @@ export default function Title(props: React.PropsWithChildren<TitleProps>) {
 
     return (
         <span 
-            className={font.className + " text-6xl md:text-7xl lg:text-8xl text-emerald-600 font-bold"}
+            className={font.className + " text-5xl md:text-7xl lg:text-8xl text-emerald-600 font-bold"}
         >
             {props.children}
         </span>

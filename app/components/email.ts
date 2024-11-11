@@ -40,18 +40,38 @@ const bccAddresses = [
 export async function sendEmail(attendeeGroup: AttendeeGroup)
 {
     // this is run from the __dirname of rsvp, so escape that
-    const email_text = await fs.readFile(
+    let email_text = await fs.readFile(
         path.resolve(process.cwd(), './app/components/email/email.txt'),
         { encoding: 'utf8' }
     );
-    const email_html = await fs.readFile(
+    let email_html = await fs.readFile(
         path.resolve(process.cwd(), './app/components/email/email.html'), 
         { encoding: 'utf8' }
     );
     console.log('loaded email text');
 
-    email_text.replace('${name}', attendeeGroup.attendees[0].first_name)
-    email_html.replace('${name}', attendeeGroup.attendees[0].first_name)
+    email_text = email_text.replace('${name}', attendeeGroup.attendees[0].first_name);
+    email_html = email_html.replace('${name}', attendeeGroup.attendees[0].first_name);
+    
+    email_html = email_html.replace('${rsvp}', '<li>' + attendeeGroup.attendees
+        .map((a) => 
+            a.first_name + ' ' + a.last_name + '; ' + 
+            (a.diet ? 'diet: ' + a.diet + '; ' : '')  + 
+            (a.is_attending ? 'attending' : 'not attending')
+        )
+        .join('</li><li>') + '</li>'
+    );
+    email_text = email_text.replace('${rsvp}', attendeeGroup.attendees
+        .map((a) => '* ' + 
+            a.first_name + ' ' + a.last_name + '; ' + 
+            (a.diet ? 'diet: ' + a.diet + '; ' : '')  + 
+            (a.is_attending ? 'attending' : 'not attending')
+        )
+        .join('\n')
+    );
+
+    email_text = email_text.replace('${comment}', attendeeGroup.comment ? attendeeGroup.comment : '');
+    email_html = email_html.replace('${comment}', attendeeGroup.comment ? attendeeGroup.comment : '');
 
     console.log('test sending email!!')
     let command = new SendEmailCommand({
@@ -73,7 +93,7 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: "RSVP for Hannah and Jack Williams Wedding",
+                Data: "RSVP for Hannah and Jack's Wedding",
             },
         },
         Source: fromAddress

@@ -4,14 +4,26 @@ import { useState } from 'react';
 import { FormGroup, FormControl, FormControlLabel, FormLabel, TextField, Button, CircularProgress } from '@mui/material';
 import { InputLabel, Select, MenuItem, Checkbox, Stack, Divider} from '@mui/material';
 
-import { uploadAttendeesFromFile, lookupRsvpByName, AttendeeGroup, Attendee } from '../components/db';
+import { uploadAttendeesFromFile, getAttendees, AttendeeGroup, Attendee } from '../components/db';
+import { LinkButton } from '../components/menu';
 
 export default function RsvpSearch(props: any) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
-    const [ranSearch, setRanSearch] = useState(false);
+    const [searchStatus, setSearchStatus] = useState('');
     const [attendeeGroups, setAttendeeGroups] = useState([] as AttendeeGroup[]);
+
+    async function submitSearch() {
+        setSearchStatus('searching')
+        const ag = await getAttendees(firstName, lastName, password);
+        if (ag == null) {
+            setSearchStatus('invalid');
+            return;
+        }
+        setSearchStatus('done');
+        setAttendeeGroups(ag);
+    }
 
     return <>
         {process.env.NODE_ENV === 'production' ? null 
@@ -25,51 +37,51 @@ export default function RsvpSearch(props: any) {
                 <TextField variant="outlined" required={true}
                     label="First Name" value={firstName}
                     onChange={(e) => { e.preventDefault(); setFirstName(e.target.value); }}
+                    onKeyUp={(e) => {e.preventDefault(); if (e.key == 'Enter') {submitSearch();}}}
                 />
                 <TextField variant="outlined" required={true}
                     label="Last Name" value={lastName}
                     onChange={(e) => { e.preventDefault(); setLastName(e.target.value); }}
+                    onKeyUp={(e) => {e.preventDefault(); if (e.key == 'Enter') {submitSearch();}}}
                 />
             </Stack>
 
             <TextField variant="outlined" required={true}
                 label="Password" value={password}
                 onChange={(e) => { e.preventDefault(); setPassword(e.target.value); }}
+                onKeyUp={(e) => {e.preventDefault(); if (e.key == 'Enter') {submitSearch();}}}
             />
             <Button variant='contained'
-                onClick={async () => {
-                    const ag = await lookupRsvpByName(firstName, lastName);
-                    if (ag.length === 1) {
-                        props.foundReservation(ag[0]);
-                        return;
-                    }
-                    setRanSearch(true);
-                    setAttendeeGroups(ag);
-                }}
+                onClick={submitSearch}
             >
                 Lookup Reservation
             </Button>
-
-            { (ranSearch) ? 
-                (attendeeGroups.length === 0) 
-                    ? <p>No matching name was found on the list. Please try a different name (note: your name must EXACTLY match as it was entered on the save the date, or whatever you changed it to</p> 
-                    : <>
-                        <Divider flexItem className='pb-5'/>
-                        <p>Please select a reservation to edit:</p>
-                        <Stack>
-                            {attendeeGroups.map((ag) => 
-                                <Button 
-                                    key={ag.id}
-                                    onClick={() => props.foundReservation(ag)}
-                                >
-                                    {ag.attendees.map((a) => <p key={a.id}>{a.first_name + ' ' + a.last_name} </p>)}
+    { 
+        (searchStatus === 'searching') 
+        ? <p>Searching......</p> :
+        (searchStatus === 'invalid') 
+        ? <p>Invalid Password</p> :
+        (searchStatus === 'done') 
+        ? (attendeeGroups.length === 0) 
+            ? <p>No matching name was found on the list. Please try again, or <LinkButton href="mailto:jackawilliams13@gmail.com" text="contact us."/></p> 
+            : <>
+                <Divider flexItem className='pb-5'/>
+                <p>Reservation found:</p>
+                <Stack spacing={1}>
+                    {attendeeGroups.map((ag) => 
+                        <div key={ag.id}>
+                            {ag.attendees.map((a) => <p key={a.id}>{a.first_name + ' ' + a.last_name} </p>)}
+                            <div className='flex justify-center'>
+                                <Button variant='contained' onClick={() => props.foundReservation(ag)}>
+                                    Select
                                 </Button>
-                            )}
-                        </Stack>
-                    </>
-                : null
-            }
-
+                            </div>
+                        </div>
+                    )}
+                </Stack>
+            </>
+        : null
+    }
         </Stack>
     </>
 }
