@@ -17,7 +17,7 @@ export default function RSVPPage({ params }: { params: { slug: string } }) {
     return <HomeLayout>
         {(attendeeGroup === null)
             ? <p>Loading...</p>
-            : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} setResult={setResult} />
+            : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} result={result} setResult={setResult} />
         }
         {result}
 
