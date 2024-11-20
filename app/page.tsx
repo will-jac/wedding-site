@@ -1,6 +1,9 @@
 import HomeLayout from './components/header';
 import Image from "next/image";
 import banner from "./home/banner.jpg";
+import FAQ from "./components/faq";
+import Story from "./components/story";
+import Schedule from "./components/schedule";
 
 export default function Main() {
 
@@ -17,10 +20,8 @@ export default function Main() {
         priority
       />
     </div>
-    <section id="story" className="pt-5">
-      <h2 className="text-2xl font-extrabold text-emerald-600">Our Story</h2>
-      <p>we met when we loved each other :)</p>
-    </section>
+
+    <Story/>
 
     <section id="location" className="pt-5">
       <h2 className="text-2xl font-extrabold text-emerald-600">Location</h2>
@@ -40,15 +41,9 @@ export default function Main() {
       <p>We plan to have our ceremony outside under the willow trees, a cocktail hour on the patio, then move inside for dinner and dancing.</p>
     </section>
 
-    <section id="faq" className="pt-5">
-      <h2 className="text-2xl font-extrabold text-emerald-600">FAQ</h2>
-      <div className="pl-5">
-        <h3 className="text-xl pt-2">Question 1</h3>
-        <p>answer!!!</p>
-        <h3 className="text-xl pt-2">Question 2</h3>
-        <p>answer!!!</p>
-      </div>
-    </section>
+    <Schedule/>
+
+    <FAQ/>
 
     <div className="pb-10"/>
   </HomeLayout>
