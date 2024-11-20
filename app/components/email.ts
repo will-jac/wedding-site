@@ -48,7 +48,6 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         path.resolve(process.cwd(), './app/components/email/email.html'), 
         { encoding: 'utf8' }
     );
-    console.log('loaded email text');
 
     email_text = email_text.replace('${name}', attendeeGroup.attendees[0].first_name);
     email_html = email_html.replace('${name}', attendeeGroup.attendees[0].first_name);
@@ -72,8 +71,9 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
 
     email_text = email_text.replace('${comment}', attendeeGroup.comment ? attendeeGroup.comment : '');
     email_html = email_html.replace('${comment}', attendeeGroup.comment ? attendeeGroup.comment : '');
+    
+    email_html = email_html.replace('${rsvpId}', String(attendeeGroup.id));
 
-    console.log('test sending email!!')
     let command = new SendEmailCommand({
         Destination: {
             BccAddresses: bccAddresses,
@@ -98,7 +98,6 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         },
         Source: fromAddress
     });
-    console.log('email command created...')
     // send the email
     try {
         let res = await sesClient.send(command);

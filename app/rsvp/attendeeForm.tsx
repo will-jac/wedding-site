@@ -1,10 +1,7 @@
 'use client'
-import { useState, useRef } from 'react';
 
 import { FormGroup, FormControl, FormControlLabel, FormLabel, TextField, Button, CircularProgress } from '@mui/material';
 import { InputLabel, Select, MenuItem, Checkbox, Stack, Divider} from '@mui/material';
-
-import HomeLayout from '../components/header';
 
 import { submitRsvp, AttendeeGroup, Attendee } from '../components/db';
 

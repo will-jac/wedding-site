@@ -1,6 +1,7 @@
 import bg from "../../public/background2.png";
 import Title from './title';
 import Menu from './menu';
+import { Link } from "@mui/material";
 
 function Layout(props: any) {
     return (
@@ -27,16 +28,16 @@ function Background(props: any) {
 }
 
 
-export default function HomeLayout(props: any) {
+export default function HomeLayout(props: {noShowMenu?: boolean, children: any}) {
 
     return <Background>
         <Layout>
             <div className='top-0 pt-8 px-5 md:px-10 xl:px-20 text-center bg-white'>
-                <Title>Jack & Hannah</Title>
+                <Link href="/" underline="none">
+                    <Title>Jack & Hannah</Title>
+                </Link>
             </div>
-            {/* <div className='sticky top-0 bg-white'> */}
-                <Menu />
-            {/* </div> */}
+            {props.noShowMenu ? null : <Menu />}
             <div className="px-5">
                 {props.children}
             </div>
