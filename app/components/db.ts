@@ -10,14 +10,16 @@ export interface Attendee {
   last_name: string,
   is_attending: boolean | null,
   diet: string | null,
+  song: string | null,
   is_plus_one: boolean | null
 }
 export interface AttendeeGroup {
   id: number,
   attendees: Attendee[],
   email: string,
-  comment: string | null,
-  hotel: string | null,
+  comment: string,
+  hotel: string,
+  shuttle: string,
   num_attendees: number
 }
 
@@ -48,14 +50,15 @@ async function buildAttendeeMap() {
     }
   }
 
-  return attendeeGroups.map(ag => ag.attendees.map(a => {
-    return {
-      groupId: ag.id,
-      first_name: a.first_name,
-      last_name: a.last_name
-    } as AttendeeMapEntry;
-  })).flat();
-
+  return attendeeGroups.map(ag => 
+    ag.attendees.map(a => {
+      return {
+        groupId: ag.id,
+        first_name: a.first_name,
+        last_name: a.last_name
+      } as AttendeeMapEntry;
+    }
+  )).flat();
 }
 
 async function updateAttendeeMap(attendeeGroup: AttendeeGroup) {
@@ -89,6 +92,7 @@ async function updateAttendeeMap(attendeeGroup: AttendeeGroup) {
   else {
     attendeeMap = await getAttendeeMap();
   }
+  
 
   // now that we have the attendeeMap, update this entry
   attendeeMap = attendeeMap.filter(a => a.groupId != attendeeGroup.id);
@@ -184,6 +188,7 @@ async function readAttendeeGroupsFromFile() {
             last_name: a.last_name ? a.last_name : '',
             is_attending: a.is_plus_one ? false : true,
             diet: '',
+            song: '',
             is_plus_one: a.is_plus_one ? a.is_plus_one : false,
           };
         })
@@ -194,14 +199,16 @@ async function readAttendeeGroupsFromFile() {
 }
 
 async function uploadAttendee(ag: AttendeeGroup) {  
-  return kv.set(`attendees:${ag.id}`, JSON.stringify(ag))
+  kv.set(`attendees:${ag.id}`, JSON.stringify(ag));
+  updateAttendeeMap(ag);
 }
 
 async function uploadAttendees(attendeeGroups: AttendeeGroup[]) {  
   console.log('uploading: ', JSON.stringify(attendeeGroups));
-  attendeeGroups.map((ag) => uploadAttendee(ag));
-  // const res = await kv.set('rsvp:attendees', JSON.stringify(attendeeGroups));
-  // console.log('upload status', res);  
+  attendeeGroups.map((ag) => kv.set(`attendees:${ag.id}`, JSON.stringify(ag)));
+  const am = await buildAttendeeMap();
+  console.log('am:', am);
+  kv.set('attendeeMap', am);
 }
 
 export async function uploadAttendeesFromFile() {

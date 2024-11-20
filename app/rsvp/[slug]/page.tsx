@@ -13,11 +13,12 @@ export default function RSVPPage({ params }: { params: { slug: string } }) {
     const [result, setResult] = useState('');
 
     useEffect(() => {
+        console.log('fetching data for slug', params.slug);
         const fetchData = async () => {
             setAttendeeGroup(await getAttendeeGroup(params.slug));
         };
         fetchData();
-    }, []);
+    }, [params.slug]);
 
     return <HomeLayout>
         {(attendeeGroup === null)
