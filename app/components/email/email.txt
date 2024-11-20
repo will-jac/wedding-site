@@ -8,9 +8,11 @@ We can't wait to see you at our wedding. In the meantime:
 Here's a copy of your RSVP for your reference:
 ${rsvp}
 
-${comment}
+Lodging: ${hotel}
+Shuttle: ${shuttle}
+Comment: ${comment}
 
-Need to make a change? Just RSVP again.
+Need to make a change? Just RSVP again at http://jackhannahwedding.com/rsvp/${rsvpId}
 
 See you soon!
 -Hannah and Jack

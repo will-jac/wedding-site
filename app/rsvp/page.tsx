@@ -24,8 +24,7 @@ export default function RSVPPage() {
         </Stack>
         : attendeeGroup === null
             ? <RsvpSearch foundReservation={(ag: AttendeeGroup) => setAttendeeGroup(ag)}/>
-            : null
-            // : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} result={result} setResult={setResult} />
+            : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} result={result} setResult={setResult} />
     }
     </HomeLayout>;
 }

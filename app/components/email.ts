@@ -49,9 +49,6 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         { encoding: 'utf8' }
     );
 
-    email_text = email_text.replace('${name}', attendeeGroup.attendees[0].first_name);
-    email_html = email_html.replace('${name}', attendeeGroup.attendees[0].first_name);
-    
     email_html = email_html.replace('${rsvp}', '<li>' + attendeeGroup.attendees
         .map((a) => 
             a.first_name + ' ' + a.last_name + '; ' + 
@@ -69,10 +66,18 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         .join('\n')
     );
 
-    email_text = email_text.replace('${comment}', attendeeGroup.comment ? attendeeGroup.comment : '');
-    email_html = email_html.replace('${comment}', attendeeGroup.comment ? attendeeGroup.comment : '');
-    
-    email_html = email_html.replace('${rsvpId}', String(attendeeGroup.id));
+    function replace(key: string, value: string) {
+        email_text = email_text.replace(key, value);
+        email_html = email_html.replace(key, value);
+        return [email_text, email_html];
+    }
+
+    [ email_text, email_html]  = replace("${name}", attendeeGroup.attendees[0].first_name); 
+    [ email_text, email_html]  = replace("${hotel}", attendeeGroup.hotel);
+    [ email_text, email_html]  = replace("${shuttle}", attendeeGroup.shuttle);
+    [ email_text, email_html]  = replace("${email}", attendeeGroup.email);
+    [ email_text, email_html]  = replace("${comment}", attendeeGroup.comment);
+    [ email_text, email_html]  = replace("${rsvpId}", String(attendeeGroup.id));
 
     let command = new SendEmailCommand({
         Destination: {
