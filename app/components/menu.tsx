@@ -16,9 +16,8 @@ export function LinkButton(props: any) {
 export default function Menu() {
   return (
     <Stack className="justify-center" direction="row" spacing={1}>
-      <LinkButton text="Story" link="/#story"/>
-      <LinkButton text="Location" link="/#location"/>
-      <LinkButton text="Attire" link="/#attire"/>
+      <LinkButton text="Our Story" link="/#story"/>
+      <LinkButton text="FAQ" link="/#faq"/>
       <LinkButton text="RSVP" link="rsvp"/>
     </Stack>
   )
