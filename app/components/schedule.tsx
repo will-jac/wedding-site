@@ -1,17 +1,18 @@
 export default function Schedule() {
     return <section id="schedule" className="pt-5">
         <h3 className="text-2xl font-extrabold text-emerald-600">Schedule of Events</h3>
-        <p>Saturday, May 30:</p>
+        <p className="indent-10"><b>Saturday, May 30:</b></p>
         <ul>
-            <li>Rehearsal dinner</li>
-            <li>Welcome party</li>
+            <li>5:30 PM - Rehearsal dinner (wedding party and immediate family only)</li>
+            <li>7:00 PM - Welcome party at Vilas Park (all are welcome!)</li>
         </ul>
-        <p>Saturday, June 1:</p>
+        <br></br>
+        <p className="indent-10"><b>Saturday, June 1:</b></p>
         <ul>
-            <li>Optional morning event—walk through the arboretum?</li>
-
+            <li>9:00 AM - Optional morning event—walk through the arboretum</li>
+            <li>3:30 PM - Guests start arriving at the venue</li>
             <li>4:00 PM - Ceremony</li>
-            <li>4:30 PM - Cocktail hour</li>
+            <li>4:30 PM - Social hour</li>
             <li>5:30 PM - Dinner</li>
             <li>6:30 PM - Dancing and Reception</li>
             <li>9:00 PM - Venue closes</li>
