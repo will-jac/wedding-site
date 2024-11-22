@@ -4,6 +4,9 @@ import banner from "./home/banner.jpg";
 import FAQ from "./components/faq";
 import Story from "./components/story";
 import Schedule from "./components/schedule";
+import Location from "./components/location";
+import Hotel from "./components/hotel";
+import Travel from "./components/travel";
 
 export default function Main() {
 
@@ -23,25 +26,13 @@ export default function Main() {
 
     <Story/>
 
-    <section id="location" className="pt-5">
-      <h2 className="text-2xl font-extrabold text-emerald-600">Location</h2>
-      <p>We are getting married at <a href="https://harvestmoonpond.com/" 
-        className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-        rel="noopener noreferrer">Harvest Moon Pond</a>. It's about 20 minutes by car from Madison.
-        We'll have a shuttle from the hotel to and from the venue, but we recommend renting a car if you're 
-        staying somewhere else or think you might want to leave early.
-      </p>
-      <p>Harvest Moon Pond is an old dairy farm that's been turned into a wedding venue.
-        We picked it because we love the large willow trees, beautiful interior, and flexible spaces for the unpredictable Wisconsin weather.
-      </p>
-    </section>
-
-    <section id="timeline" className="pt-5">
-      <h2 className="text-2xl font-extrabold text-emerald-600">Timeline</h2>
-      <p>We plan to have our ceremony outside under the willow trees, a cocktail hour on the patio, then move inside for dinner and dancing.</p>
-    </section>
+    <Location/>
 
     <Schedule/>
+
+    <Hotel/>
+
+    <Travel/>
 
     <FAQ/>
 
