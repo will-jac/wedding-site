@@ -6,6 +6,7 @@ import { InputLabel, Select, MenuItem, Checkbox, Stack, Divider} from '@mui/mate
 
 import { uploadAttendeesFromFile, getAttendees, AttendeeGroup, Attendee } from '../components/db';
 import { LinkButton } from '../components/menu';
+import { sendEmail } from '../components/email';
 
 export default function RsvpSearch(props: any) {
     const [firstName, setFirstName] = useState('');
@@ -79,6 +80,7 @@ export default function RsvpSearch(props: any) {
                         </div>
                     )}
                 </Stack>
+                <Button onClick={() => sendEmail(attendeeGroups[0])}>Test Send RSVP</Button>
             </>
         : null
     }

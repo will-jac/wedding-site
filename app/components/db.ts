@@ -54,8 +54,8 @@ async function buildAttendeeMap() {
     ag.attendees.map(a => {
       return {
         groupId: ag.id,
-        first_name: a.first_name,
-        last_name: a.last_name
+        first_name: a.first_name.toLowerCase(),
+        last_name: a.last_name.toLowerCase()
       } as AttendeeMapEntry;
     }
   )).flat();
@@ -109,6 +109,8 @@ async function updateAttendeeMap(attendeeGroup: AttendeeGroup) {
 }
 
 export async function getAttendees(first_name: string, last_name: string, password: string) {
+  console.log('searching for:', first_name, last_name, password);
+
   if (password !== process.env.PASSWORD) {
     return null;
   }
@@ -119,17 +121,18 @@ export async function getAttendees(first_name: string, last_name: string, passwo
   let attendeeGroups = [] as AttendeeGroup[];
 
   const am = await getAttendeeMap();
-  const matches = am.filter((a) => 
-    (a.first_name.toLowerCase() === first_name) && (a.last_name.toLowerCase() === last_name)
+  console.log('fetched attendee map');
+  const matches = am.filter(a => 
+    a.first_name.startsWith(first_name) && a.last_name.startsWith(last_name)
   );
+
   if (matches.length > 0) {
+    console.log('found match in AttendeeMap');
     // found match in AttendeeMap
     return Promise.all(matches.map(
       async (a) => await kv.get("attendees:" + String(a.groupId)) as AttendeeGroup
     ));
   }
-
-
 
   // Failure to find it in the map: do a full table scan as the fallback
   // search for the first_name and last_name on the database.
@@ -148,7 +151,7 @@ export async function getAttendees(first_name: string, last_name: string, passwo
     // find the matching attendee group, if one exists
     const matching_ags = attendeeGroups.filter((ag) => 
       ag.attendees.some((a) => 
-        (a.first_name.toLowerCase() === first_name) && (a.last_name.toLowerCase() === last_name)
+        a.first_name.toLowerCase().startsWith(first_name) && a.last_name.toLowerCase().startsWith(last_name)
       )
     );
 
@@ -209,6 +212,8 @@ async function uploadAttendees(attendeeGroups: AttendeeGroup[]) {
   const am = await buildAttendeeMap();
   console.log('am:', am);
   kv.set('attendeeMap', am);
+  kv.set('attendeeMap:lock', 0);
+  kv.set('attendeeMap:dirty', 0);
 }
 
 export async function uploadAttendeesFromFile() {

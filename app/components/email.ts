@@ -39,6 +39,9 @@ const bccAddresses = [
 
 export async function sendEmail(attendeeGroup: AttendeeGroup)
 {
+    console.log(process.cwd());
+    fs.readdir(process.cwd()).then((files) => console.log(files));
+
     // this is run from the __dirname of rsvp, so escape that
     let email_text = await fs.readFile(
         path.resolve(process.cwd(), './public/email/email.txt'),
