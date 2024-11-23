@@ -41,14 +41,20 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
 {
     console.log(process.cwd());
     fs.readdir(process.cwd()).then((files) => console.log(files));
+    const filepath = process.env.NODE_ENV === 'production' 
+        ? '/email' 
+        : path.resolve(process.cwd(), './public/email');
+
+    console.log(filepath);
+    fs.readdir(filepath).then((files) => console.log(files));
 
     // this is run from the __dirname of rsvp, so escape that
     let email_text = await fs.readFile(
-        path.resolve(process.cwd(), './public/email/email.txt'),
+        path.resolve(filepath, './email.txt'),
         { encoding: 'utf8' }
     );
     let email_html = await fs.readFile(
-        path.resolve(process.cwd(), './public/email/email.html'), 
+        path.resolve(filepath, './email.html'), 
         { encoding: 'utf8' }
     );
 
