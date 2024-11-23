@@ -41,11 +41,11 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
 {
     // this is run from the __dirname of rsvp, so escape that
     let email_text = await fs.readFile(
-        path.resolve(process.cwd(), './app/components/email/email.txt'),
+        path.resolve(process.cwd(), './public/email/email.txt'),
         { encoding: 'utf8' }
     );
     let email_html = await fs.readFile(
-        path.resolve(process.cwd(), './app/components/email/email.html'), 
+        path.resolve(process.cwd(), './public/email/email.html'), 
         { encoding: 'utf8' }
     );
 
