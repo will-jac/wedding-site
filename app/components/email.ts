@@ -4,28 +4,53 @@ import { AttendeeGroup } from './db';
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
 
-import fs from 'node:fs/promises';
-import path from 'node:path';
+const email_html = `<div dir="ltr">Congratulations __name__, you've successfully RSVP'd!!
+<br><br>We can't wait to see you at our wedding. In the meantime:<br>
+<ul>
+<li><a href="http://jackhannahwedding.com/hotel" target="_blank">
+    Book your hotel</a></li>
+<li><a href="http://jackhannahwedding.com/madison" target="_blank">
+    Check out things to do in Madison</a></li>
+<li><a href="http://jackhannahwedding.com/registry" target="_blank">
+    Browse our registry</a></li>
+</ul>
+<br><br>Here's a copy of your RSVP for your reference:<br>
+<ul>__rsvp__</ul>
+<br>
+<br>Lodging: __hotel__<br>
+<br>Shuttle: __shuttle__<br>
+<br>Comment: __comment__<br>
+<br><br>Need to make a change? Just <a href="http://jackhannahwedding.com/rsvp/__rsvpId__" target="_blank">RSVP again</a>.
+<br>See you soon!<br>
+<div>- Hannah and Jack</div>
+<div><br></div>
+<div><br></div><i>Issues? Let me know! I don't monitor this email address, so please <a
+        href="mailto:jackawilliams13@gmail.com" target="_blank">email me directly</a> or reply all to this email.</i>
+</div>
+`
+const email_text = `Congratulations __name__, you've successfully RSVP'd!!
+
+We can't wait to see you at our wedding. In the meantime:
+* Book your hotel
+* Check out things to do in Madison
+* Browse our registry
+
+Here's a copy of your RSVP for your reference:
+__rsvp__
+
+Lodging: __hotel__
+Shuttle: __shuttle__
+Comment: __comment__
+
+Need to make a change? Just RSVP again at http://jackhannahwedding.com/rsvp/__rsvpId__
+
+See you soon!
+-Hannah and Jack
+
+Issues? Let me know! I don't monitor this email address, so please email me directly or reply-all (I'm CC'd)
+Unsubscribe`;
 
 // read the email
-
-// let email_text = null;
-// fs.readFile('./email/email.txt', (err,data) => {
-//     if (err) {
-//         console.error(err);
-//         return;
-//     }
-//     email_text = data as string;
-// });
-
-// let email_html = null;
-// fs.readFile('./email/email.html', (err,data) => {
-//     if (err) {
-//         console.error(err);
-//         return;
-//     }
-//     email_html = data;
-// });
 
 // Create SES service object.
 const sesClient = new SESClient({});
@@ -39,26 +64,8 @@ const bccAddresses = [
 
 export async function sendEmail(attendeeGroup: AttendeeGroup)
 {
-    console.log(process.cwd());
-    fs.readdir(process.cwd()).then((files) => console.log(files));
-    const filepath = process.env.NODE_ENV === 'production' 
-        ? '/email' 
-        : path.resolve(process.cwd(), './public/email');
-
-    console.log(filepath);
-    fs.readdir(filepath).then((files) => console.log(files));
-
-    // this is run from the __dirname of rsvp, so escape that
-    let email_text = await fs.readFile(
-        path.resolve(filepath, './email.txt'),
-        { encoding: 'utf8' }
-    );
-    let email_html = await fs.readFile(
-        path.resolve(filepath, './email.html'), 
-        { encoding: 'utf8' }
-    );
-
-    email_html = email_html.replace('${rsvp}', '<li>' + attendeeGroup.attendees
+    
+    let local_email_html = email_html.replace('__rsvp__', '<li>' + attendeeGroup.attendees
         .map((a) => 
             a.first_name + ' ' + a.last_name + '; ' + 
             (a.diet ? 'diet: ' + a.diet + '; ' : '')  + 
@@ -66,7 +73,7 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         )
         .join('</li><li>') + '</li>'
     );
-    email_text = email_text.replace('${rsvp}', attendeeGroup.attendees
+    let local_email_text = email_text.replace('__rsvp__', attendeeGroup.attendees
         .map((a) => '* ' + 
             a.first_name + ' ' + a.last_name + '; ' + 
             (a.diet ? 'diet: ' + a.diet + '; ' : '')  + 
@@ -76,17 +83,17 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
     );
 
     function replace(key: string, value: string) {
-        email_text = email_text.replace(key, value);
-        email_html = email_html.replace(key, value);
-        return [email_text, email_html];
+        local_email_text = local_email_text.replace(key, value);
+        local_email_html = local_email_html.replace(key, value);
+        return [local_email_text, local_email_html];
     }
 
-    [ email_text, email_html]  = replace("${name}", attendeeGroup.attendees[0].first_name); 
-    [ email_text, email_html]  = replace("${hotel}", attendeeGroup.hotel);
-    [ email_text, email_html]  = replace("${shuttle}", attendeeGroup.shuttle);
-    [ email_text, email_html]  = replace("${email}", attendeeGroup.email);
-    [ email_text, email_html]  = replace("${comment}", attendeeGroup.comment);
-    [ email_text, email_html]  = replace("${rsvpId}", String(attendeeGroup.id));
+    [ local_email_text, local_email_html]  = replace("__name__", attendeeGroup.attendees[0].first_name); 
+    [ local_email_text, local_email_html]  = replace("__hotel__", attendeeGroup.hotel);
+    [ local_email_text, local_email_html]  = replace("__shuttle__", attendeeGroup.shuttle);
+    [ local_email_text, local_email_html]  = replace("__email__", attendeeGroup.email);
+    [ local_email_text, local_email_html]  = replace("__comment__", attendeeGroup.comment);
+    [ local_email_text, local_email_html]  = replace("__rsvpId__", String(attendeeGroup.id));
 
     let command = new SendEmailCommand({
         Destination: {
@@ -98,11 +105,11 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
             Body: {
                 Html: {
                     Charset: "UTF-8",
-                    Data: email_html,
+                    Data: local_email_html,
                 },
                 Text: {
                     Charset: "UTF-8",
-                    Data: email_text,
+                    Data: local_email_text,
                 },
             },
             Subject: {
