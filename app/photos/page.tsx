@@ -1,6 +1,5 @@
 'use client';
 import {useEffect, useState} from "react";
-import Image from "next/image";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import getImages from "../components/gallery/utils/getImages";

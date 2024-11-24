@@ -1,6 +1,6 @@
 'use server';
 import Image from "next/image";
-import banner2 from "../../public/banner2.jpg";
+import banner from "../images/banner2.jpg";
 
 import HomeLayout from '../components/HomeLayout';
 
@@ -9,7 +9,7 @@ export default async function Travel() {
     return <HomeLayout>
         <div className="p-5 flex flex-col items-center justify-center">
             <Image
-                src={banner2}
+                src={banner}
                 width={500}
                 alt="Picture of Hannah and Jack Kissing :)"
                 className="object-cover pb-10"
