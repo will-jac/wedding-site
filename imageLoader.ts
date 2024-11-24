@@ -1,19 +1,13 @@
 const normalizeSrc = (src: string) => {
-    console.log('normalizeSrc', src);
     return src.startsWith("/") ? src.slice(1) : src;
 };
 
 export default function cloudflareLoader({
     src,
     width,
-    height,
     quality,
-}: { src: string; width: number; height: number; quality?: number }) {
-    // if (process.env.NODE_ENV === "development") {
-    //     return src;
-    // }
+}: { src: string; width: number; quality?: number }) {
     const params = [`width=${width}`];
-    params.push(`height=${height}`);
     if (quality) {
         params.push(`quality=${quality}`);
     }

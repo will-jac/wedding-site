@@ -1,12 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react';
 
-import HomeLayout from '../../components/header';
+import HomeLayout from '../../components/HomeLayout';
 import RsvpForm from '../attendeeForm';
 
 import { AttendeeGroup, getAttendeeGroup } from '../../components/db';
-import { Stack } from '@mui/material';
-import { LinkButton } from '@/app/components/menu';
+import { Button, Stack } from '@mui/material';
 
 export default function RSVPPage({ params }: { params: { slug: string } }) {
     const [attendeeGroup, setAttendeeGroup] = useState(null as null | AttendeeGroup);
@@ -28,7 +27,7 @@ export default function RSVPPage({ params }: { params: { slug: string } }) {
                     <p>Thank you for RSVP'ing!</p>
                     <p>We can't wait to see you on June 1, 2025</p>
                     <div className="flex justify-center">
-                        <LinkButton text="Next, check out the FAQ" link="/#faq"/>
+                        <Button href="/#faq">Next, check out the FAQ</Button>
                     </div>
                 </Stack>
                 : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} result={result} setResult={setResult} />

@@ -1,6 +1,6 @@
 function Question(props: {question: string, id: string, children: any}) {
     return <details open>
-        <summary id={props.id} className="text-xl pt-2 text-emerald-600">{props.question}</summary>
+        <summary id={props.id} className="text-xl pt-2 text-[#879b88]">{props.question}</summary>
         {props.children}
         <br/>
     </details>
@@ -8,7 +8,7 @@ function Question(props: {question: string, id: string, children: any}) {
 
 export default function FAQ() {
     return <section id="faq" className="pt-5">
-    <h2 className="text-2xl font-extrabold text-emerald-600">FAQ</h2>
+    <h2 className="text-2xl font-extrabold text-[#879b88]">FAQ</h2>
 <div className="px-5">
     
 <Question id="rsvp-deadline" question="What is the deadline to RSVP?">
@@ -33,7 +33,7 @@ export default function FAQ() {
     <p>There is a large parking lot at Harvest Moon Pond if you want to drive.</p>
 </Question>
 <Question id="accessibility" question="Is the venue accessible?">
-    <p>Most of the venue is accesible without needing to go up or down stairs. Our back-up ceremony location is up one flight of stairs in the barn. For anyone with difficulty walking, there will be golf carts on site for getting around.</p>
+    <p>Most of the venue is accessible without needing to go up or down stairs. Our back-up ceremony location is up one flight of stairs in the barn. For anyone with difficulty walking, there will be golf carts on site for getting around.</p>
 </Question>
 <Question id="lodging" question="Where should I stay?">
     <p>We have a block of rooms at the Hilton Garden Inn Madison Downtown. We'll have a shuttle to and from the venue from there. If you're staying somewhere else, we recommend renting a car or using a ride share service.</p>

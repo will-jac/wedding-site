@@ -5,6 +5,9 @@ import { InputLabel, Select, MenuItem, Checkbox, Stack, Divider} from '@mui/mate
 
 import { submitRsvp, AttendeeGroup, Attendee } from '../components/db';
 
+import { ThemeProvider } from '@mui/material/styles';
+import { ButtonTheme } from '../styles';
+
 function AttendeeForm(props: {updateAttendee: any, removeAttendee: any, attendee: Attendee}) {
     const {updateAttendee, removeAttendee, attendee} = props
     const {first_name, last_name, diet, song, is_attending, is_plus_one} = attendee;
@@ -123,7 +126,14 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
         }
     }
 
-    return <Stack spacing={1} className='py-5'>
+    return <div>
+    <ThemeProvider theme={ButtonTheme}>
+    <div className="flex justify-between items-center py-5">
+            <h1 className="text-2xl pt-2 text-[#879b88]">RSVP</h1>
+            <Button  variant='outlined' onClick={() => setAttendeeGroup(null)}>Back</Button>
+        </div>
+    <Stack spacing={1} className='py-5'>
+        
         <p>First, what's a good email? This is where we'll send your RSVP info, and any updates as we get closer to the big day.</p>
         <TextField variant="outlined" required={true}
             label="E-mail" value={email} type="email"
@@ -189,4 +199,6 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
         />
         <p>{result}</p>
     </Stack>
+    </ThemeProvider>
+    </div>
 }
