@@ -134,7 +134,7 @@ import downloadPhoto from "./utils/downloadPhoto";
                         </a>
                     <button
                         onClick={() => downloadPhoto(
-                            `https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index]}`,
+                            `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index]}`,
                             images[index]
                           )
                         }
