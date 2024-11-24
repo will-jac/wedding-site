@@ -1,11 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
+import Modal from "./modal";
 
 function loaderFactory(params: string[]) {
   return (
     { src, width, quality }: 
     { src: string; width: number; quality?: number }
   ) =>{
-    console.log(width, quality, src);
+    // console.log(width, quality, src);
     const new_params = params.concat([]);
     if (quality) new_params.push(`quality=${quality}`);
     
@@ -16,32 +18,53 @@ function loaderFactory(params: string[]) {
 
 const gridCloudflareLoader = loaderFactory(['fit=crop', 'height=720', 'width=720']);
 const baseCloudflareLoader = loaderFactory(['width=720']);
+const navBarCloudflareLoader = loaderFactory(['width=240']);
 
+const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
-function ImageComponent(props: { image: string, imageLoader: any}) {
+function triplet(e1: number, e2: number, e3: number) {
+  return keyStr.charAt(e1 >> 2) +
+  keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+  keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+  keyStr.charAt(e3 & 63);
+}
+export function rgbDataURL(r: number, g: number, b: number) {
+  return `data:image/gif;base64,R0lGODlhAQABAPAA${
+    triplet(0, r, g) + triplet(b, 255, 255)
+  }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
+}
 
-  return <Image 
-    src={props.image} 
-    className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
-    style={{ transform: "translate3d(0, 0, 0)" }}
-    width={720} 
-    height={480}
-    quality={50}
-    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
-    alt={"An engagement photo of Jack and Hannah"}
-    loader={props.imageLoader}
-  />
+function ImageComponent(props: { image: string, imageLoader: any, quality?: number }) {
+
+  return <Link 
+    href={`/photos?photoId=${props.image}`}
+    shallow
+    className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
+  >
+    <Image 
+      src={props.image} 
+      className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
+      style={{ transform: "translate3d(0, 0, 0)" }}
+      width={720} 
+      height={480}
+      quality={props.quality ?? 75}
+      sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
+      alt={"An engagement photo of Jack and Hannah"}
+      loader={props.imageLoader}
+      placeholder="blur"
+      blurDataURL={rgbDataURL(135, 155, 136)}
+    />
+  </Link>
 }
 
 export function GridView(props: { images: string[] }) {
-    return <div className="mx-auto max-w-[1960px] p-4">
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+  return <div className="mx-auto max-w-[1960px] p-4">
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 
-      {props.images.map((image, index) => (
-        <ImageComponent key={index} image={image} imageLoader={gridCloudflareLoader} />
-      ))}
-    </div>
-  </div>
+    {props.images.map((image, index) => (
+      <ImageComponent key={index} image={image} imageLoader={gridCloudflareLoader} />
+    ))}
+  </div></div>
 }
 
 export function GalleryView(props: { images: string[] }) {
@@ -51,8 +74,7 @@ export function GalleryView(props: { images: string[] }) {
     {props.images.map((image, index) => (
       <ImageComponent key={index} image={image} imageLoader={baseCloudflareLoader} />
     ))}
-  </div>
-</div>
+  </div></div>
 }
 
 export function ListView(props: { images: string[] }) {
@@ -60,8 +82,22 @@ export function ListView(props: { images: string[] }) {
   <div className="columns-1 gap-4">
 
     {props.images.map((image, index) => (
-      <ImageComponent key={index} image={image} imageLoader={baseCloudflareLoader} />
+      <ImageComponent key={index} image={image} quality={100} imageLoader={baseCloudflareLoader} />
     ))}
-  </div>
-</div>
+  </div></div>
+}
+
+export function CaroselView(props: { 
+  images: string[]; index: number; 
+  setIndex: (n: number) => void; onClose: () => void; 
+}) {
+  return <Modal 
+    images={props.images}
+    index={props.index}
+    setIndex={props.setIndex}
+    onClose={props.onClose}
+    imageLoader={baseCloudflareLoader}
+    navBarLoader={navBarCloudflareLoader}
+    
+  />
 }

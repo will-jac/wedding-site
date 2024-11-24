@@ -11,10 +11,12 @@ export interface ImageProps {
   
   export interface SharedModalProps {
     index: number;
-    images?: ImageProps[];
-    currentPhoto?: ImageProps;
+    images: string[];
+    currentPhoto?: string;
     changePhotoId: (newVal: number) => void;
     closeModal: () => void;
     navigation: boolean;
     direction?: number;
+    imageLoader: any;
+    navBarLoader: any;
   }
