@@ -12,15 +12,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [x] be resilient to concurrent edits by changing to hashes by attendee groups and grabbing all of them with a full table scan
 - [ ] copy text
 - [ ] make email pretty
-- [ ] make attendee lookup faster by storing a lookup table
+- [x] make attendee lookup faster by storing a lookup table
 - [ ] registry links/integrations and cash contributions
-- [ ] make attendee forms a subpage that can be directly linked to
-- [ ] validate user input so that people can't just have infinite attendees
+- [x] make attendee forms a subpage that can be directly linked to
+- [x] validate user input so that people can't just have infinite attendees
 - [ ] actually have proper pages for hotel and things
-- [ ] probably get people's hotel preference on the attendee form? And song requests
-
-upload the attendees:
-
+- [x] probably get people's hotel preference on the attendee form? And song requests
+- [ ] make the gallery page possible to load full-size images and download them in bulk
+- [ ] change to centralized fonts
+- [ ] make it possible to show only some images for a given page using prefixes/metadata/a worker
 
 ## Getting Started
 
