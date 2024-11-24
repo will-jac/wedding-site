@@ -1,6 +1,6 @@
 'use server';
 import Image from "next/image";
-import banner from "../public/banner.jpg";
+import banner from "./images/banner.jpg";
 
 import HomeLayout from './components/HomeLayout';
 import FAQ from "./components/faq";
