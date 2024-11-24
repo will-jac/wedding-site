@@ -10,9 +10,11 @@ export default function Menu() {
   return (
     <Stack className="justify-center" direction="row" spacing={1}>
       <ThemeProvider theme={ButtonTheme}>
-        <Button href="/#story">Our Story</Button>
-        <Button href="/#faq">FAQ</Button>
         <Button href="rsvp">RSVP</Button>
+        <Button href="/#faq">FAQ</Button>
+        <Button href="/#story">Story</Button>
+        <Button href="photos">Photos</Button>
+        <Button href="travel">travel</Button>
       </ThemeProvider>
     </Stack>
   )

@@ -1,6 +1,8 @@
-import HomeLayout from './components/HomeLayout';
+'use server';
 import Image from "next/image";
-import banner from "./home/banner.jpg";
+import banner from "../public/banner.jpg";
+
+import HomeLayout from './components/HomeLayout';
 import FAQ from "./components/faq";
 import Story from "./components/story";
 import Schedule from "./components/schedule";
@@ -8,20 +10,35 @@ import Location from "./components/location";
 import Hotel from "./components/hotel";
 import Travel from "./components/travel";
 
-export default function Main() {
+import { ThemeProvider } from '@mui/material/styles';
+import { ButtonTheme } from './styles';
+import { Button } from '@mui/material';
 
+function RSVPButton(props: any) {
+  'use client';
+  return <ThemeProvider theme={ButtonTheme}>
+    <Button variant="contained" href="rsvp">
+      <p className="text-2xl">RSVP</p>
+    </Button>
+  </ThemeProvider>
+}
+
+
+export default async function Main() {
   return <div>
   <HomeLayout>
-    <p>We're getting married!!!</p>
-    <p>Come join us in Madison, WI on June 1, 2025 to celebrate</p>
     <div className="p-5 flex flex-col items-center justify-center">
       <Image
         src={banner}
         width={500}
         alt="Picture of Hannah and Jack Kissing :)"
-        className="object-cover"
+        className="object-cover pb-10"
         priority
       />
+
+      <p className="text-3xl font-extrabold text-[#879b88] text-center">Saturday, June 1 2025</p>
+      <p className="text-3xl font-extrabold text-[#879b88] text-center pb-5">Madison, WI</p>
+      <RSVPButton/>
     </div>
 
     <Story/>

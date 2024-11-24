@@ -41,7 +41,7 @@ export default function HomeLayout(props: {noShowMenu?: boolean, isGalleryWidth?
                 </Link>
             </div>
             {props.noShowMenu ? null : <Menu />}
-            <div className="px-5">
+            <div className="px-5 pb-52">
                 {props.children}
             </div>
         </Layout>
