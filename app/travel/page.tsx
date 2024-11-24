@@ -46,7 +46,7 @@ export default async function Travel() {
             <li>Take a brewery tour</li>
         </ul>
 
-        <p className="pt-5">Some of our favorite restaurants</p>
+        <h3 id="food" className="pt-5 text-1xl font-extrabold text-[#879b88]">Some of our favorite restaurants</h3>
         <ul className="list-disc pl-5">
             <li>Fabiolas</li>
             <li>Everly</li>
