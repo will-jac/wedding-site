@@ -91,6 +91,8 @@ export function CaroselView(props: {
   images: string[]; index: number; 
   setIndex: (n: number) => void; onClose: () => void; 
 }) {
+  
+  
   return <Modal 
     images={props.images}
     index={props.index}
