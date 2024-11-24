@@ -1,5 +1,6 @@
 'use client';
 import {useEffect, useState} from "react";
+import { Suspense } from 'react'
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useSearchParams, useRouter } from 'next/navigation';
 
@@ -9,10 +10,10 @@ import { GridView, GalleryView, CaroselView } from "../components/gallery/views"
 
 import Modal from "../components/gallery/modal";
 
-export default function Photos() {
+function Photos() {
   const router = useRouter();
-  const searchParams = useSearchParams()
-  const photoId = searchParams.get('photoId')
+  const searchParams = useSearchParams();
+  const photoId = searchParams.get('photoId');
 
   const [images, setImages] = useState([] as string[]);
   const [index, setIndex] = useState(0); // currently selected photo
@@ -38,8 +39,7 @@ export default function Photos() {
   // TODO: show a selected photo in a modal with more resolution
   // TODO: let people like photos and have that affect the sorting?
 
-  return <div>
-    <HomeLayout isGalleryWidth={true}>
+  return <HomeLayout isGalleryWidth={true}>
       <div className="flex justify-between items-center py-5">
         <h1>Engagement Photos</h1>
         <ToggleButtonGroup
@@ -63,5 +63,11 @@ export default function Photos() {
       />}
       
     </HomeLayout>
-  </div>;
+}
+
+// todo: wrap this in a more inner scope
+export default function Main() {
+  return <Suspense fallback={<div>Loading...</div>}>
+    <Photos />
+  </Suspense>
 }

@@ -21,6 +21,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [ ] make the gallery page possible to load full-size images and download them in bulk
 - [ ] change to centralized fonts
 - [ ] make it possible to show only some images for a given page using prefixes/metadata/a worker
+- [ ] make the gallery work with portrait mode photos
+- [ ] figure out why the carosel is constantly re-loading photos and is kinda slow
 
 ## Getting Started
 
