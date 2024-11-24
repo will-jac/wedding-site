@@ -1,4 +1,4 @@
-import HomeLayout from './components/header';
+import HomeLayout from './components/HomeLayout';
 import Image from "next/image";
 import banner from "./home/banner.jpg";
 import FAQ from "./components/faq";
@@ -38,7 +38,7 @@ export default function Main() {
 
     <div className="pb-10"/>
   </HomeLayout>
-  <section className="flex justify-end bg-emerald-300" id="about">
+  <section className="flex justify-end bg-[#879b88]" id="about">
     <div className="mx-20 my-5">
       <p>Made by Jack</p>
       <p>Deployed with Vercel</p>

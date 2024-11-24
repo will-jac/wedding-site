@@ -1,6 +1,6 @@
 export default function Location() {
     return <section id="location" className="pt-5">
-    <h2 className="text-2xl font-extrabold text-emerald-600">Location</h2>
+    <h2 className="text-2xl font-extrabold text-[#879b88]">Location</h2>
     <p className="indent-8">We are getting married at <a href="https://harvestmoonpond.com/" 
     className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
     rel="noopener noreferrer">Harvest Moon Pond</a>. It's about 20 minutes by car from Madison.

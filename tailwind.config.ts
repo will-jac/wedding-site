@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'sans': ['Roboto', 'system-ui', 'sans-serif'],
+    }
   },
   plugins: [],
 };

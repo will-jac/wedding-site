@@ -37,7 +37,7 @@ export default function HomeLayout(props: {noShowMenu?: boolean, isGalleryWidth?
         <Layout isGalleryWidth={props.isGalleryWidth}>
             <div className='top-0 pt-8 px-5 md:px-10 xl:px-20 text-center bg-white'>
                 <Link href="/" underline="none">
-                    <Title>Jack & Hannah</Title>
+                    <Title>Hannah & Jack</Title>
                 </Link>
             </div>
             {props.noShowMenu ? null : <Menu />}

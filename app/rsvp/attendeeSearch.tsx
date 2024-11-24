@@ -5,8 +5,9 @@ import { FormGroup, FormControl, FormControlLabel, FormLabel, TextField, Button,
 import { InputLabel, Select, MenuItem, Checkbox, Stack, Divider} from '@mui/material';
 
 import { uploadAttendeesFromFile, getAttendees, AttendeeGroup, Attendee } from '../components/db';
-import { LinkButton } from '../components/menu';
-import { sendEmail } from '../components/email';
+
+import { ThemeProvider } from '@mui/material/styles';
+import { ButtonTheme } from '../styles';
 
 export default function RsvpSearch(props: any) {
     const [firstName, setFirstName] = useState('');
@@ -27,6 +28,8 @@ export default function RsvpSearch(props: any) {
     }
 
     return <>
+    <ThemeProvider theme={ButtonTheme}>
+
         {process.env.NODE_ENV === 'production' ? null 
             : <Button onClick={() => uploadAttendeesFromFile()}>
                 Upload Attendees to Database (WARNING WILL OVERWRITE)
@@ -55,7 +58,7 @@ export default function RsvpSearch(props: any) {
             <Button variant='contained'
                 onClick={submitSearch}
             >
-                Lookup Reservation
+                Find Invitation
             </Button>
     { 
         (searchStatus === 'searching') 
@@ -64,7 +67,7 @@ export default function RsvpSearch(props: any) {
         ? <p>Invalid Password</p> :
         (searchStatus === 'done') 
         ? (attendeeGroups.length === 0) 
-            ? <p>No matching name was found on the list. Please try again, or <LinkButton href="mailto:jackawilliams13@gmail.com" text="contact us."/></p> 
+            ? <p>No matching name was found on the list. Please try again, or <a href="mailto:jackawilliams13@gmail.com">contact us.</a></p> 
             : <>
                 <Divider flexItem className='pb-5'/>
                 <p>Reservation found:</p>
@@ -80,10 +83,10 @@ export default function RsvpSearch(props: any) {
                         </div>
                     )}
                 </Stack>
-                <Button onClick={() => sendEmail(attendeeGroups[0])}>Test Send RSVP</Button>
             </>
         : null
     }
         </Stack>
+    </ThemeProvider>
     </>
 }

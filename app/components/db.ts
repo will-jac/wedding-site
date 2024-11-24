@@ -99,8 +99,8 @@ async function updateAttendeeMap(attendeeGroup: AttendeeGroup) {
   attendeeMap = attendeeMap.concat(attendeeGroup.attendees.map(a => {
     return {
       groupId: attendeeGroup.id,
-      first_name: a.first_name,
-      last_name: a.last_name
+      first_name: a.first_name.toLowerCase(),
+      last_name: a.last_name.toLowerCase()
     };
   }));
 
@@ -121,7 +121,7 @@ export async function getAttendees(first_name: string, last_name: string, passwo
   let attendeeGroups = [] as AttendeeGroup[];
 
   const am = await getAttendeeMap();
-  console.log('fetched attendee map');
+  console.log('fetched attendee map', am);
   const matches = am.filter(a => 
     a.first_name.startsWith(first_name) && a.last_name.startsWith(last_name)
   );
