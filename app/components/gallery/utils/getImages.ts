@@ -20,14 +20,18 @@ export default async function getImages(bucket = "photos") {
     });
 
     const response = await s3Client.send(command);
-    const images = response?.Contents
-        ?.map(item => {
-            return item.Key;
-            // return {
-            //     key: item.Key
-            // } as ImageProps;
+    const images = await Promise.all(response?.Contents
+        ?.map(async item => {
+            const resp = await fetch(`https://photos.hannahjackwedding.com/cdn-cgi/image/format=json/${item.Key}`);
+            const imgSize = await resp.json();
+            return {
+                key: item.Key,
+                width: (imgSize['width'] ?? 0) as number,
+                height: (imgSize['height'] ?? 0) as number,
+                portrait: imgSize['height'] > imgSize['width']
+            } as ImageProps;
         })
-        .filter(key => key !== undefined) ?? [];
+        .filter(key => key !== undefined) ?? []);
         
     return images;
 }

@@ -9,13 +9,14 @@ import HomeLayout from '../components/HomeLayout';
 import { GridView, GalleryView, CaroselView } from "../components/gallery/views";
 
 import Modal from "../components/gallery/modal";
+import { ImageProps } from "../components/gallery/utils/types";
 
 function Photos() {
   const router = useRouter();
   const searchParams = useSearchParams();
   // const photoId = searchParams.get('photoId');
 
-  const [images, setImages] = useState([] as string[]);
+  const [images, setImages] = useState([] as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
   const [prefix, setPrefix] = useState('');
   const [view, setView] = useState('grid');
@@ -29,7 +30,7 @@ function Photos() {
   }
 
   function setPhotoId(id: string) {
-    setIndex(images.indexOf(id));
+    setIndex(images.findIndex((ip) => ip.key === id));
   }
 
   function onClose() {

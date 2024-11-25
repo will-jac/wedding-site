@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Modal from "./modal";
+import { ImageProps } from "./utils/types";
 
 function loaderFactory(params: string[]) {
   return (
@@ -18,8 +19,10 @@ function loaderFactory(params: string[]) {
 
 const gridCloudflareLoader = loaderFactory(['fit=crop', 'height=720', 'width=720']);
 const baseCloudflareLoader = loaderFactory(['width=720']);
-const caroselCloudflareLoader = loaderFactory(['fit=scale-down', 'width=1024', 'quality=90']);
 const navBarCloudflareLoader = loaderFactory(['width=240']);
+
+const portraitLoader = loaderFactory(['width=720']);
+const landscapeLoader = loaderFactory(['width=1024']);
 
 const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -35,16 +38,16 @@ export function rgbDataURL(r: number, g: number, b: number) {
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
 }
 
-function ImageComponent(props: { image: string, imageLoader: any, quality?: number, setPhotoId: (id: string) => void }) {
+function ImageComponent(props: { image: ImageProps, imageLoader: any, quality?: number, setPhotoId: (id: string) => void }) {
 
   return <button
     // href={`/photos?photoId=${props.image}`}
-    onClick={(e) => {props.setPhotoId(props.image); e.preventDefault();}}
+    onClick={(e) => {props.setPhotoId(props.image.key); e.preventDefault();}}
     // shallow
     className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
   >
     <Image
-      src={props.image}
+      src={props.image.key}
       className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
       style={{ transform: "translate3d(0, 0, 0)" }}
       width={720}
@@ -59,7 +62,7 @@ function ImageComponent(props: { image: string, imageLoader: any, quality?: numb
   </button>
 }
 
-export function GridView(props: { images: string[], setPhotoId: (id: string) => void }) {
+export function GridView(props: { images: ImageProps[], setPhotoId: (id: string) => void }) {
   return <div className="mx-auto max-w-[1960px] p-4">
   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 
@@ -69,7 +72,7 @@ export function GridView(props: { images: string[], setPhotoId: (id: string) => 
   </div></div>
 }
 
-export function GalleryView(props: { images: string[], setPhotoId: (id: string) => void }) {
+export function GalleryView(props: { images: ImageProps[], setPhotoId: (id: string) => void }) {
   return <div className="mx-auto max-w-[1960px] p-4">
   <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
 
@@ -80,7 +83,7 @@ export function GalleryView(props: { images: string[], setPhotoId: (id: string) 
 }
 
 export function CaroselView(props: {
-  images: string[]; index: number;
+  images: ImageProps[]; index: number;
   setIndex: (n: number) => void; onClose: () => void;
 }) {
 
@@ -89,7 +92,8 @@ export function CaroselView(props: {
     index={props.index}
     setIndex={props.setIndex}
     onClose={props.onClose}
-    imageLoader={caroselCloudflareLoader}
+    portraitLoader={portraitLoader}
+    landscapeLoader={landscapeLoader}
     navBarLoader={navBarCloudflareLoader}
 
   />
