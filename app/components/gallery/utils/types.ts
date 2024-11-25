@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 export interface ImageProps {
     key: string;
-    // rest to be filled in by a cloudflare worker
-    // height: string;
-    // width: string;
+    height: number;
+    width: number;
+    portrait: boolean;
     // public_id: string;
     // format: string;
     // blurDataUrl: string;
@@ -11,12 +11,13 @@ export interface ImageProps {
   
   export interface SharedModalProps {
     index: number;
-    images: string[];
+    images: ImageProps[];
     currentPhoto?: string;
     changePhotoId: (newVal: number) => void;
     closeModal: () => void;
     navigation: boolean;
     direction?: number;
-    imageLoader: any;
+    landscapeLoader: any;
+    portraitLoader: any;
     navBarLoader: any;
   }

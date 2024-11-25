@@ -122,26 +122,45 @@ function AnimatedImage(props: any) {
 }
 
 function MainImage(props: any) {
-  const { index, images, setLoaded, direction, imageLoader, navigation } = props;
+  const { index, images, setLoaded, direction, landscapeLoader, portraitLoader, navigation } = props;
 
   return <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-    <div className="absolute flex items-center">
-      <Image 
-          src={images[index]} 
-          className="w-full contain transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
-          style={{ transform: "translate3d(0, 0, 0)" }}
-          width={navigation ? 1280 : 1920}
-          height={navigation ? 853 : 1280}
-          quality={100}
-          priority
-          // sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
-          alt={"An engagement photo of Jack and Hannah"}
-          loader={imageLoader}
-          placeholder="blur"
-          blurDataURL={rgbDataURL(135, 155, 136)}
-          onLoad={() => setLoaded(true)}
-      /> 
-    </div>
+      {images[index].portrait 
+        ? <div className="absolute flex items-center h-full ">
+          <Image 
+              src={images[index].key} 
+              className="h-full object-contain transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
+              style={{ transform: "translate3d(0, 0, 0)" }}
+              width={images[index].portrait ? 1280 : 1920}
+              height={images[index].portrait ? 853 : 1280}
+              quality={100}
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
+              alt={"An engagement photo of Jack and Hannah"}
+              loader={images[index].portrait ? portraitLoader : landscapeLoader}
+              placeholder="blur"
+              blurDataURL={rgbDataURL(135, 155, 136)}
+              onLoad={() => setLoaded(true)}
+          /> 
+          </div>
+        : <div className="absolute flex items-center w-full">
+          <Image 
+              src={images[index].key} 
+              className="w-full object-contain transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
+              style={{ transform: "translate3d(0, 0, 0)" }}
+              width={images[index].portrait ? 1280 : 1920}
+              height={images[index].portrait ? 853 : 1280}
+              quality={100}
+              priority
+              // sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
+              alt={"An engagement photo of Jack and Hannah"}
+              loader={images[index].portrait ? portraitLoader : landscapeLoader}
+              placeholder="blur"
+              blurDataURL={rgbDataURL(135, 155, 136)}
+              onLoad={() => setLoaded(true)}
+          /> 
+        </div>
+      }
   </div>
 }
 
@@ -154,7 +173,8 @@ export default function SharedModal(props: SharedModalProps) {
       navigation,
       currentPhoto,
       direction,
-      imageLoader,
+      landscapeLoader,
+      portraitLoader,
       navBarLoader,
   } = props;
 
@@ -202,7 +222,7 @@ export default function SharedModal(props: SharedModalProps) {
                 className="mx-auto mt-6 mb-6 flex aspect-[3/2] h-14"
               >
                 <AnimatePresence initial={false}>
-                  {filteredImages?.map((id, filteredIndex) => (
+                  {filteredImages?.map((image, filteredIndex) => (
                     <motion.button
                       initial={{
                         width: "0%",
@@ -215,16 +235,16 @@ export default function SharedModal(props: SharedModalProps) {
                       }}
                       exit={{ width: "0%" }}
                       onClick={() => changePhotoId(index + filteredIndex - 1)}
-                      key={id}
-                      className={`${id == images[index]
+                      key={image.key}
+                      className={`${image.key == images[index].key
                         ? "z-20 rounded-md shadow shadow-black/50"
                         : "z-10"
                       } ${
                         // at the start of the array
-                        id === images[0] ? "rounded-l-md" : ""
+                        image.key === images[0].key ? "rounded-l-md" : ""
                       } ${
                         // at the end of the array
-                        id === images[-1] ? "rounded-r-md" : ""
+                        image.key === images[images.length - 1].key ? "rounded-r-md" : ""
                       } relative inline-block w-full shrink-0 transform-gpu overflow-hidden focus:outline-none`}
                     >
                       <Image
@@ -232,11 +252,11 @@ export default function SharedModal(props: SharedModalProps) {
                         width={180}
                         height={120}
                         className={`${
-                          id === images[index]
+                          image === images[index]
                             ? "brightness-110 hover:brightness-110"
                             : "brightness-50 contrast-125 hover:brightness-75"
                         } h-full transform object-cover transition`}
-                        src={id}
+                        src={image.key}
                         loader={navBarLoader}
                       />
                     </motion.button>

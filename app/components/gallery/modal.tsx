@@ -3,13 +3,14 @@ import { Dialog } from "@headlessui/react";
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import SharedModal from "./shared_modal";
+import { ImageProps } from "./utils/types";
 
 export default function Modal(props: {
-  images: string[]; index: number; setIndex: (n: number) => void, onClose: () => void;
-  imageLoader: any; navBarLoader: any;
+  images: ImageProps[]; index: number; setIndex: (n: number) => void, onClose: () => void;
+  portraitLoader: any, landscapeLoader: any; navBarLoader: any;
 }) {
   const {
-    images, index, setIndex, onClose, imageLoader, navBarLoader
+    images, index, setIndex, onClose,portraitLoader, landscapeLoader, navBarLoader
   } = props;
 
   let overlayRef = useRef<HTMLDivElement>(null);
@@ -55,7 +56,8 @@ export default function Modal(props: {
         changePhotoId={setIndex}
         closeModal={onClose}
         navigation={true}
-        imageLoader={imageLoader}
+        portraitLoader={portraitLoader}
+        landscapeLoader={landscapeLoader}
         navBarLoader={navBarLoader}
       />
     </Dialog>
