@@ -4,13 +4,13 @@ import Modal from "./modal";
 
 function loaderFactory(params: string[]) {
   return (
-    { src, width, quality }: 
+    { src, width, quality }:
     { src: string; width: number; quality?: number }
   ) =>{
     // console.log(width, quality, src);
     const new_params = params.concat([]);
     if (quality) new_params.push(`quality=${quality}`);
-    
+
     const paramsString = new_params.join(",");
     return `https://photos.hannahjackwedding.com/cdn-cgi/image/${paramsString}/${src}`;
   }
@@ -18,6 +18,7 @@ function loaderFactory(params: string[]) {
 
 const gridCloudflareLoader = loaderFactory(['fit=crop', 'height=720', 'width=720']);
 const baseCloudflareLoader = loaderFactory(['width=720']);
+const caroselCloudflareLoader = loaderFactory(['fit=scale-down', 'width=1024', 'quality=90']);
 const navBarCloudflareLoader = loaderFactory(['width=240']);
 
 const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -34,18 +35,19 @@ export function rgbDataURL(r: number, g: number, b: number) {
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
 }
 
-function ImageComponent(props: { image: string, imageLoader: any, quality?: number }) {
+function ImageComponent(props: { image: string, imageLoader: any, quality?: number, setPhotoId: (id: string) => void }) {
 
-  return <Link 
-    href={`/photos?photoId=${props.image}`}
-    shallow
+  return <button
+    // href={`/photos?photoId=${props.image}`}
+    onClick={(e) => {props.setPhotoId(props.image); e.preventDefault();}}
+    // shallow
     className="after:content group relative mb-5 block w-full cursor-zoom-in after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:shadow-highlight"
   >
-    <Image 
-      src={props.image} 
+    <Image
+      src={props.image}
       className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
       style={{ transform: "translate3d(0, 0, 0)" }}
-      width={720} 
+      width={720}
       height={480}
       quality={props.quality ?? 75}
       sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
@@ -54,52 +56,41 @@ function ImageComponent(props: { image: string, imageLoader: any, quality?: numb
       placeholder="blur"
       blurDataURL={rgbDataURL(135, 155, 136)}
     />
-  </Link>
+  </button>
 }
 
-export function GridView(props: { images: string[] }) {
+export function GridView(props: { images: string[], setPhotoId: (id: string) => void }) {
   return <div className="mx-auto max-w-[1960px] p-4">
   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
 
     {props.images.map((image, index) => (
-      <ImageComponent key={index} image={image} imageLoader={gridCloudflareLoader} />
+      <ImageComponent key={index} image={image} imageLoader={gridCloudflareLoader} setPhotoId={props.setPhotoId}/>
     ))}
   </div></div>
 }
 
-export function GalleryView(props: { images: string[] }) {
+export function GalleryView(props: { images: string[], setPhotoId: (id: string) => void }) {
   return <div className="mx-auto max-w-[1960px] p-4">
   <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 2xl:columns-4">
 
     {props.images.map((image, index) => (
-      <ImageComponent key={index} image={image} imageLoader={baseCloudflareLoader} />
+      <ImageComponent key={index} image={image} imageLoader={baseCloudflareLoader} setPhotoId={props.setPhotoId}/>
     ))}
   </div></div>
 }
 
-export function ListView(props: { images: string[] }) {
-  return <div className="mx-auto max-w-[1960px] p-4">
-  <div className="columns-1 gap-4">
-
-    {props.images.map((image, index) => (
-      <ImageComponent key={index} image={image} quality={100} imageLoader={baseCloudflareLoader} />
-    ))}
-  </div></div>
-}
-
-export function CaroselView(props: { 
-  images: string[]; index: number; 
-  setIndex: (n: number) => void; onClose: () => void; 
+export function CaroselView(props: {
+  images: string[]; index: number;
+  setIndex: (n: number) => void; onClose: () => void;
 }) {
-  
-  
-  return <Modal 
+
+  return <Modal
     images={props.images}
     index={props.index}
     setIndex={props.setIndex}
     onClose={props.onClose}
-    imageLoader={baseCloudflareLoader}
+    imageLoader={caroselCloudflareLoader}
     navBarLoader={navBarCloudflareLoader}
-    
+
   />
 }

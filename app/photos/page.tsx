@@ -13,21 +13,29 @@ import Modal from "../components/gallery/modal";
 function Photos() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const photoId = searchParams.get('photoId');
+  // const photoId = searchParams.get('photoId');
 
   const [images, setImages] = useState([] as string[]);
-  const [index, setIndex] = useState(0); // currently selected photo
+  const [index, setIndex] = useState(null as number | null); // currently selected photo
   const [prefix, setPrefix] = useState('');
   const [view, setView] = useState('grid');
   
   function changePhotoId(newIndex: number) {
     if (newIndex < 0 || newIndex >= images.length) return;
     setIndex(newIndex);
-    router.push(`/photos?photoId=${images[newIndex]}`);
+    // router.push(
+    //   `/photos?photoId=${images[newIndex]}`,
+    // );
+  }
+
+  function setPhotoId(id: string) {
+    setIndex(images.indexOf(id));
   }
 
   function onClose() {
-    router.push("/");
+    // router.push("/photos");
+    setIndex(null);
+    console.log('closing');
   }
 
   useEffect(() => {
@@ -41,7 +49,7 @@ function Photos() {
 
   return <HomeLayout isGalleryWidth={true}>
       <div className="flex justify-between items-center py-5">
-        <h1>Engagement Photos</h1>
+        <h1>Click on a photo to open it in a larger resolution</h1>
         <ToggleButtonGroup
           color="primary"
           value={view}
@@ -54,11 +62,11 @@ function Photos() {
         </ToggleButtonGroup>
       </div>
 
-      {photoId == null && view === 'grid' &&     <GridView images={images} />}
-      {photoId == null && view === 'gallery' &&  <GalleryView images={images} />}
-      {photoId && <CaroselView 
+      {view === 'grid' &&     <GridView images={images} setPhotoId={setPhotoId} />}
+      {view === 'gallery' &&  <GalleryView images={images} setPhotoId={setPhotoId} />}
+      {index != null && <CaroselView 
         images={images} 
-        index={images.indexOf(photoId)} 
+        index={index} 
         setIndex={changePhotoId} onClose={onClose}
       />}
       
