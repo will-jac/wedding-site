@@ -12,7 +12,7 @@ export default function FAQ() {
 <div className="px-5">
     
 <Question id="rsvp-deadline" question="What is the deadline to RSVP?">
-    <p>please do so ASAP!</p>
+    <p>Please do so by March 15!</p>
 </Question>
 <Question id="plus-one" question="Can I bring a date?">
     <p>We'll only be able to accommodate those who were directly invited. Unless your invitation is addressed to "X and Guest," or with your guest's name, we kindly ask that you do not bring a guest.</p>
@@ -30,7 +30,7 @@ export default function FAQ() {
     <p>We respectfully request that guests do not take photographs during the ceremony as professional pictures will be taken throughout the day. We invite you to relax, enjoy the moment and we'll gladly share these images with you after the celebration. However, we would love for you to take photos/videos at the reception and share them with us! </p>
 </Question>
 <Question id="parking" question="What will the parking situation be?">
-    <p>There is a large parking lot at Harvest Moon Pond if you want to drive.</p>
+    <p>There is a large parking lot at Harvest Moon Pond if you want to drive. However, all cars must be removed from the venue by 9am the next day.</p>
 </Question>
 <Question id="accessibility" question="Is the venue accessible?">
     <p>Most of the venue is accessible without needing to go up or down stairs. Our back-up ceremony location is up one flight of stairs in the barn. For anyone with difficulty walking, there will be golf carts on site for getting around.</p>
@@ -43,7 +43,7 @@ export default function FAQ() {
     <br/>
     <p>The venue has a bar. Batch cocktials, beer, and wine are free, up to the amount we've purchased. After that, or for any other drinks, you'll be able to pay for it.</p>
 </Question>
-<Question id="dietary-restrictions" question="What about my dietary restrictions">
+<Question id="dietary-restrictions" question="What about my dietary restrictions?">
     <p>There will be a question in the RSVP for any dietary restrictions we should know about. We will have vegetarian, vegan, and gluten free options at the dinner buffet and will ensure that those with dietary restrictions are able to have their requests met. Please reach out to Hannah or Jack if you have any additional questions or concerns.
     </p>
 </Question>
