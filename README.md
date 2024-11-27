@@ -22,7 +22,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [ ] change to centralized fonts
 - [ ] make it possible to show only some images for a given page using prefixes/metadata/a worker
 - [ ] make the gallery work with portrait mode photos
-- [ ] figure out why the carosel is constantly re-loading photos and is kinda slow
+- [x] figure out why the carosel is constantly re-loading photos and is kinda slow
+- [ ] make Cloudflare worker respond with the image metadata on image list
 
 ## Getting Started
 

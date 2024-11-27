@@ -126,7 +126,7 @@ function MainImage(props: any) {
 
   return <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
       {images[index].portrait 
-        ? <div className="absolute flex items-center h-full ">
+        ? <div className="absolute flex items-center h-full object-contain">
           <Image 
               src={images[index].key} 
               className="h-full object-contain transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"

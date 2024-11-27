@@ -37,7 +37,7 @@ export default async function Main() {
       />
 
       <p className="text-3xl font-extrabold text-[#879b88] text-center">Sunday, June 1, 2025</p>
-      <p className="text-3xl font-extrabold text-[#879b88] text-center pb-5">Madison, WI</p>
+      <p className="text-2xl xl:text-3xl font-extrabold text-[#879b88] text-center pb-5">Madison, WI</p>
       <RSVPButton/>
     </div>
 
@@ -58,7 +58,6 @@ export default async function Main() {
   <section className="flex justify-end bg-[#879b88]" id="about">
     <div className="mx-20 my-5">
       <p>Made by Jack</p>
-      <p>Deployed with Vercel</p>
       <a 
         href="https://github.com/will-jac/wedding-site" 
         className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
