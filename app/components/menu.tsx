@@ -14,7 +14,7 @@ export default function Menu() {
         <Button href="/#faq">FAQ</Button>
         <Button href="/#story">Story</Button>
         <Button href="photos">Photos</Button>
-        <Button href="travel">travel</Button>
+        {/* <Button href="travel">Travel</Button> */}
       </ThemeProvider>
     </Stack>
   )
