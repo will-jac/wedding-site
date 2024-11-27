@@ -21,7 +21,7 @@ export default async function Travel() {
         <p>We have booked a block of rooms at two hotels:</p>
         <ul>
             <li><b>Hilton Garden Inn Madison Downtown</b> - 770 Regent St, Madison, WI 53715</li>
-            <li><b>Unnamed hotel #2</b> - East side of Madison</li>
+            <li>A hotel on the East side of Madison</li>
         </ul>
         <p>The Hilton Garden in is downtown, perfect for exploring Madison and hanging out with others before the wedding. Unamed Hotel #2 is closer to the airport and the venue, and is a bit cheaper.</p>
         <p>We don't currently have bookable links--check back again soon! We'll also send you an email when we have it.</p>

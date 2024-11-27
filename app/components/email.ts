@@ -7,9 +7,9 @@ import { SESClient } from "@aws-sdk/client-ses";
 const email_html = `<div dir="ltr">Congratulations __name__, you've successfully RSVP'd!!
 <br><br>We can't wait to see you at our wedding. In the meantime:<br>
 <ul>
-<li><a href="http://jackhannahwedding.com/hotel" target="_blank">
+<li><a href="http://jackhannahwedding.com/travel" target="_blank">
     Book your hotel</a></li>
-<li><a href="http://jackhannahwedding.com/madison" target="_blank">
+<li><a href="http://jackhannahwedding.com/travel#madison" target="_blank">
     Check out things to do in Madison</a></li>
 <li><a href="http://jackhannahwedding.com/registry" target="_blank">
     Browse our registry</a></li>

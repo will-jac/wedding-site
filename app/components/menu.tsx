@@ -11,8 +11,8 @@ export default function Menu() {
     <Stack className="justify-center" direction="row" spacing={0}>
       <ThemeProvider theme={ButtonTheme}>
         <Button href="rsvp">RSVP</Button>
-        <Button href="/#story">Story</Button>
-        <Button href="/#faq">FAQ</Button>
+        <Button href="story">Story</Button>
+        <Button href="faq">FAQ</Button>
       </ThemeProvider>
     </Stack>
     <Stack className="justify-center" direction="row" spacing={0}>
