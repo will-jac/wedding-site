@@ -15,10 +15,10 @@ export default function FAQ() {
     <p>Please do so by March 15!</p>
 </Question>
 <Question id="plus-one" question="Can I bring a date?">
-    <p>We'll only be able to accommodate those who were directly invited. Unless your invitation is addressed to "X and Guest," or with your guest's name, we kindly ask that you do not bring a guest.</p>
+    <p>We'll only be able to accommodate those who were directly invited. If there are any concerns or questions, please reach out to us.</p>
 </Question>
 <Question id="kids" question="Are kids welcome?">
-    <p>We'll only be able to accommodate those who were directly invited. Unless your invitation is addressed to "the X Family," we kindly ask that you do not bring your children.</p>
+    <p>We kindly request that this be an adult-only wedding. We're more than happy to help find childcare for anyone travelling from out of town.</p>
 </Question>
 <Question id="weather" question="What will the weather be like?">
     <p>Summer in Madison is just about the best weather anyone could ask for! For June 1st, there is typically a high of 78 degrees and a low of 58 degrees. However, spring and early summer is typically the rainy season, so be prepared for showers!</p>
