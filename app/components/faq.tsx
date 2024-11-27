@@ -27,7 +27,7 @@ export default function FAQ() {
     <p>Weather permitting, the ceremony will be outdoors, the cocktail hour will be on the patio, and the reception will be indoors with the option of hanging out on the patio.</p>
 </Question>
 <Question id="photos" question="Can I take pictures during the wedding or reception?">
-    <p>We respectfully request that guests do not take photographs during the ceremony as professional pictures will be taken throughout the day. We invite you to relax, enjoy the moment and we'll gladly share these images with you after the celebration. However, we would love for you to take photos/videos at the reception and share them with us! </p>
+    <p>We respectfully request that guests do not take photographs during the ceremony as professional pictures will be taken throughout the day. We invite you to relax, enjoy the moment and we'll gladly share these images with you after the celebration on this website. However, we would love for you to take photos/videos at the reception and share them with us! </p>
 </Question>
 <Question id="parking" question="What will the parking situation be?">
     <p>There is a large parking lot at Harvest Moon Pond if you want to drive. However, all cars must be removed from the venue by 9am the next day.</p>
@@ -36,7 +36,7 @@ export default function FAQ() {
     <p>Most of the venue is accessible without needing to go up or down stairs. Our back-up ceremony location is up one flight of stairs in the barn. For anyone with difficulty walking, there will be golf carts on site for getting around.</p>
 </Question>
 <Question id="lodging" question="Where should I stay?">
-    <p>We have a block of rooms at the Hilton Garden Inn Madison Downtown. We'll have a shuttle to and from the venue from there. If you're staying somewhere else, we recommend renting a car or using a ride share service.</p>
+    <p>We have a block of rooms at the Hilton Garden Inn Madison Downtown, as well as a block of rooms at a hotel on the East Side. We'll have a shuttle to and from the venue from there. If you're staying somewhere else, we recommend renting a car or using a ride share service.</p>
 </Question>
 <Question id="food" question="How will food & drinks be served?">
     <p>Dinner will be a buffet with options of lasagna, ravioli, salad, rolls, and vegetable kabobs for our vegan and gluten free guests. Most sides will be vegan and gluten free.</p>
