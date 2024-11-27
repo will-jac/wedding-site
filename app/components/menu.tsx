@@ -7,15 +7,19 @@ import { ButtonTheme } from '../styles';
 
 
 export default function Menu() {
-  return (
-    <Stack className="justify-center" direction="row" spacing={1}>
+  return <Stack>
+    <Stack className="justify-center" direction="row" spacing={0}>
       <ThemeProvider theme={ButtonTheme}>
         <Button href="rsvp">RSVP</Button>
-        <Button href="/#faq">FAQ</Button>
         <Button href="/#story">Story</Button>
-        <Button href="photos">Photos</Button>
-        {/* <Button href="travel">Travel</Button> */}
+        <Button href="/#faq">FAQ</Button>
       </ThemeProvider>
     </Stack>
-  )
+    <Stack className="justify-center" direction="row" spacing={0}>
+      <ThemeProvider theme={ButtonTheme}>
+        <Button href="photos">Photos</Button>
+        <Button href="travel">Travel</Button>
+      </ThemeProvider>
+    </Stack>
+  </Stack>
 }

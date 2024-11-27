@@ -36,22 +36,18 @@ export default async function Main() {
         priority
       />
 
-      <p className="text-3xl font-extrabold text-[#879b88] text-center">Sunday, June 1, 2025</p>
-      <p className="text-2xl xl:text-3xl font-extrabold text-[#879b88] text-center pb-5">Madison, WI</p>
+      <p className="text-xl xl:text-3xl font-extrabold text-[#879b88] text-center">Sunday, June 1, 2025</p>
+      <p className="text-xl xl:text-3xl font-extrabold text-[#879b88] text-center pb-5">Madison, WI</p>
       <RSVPButton/>
     </div>
-
-    <Story/>
 
     <Location/>
 
     <Schedule/>
-
+{/* 
     <Hotel/>
 
-    <Travel/>
-
-    <FAQ/>
+    <Travel/> */}
 
     <div className="pb-10"/>
   </HomeLayout>
