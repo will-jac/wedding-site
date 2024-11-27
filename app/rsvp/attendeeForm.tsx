@@ -153,6 +153,7 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
         {/* <AddAttendeeButton attendees={attendees} setAttendees={(a: Attendee[]) => setAttendeeGroup({...attendeeGroup, attendees:a})}/> */}
 
         <p>What are your plans for <Link href="/faq#lodging">lodging?</Link></p>
+        <p>Note that this is somewhat of a work in progress--we don't have booking links yet. Please still RSVP--we'll email you with the hotel information when we have it!</p>
         <RadioGroup 
             aria-label="hotel" name="hotel" value={hotel}
             onChange={(e) => {
@@ -166,14 +167,14 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
 
         <Divider flexItem/>
 
-        <p>What are your plans for <Link href="/faq#shuttle">getting to and from the venue?</Link></p>
+        <p>What are your plans for <Link href="/faq#shuttle">getting to and from the venue? We're likely going to have a shuttle running from the two hotels to the venue</Link></p>
         <RadioGroup 
             aria-label="shuttle" name="shuttle" value={shuttle}
             onChange={(e) => {
                 setAttendeeGroup({...attendeeGroup, shuttle: e.target.value});
             }}
         >
-            <FormControlLabel value="Shuttle" control={<Radio />} label="I'll take the shuttle" />
+            <FormControlLabel value="Shuttle" control={<Radio />} label="If there is one, I'll take the shuttle" />
             <FormControlLabel value="Car" control={<Radio />} label="I'll drive myself or get a ride from someone" />
         </RadioGroup>
 
