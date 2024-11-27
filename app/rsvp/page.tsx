@@ -30,7 +30,7 @@ export default function RSVPPage() {
             <p>Thank you for RSVP'ing!</p>
             <p>We can't wait to see you on June 1, 2025</p>
             <div className="flex justify-center">
-                <Button href="/#faq">Next, check out the FAQ</Button>
+                <Button href="/faq">Next, check out the FAQ</Button>
             </div>
         </Stack>
         : attendeeGroup === null
