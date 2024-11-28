@@ -1,6 +1,8 @@
 'use server';
 import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 import { ImageProps } from './types';
+import { kv } from "@vercel/kv";
+import pLimit from 'p-limit';
 
 // TODO: use the cloudflare worker to get the images
 
@@ -13,25 +15,64 @@ const s3Client = new S3Client({
     }
 });
 
-export default async function getImages(bucket = "photos") {
+const limit = pLimit(100); // Limit to 100 simultaneous requests
+
+export async function getImagesFromCloudflare(bucket: string) {
+    console.log("getting all images from Cloudflare ($$$)");
     // list objects in bucket
     const command = new ListObjectsCommand({
         Bucket: bucket
     });
 
     const response = await s3Client.send(command);
+    
     const images = await Promise.all(response?.Contents
-        ?.map(async item => {
-            const resp = await fetch(`https://photos.hannahjackwedding.com/cdn-cgi/image/format=json/${item.Key}`);
-            const imgSize = await resp.json();
-            return {
-                key: item.Key,
-                width: (imgSize['width'] ?? 0) as number,
-                height: (imgSize['height'] ?? 0) as number,
-                portrait: imgSize['height'] > imgSize['width']
-            } as ImageProps;
-        })
+        ?.map(item => 
+            limit(async () => {
+                process.stdout.write(".");
+                const resp = await fetch(`https://photos.hannahjackwedding.com/cdn-cgi/image/format=json/${item.Key}`);
+                const imgJson = await resp.json();
+                return {
+                    key: item.Key,
+                    portrait: imgJson['height'] > imgJson['width']
+                } as ImageProps;
+            })
+        )
         .filter(key => key !== undefined) ?? []);
-        
+
+    // photos have names in the format <prefix>-<number>.<ext>
+    // sort on the number and the prefix
+    images.sort((a, b) => {
+        const aName = a.key.split('-');
+        const bName = b.key.split('-');
+        const aPrefix = aName.slice(0, aName.length - 1).join('-');
+        const bPrefix = aName.slice(0, bName.length - 1).join('-');
+        const aNum = parseInt(aName[aName.length - 1].split('.')[0]);
+        const bNum = parseInt(bName[bName.length - 1].split('.')[0]);
+        if (aPrefix !== bPrefix) {
+            return aPrefix.localeCompare(bPrefix);
+        }
+        return aNum - bNum;
+    });
+    // save to KV
+    const resp = await kv.set(`photos:${bucket}`, images);
+    console.log(resp);
+
+    return images;
+}
+
+// TODO: figure out edge caching so this doesn't need to be recomputed
+export async function getImagesFromKV(bucket: string) {
+    console.log("getting all images from KV ($)");
+    const images = await kv.get(`photos:${bucket}`) as ImageProps[];
+    return images;
+}
+
+export default async function getImages(bucket = "photos") {
+    let images = await getImagesFromKV(bucket)
+    if (images == null || images.length == 0)
+    {
+        return getImagesFromCloudflare(bucket);
+    }
     return images;
 }

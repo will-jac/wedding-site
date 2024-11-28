@@ -8,7 +8,6 @@ return <section id="story" className="pt-5">
 <h3 className="text-xl pt-2 text-[#879b88]">What's your favorite activity together?</h3>
 <p>We both love biking, cooking, gardening, and spoiling our cats, Pesto and Moka! Hannah humors Jack by playing board games, and Jack humors Hannah by going on long walks in our neighborhood.</p>
 
-
 <h3 className="text-xl pt-2 text-[#879b88]">Honeymoon destination?</h3>
 <p>Greece! We had planned a trip to Greece in January 2022 right before moving to Madison, but we unfortunately got COVID right before we were supposed to leave. We're so excited we finally get to take this trip and think it will be a perfect mix of nature, history, and relaxation, not to mention the amazing food!</p>
 
