@@ -108,7 +108,8 @@ function Buttons(props: any) {
             </a>
         <button
             onClick={() => downloadPhoto(
-                `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index].key}`,
+                `https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index].key}`,
+                // `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index].key}`,
                 images[index].key
               )
             }
