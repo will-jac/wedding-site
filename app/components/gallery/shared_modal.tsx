@@ -109,7 +109,7 @@ function Buttons(props: any) {
         <button
             onClick={() => downloadPhoto(
                 `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index].key}`,
-                images[index]
+                images[index].key
               )
             }
             className="z-40 rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
