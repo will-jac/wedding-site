@@ -83,7 +83,7 @@ export function GalleryView(props: { images: ImageProps[], setPhotoId: (id: stri
 }
 
 export function CaroselView(props: {
-  images: ImageProps[]; index: number;
+  images: ImageProps[]; index: number; navigation: boolean,
   setIndex: (n: number) => void; onClose: () => void;
 }) {
 
@@ -95,6 +95,6 @@ export function CaroselView(props: {
     portraitLoader={portraitLoader}
     landscapeLoader={landscapeLoader}
     navBarLoader={navBarCloudflareLoader}
-
+    navigation={props.navigation}
   />
 }
