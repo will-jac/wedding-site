@@ -50,6 +50,6 @@ export default function FAQ() {
 <Question id="dancing" question="Will there be dancing?">
     <p>Yes!! We'll also have an area for games in the loft.</p>
 </Question>
-
-</div> </section>
+</div> 
+</section>
 }

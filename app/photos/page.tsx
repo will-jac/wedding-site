@@ -30,6 +30,7 @@ function Photos() {
   }
 
   function setPhotoId(id: string) {
+    console.log('setting photo id', id);
     setIndex(images.findIndex((ip) => ip.key === id));
   }
 
@@ -50,7 +51,7 @@ function Photos() {
 
   return <HomeLayout isGalleryWidth={true}>
       <div className="flex justify-between items-center py-5">
-        <h1>Click on a photo to open it in a larger resolution</h1>
+        <h1>Click on a photo to open it in a higher resolution</h1>
         <ToggleButtonGroup
           color="primary"
           value={view}

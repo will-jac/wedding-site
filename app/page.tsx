@@ -51,14 +51,5 @@ export default async function Main() {
 
     <div className="pb-10"/>
   </HomeLayout>
-  <section className="flex justify-end bg-[#879b88]" id="about">
-    <div className="mx-20 my-5">
-      <p>Made by Jack</p>
-      <a 
-        href="https://github.com/will-jac/wedding-site" 
-        className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-        rel="noopener noreferrer">Source Code</a>
-    </div>
-  </section>
 </div>
 }
