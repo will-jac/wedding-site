@@ -13,7 +13,7 @@ export interface ImageProps {
     index: number;
     images: ImageProps[];
     currentPhoto?: string;
-    changePhotoId: (newVal: number) => void;
+    setIndex: (newIndex: number) => void;
     closeModal: () => void;
     navigation: boolean;
     direction?: number;

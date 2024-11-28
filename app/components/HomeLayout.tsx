@@ -44,6 +44,15 @@ export default function HomeLayout(props: {noShowMenu?: boolean, isGalleryWidth?
             <div className="px-5 pb-52">
                 {props.children}
             </div>
+            <section className="flex justify-end bg-[#879b88]" id="about">
+                <div className="mx-20 my-5">
+                <p>Made by Jack</p>
+                <Link 
+                    href="https://github.com/will-jac/wedding-site" 
+                    // className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+                    rel="noopener noreferrer">Source Code</Link>
+                </div>
+            </section>
         </Layout>
     </Background>
 }
