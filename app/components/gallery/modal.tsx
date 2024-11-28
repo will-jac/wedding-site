@@ -6,11 +6,12 @@ import SharedModal from "./shared_modal";
 import { ImageProps } from "./utils/types";
 
 export default function Modal(props: {
-  images: ImageProps[]; index: number; setIndex: (n: number) => void, onClose: () => void;
+  images: ImageProps[]; index: number; navigation: boolean;
+  setIndex: (n: number) => void, onClose: () => void;
   portraitLoader: any, landscapeLoader: any; navBarLoader: any;
 }) {
   const {
-    images, index, setIndex, onClose, portraitLoader, landscapeLoader, navBarLoader
+    images, index, navigation, setIndex, onClose, portraitLoader, landscapeLoader, navBarLoader
   } = props;
 
   let overlayRef = useRef<HTMLDivElement>(null);
@@ -57,7 +58,7 @@ export default function Modal(props: {
           images={images}
           setIndex={setIndex}
           closeModal={onClose}
-          navigation={true}
+          navigation={navigation}
           portraitLoader={portraitLoader}
           landscapeLoader={landscapeLoader}
           navBarLoader={navBarLoader}

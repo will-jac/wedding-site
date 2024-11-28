@@ -1,4 +1,5 @@
 'use client';
+import {isMobile} from 'react-device-detect';
 import {useEffect, useState} from "react";
 import { Suspense } from 'react'
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
@@ -19,7 +20,7 @@ function Photos() {
   const [images, setImages] = useState([] as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
   const [prefix, setPrefix] = useState('');
-  const [view, setView] = useState('grid');
+  const [view, setView] = useState(isMobile ? 'gallery' : 'grid');
 
 
   function changePhotoId(newIndex: number) {
@@ -86,6 +87,7 @@ function Photos() {
         images={images} 
         index={index} 
         setIndex={changePhotoId} onClose={onClose}
+        navigation={!isMobile}
       />}
       
     </HomeLayout>
