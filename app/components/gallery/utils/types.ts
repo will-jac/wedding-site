@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 export interface ImageProps {
     key: string;
-    height: number;
-    width: number;
     portrait: boolean;
     // public_id: string;
     // format: string;
