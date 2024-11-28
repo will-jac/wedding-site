@@ -98,7 +98,7 @@ function Buttons(props: any) {
     {currentImage == null ? null :  (
         <div className="z-40 absolute top-0 right-0 flex items-center gap-2 p-3 text-white">
             <a
-                href={`https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index]}`}
+                href={`https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index].key}`}
                 className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                 target="_blank"
                 title="Open fullsize version"
@@ -108,7 +108,7 @@ function Buttons(props: any) {
             </a>
         <button
             onClick={() => downloadPhoto(
-                `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index]}`,
+                `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index].key}`,
                 images[index]
               )
             }
@@ -230,7 +230,7 @@ export default function SharedModal(props: SharedModalProps) {
       >
         {/* Buttons + bottom nav bar */}
         <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-          {loaded && <Buttons {...props} currentImage={currentImage} navigation={false} />}
+          {loaded && <Buttons {...props} currentImage={currentImage}/>}
           {/* Bottom Nav bar */}
           {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>}
         </div>
