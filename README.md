@@ -10,21 +10,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [x] fix the mailto link in the reservation not found
 - [x] make email contain all the necessary information
 - [x] be resilient to concurrent edits by changing to hashes by attendee groups and grabbing all of them with a full table scan
-- [ ] copy text
+- [x] copy text
 - [ ] make email pretty
 - [x] make attendee lookup faster by storing a lookup table
 - [ ] registry links/integrations and cash contributions
 - [x] make attendee forms a subpage that can be directly linked to
 - [x] validate user input so that people can't just have infinite attendees
-- [ ] actually have proper pages for hotel and things
+- [x] actually have proper pages for hotel and things
 - [x] probably get people's hotel preference on the attendee form? And song requests
-- [ ] make the gallery page possible to load full-size images and download them in bulk
+- [x] make the gallery page possible to load full-size images and download them in bulk
 - [ ] change to centralized fonts
 - [ ] make it possible to show only some images for a given page using prefixes/metadata/a worker
-- [ ] make the gallery work with portrait mode photos
+- [x] make the gallery work with portrait mode photos
 - [x] figure out why the carosel is constantly re-loading photos and is kinda slow
-- [ ] make Cloudflare worker respond with the image metadata on image list
-- [ ] load images in pages so we don't overwhelm the server
+~~- [ ] make Cloudflare worker respond with the image metadata on image list~~
+- [x] load images in pages so we don't overwhelm the server
 
 ## Getting Started
 
