@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useCallback } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { motion } from "framer-motion";

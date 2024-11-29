@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import Modal from "./modal";
 import { ImageProps } from "./utils/types";
 
@@ -18,11 +17,11 @@ function loaderFactory(params: string[]) {
 }
 
 const gridCloudflareLoader = loaderFactory(['fit=crop', 'height=720', 'width=720']);
-const baseCloudflareLoader = loaderFactory(['width=720']);
+export const baseCloudflareLoader = loaderFactory(['width=720']);
 const navBarCloudflareLoader = loaderFactory(['width=240']);
 
 const portraitLoader = loaderFactory(['width=720']);
-const landscapeLoader = loaderFactory(['width=1024']);
+export const landscapeLoader = loaderFactory(['width=1024']);
 
 const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 

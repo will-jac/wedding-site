@@ -31,7 +31,7 @@ export default async function Main() {
       <Image
         src={banner}
         width={500}
-        alt="Picture of Hannah and Jack Kissing :)"
+        alt="Picture of Hannah and Jack"
         className="object-cover pb-10"
         priority
       />
