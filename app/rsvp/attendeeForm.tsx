@@ -161,7 +161,7 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
             }}
         >
             <FormControlLabel value="Hilton Downtown" control={<Radio />} label="Hilton Garden Inn Madison Downtown" />
-            <FormControlLabel value="Doubletree" control={<Radio />} label="Doubletree by Hilton" />
+            <FormControlLabel value="Doubletree" control={<Radio />} label="Doubletree by Hilton East Madison" />
             <FormControlLabel value="Other" control={<Radio />} label="I live in Madison or am getting my own lodging" />
         </RadioGroup>
 

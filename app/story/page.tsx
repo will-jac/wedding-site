@@ -5,7 +5,7 @@ import Story from "../components/story";
 
 export default function Travel() {
 
-    return <HomeLayout headerImageSrc="Hannah-Jack-ENG-AKP-6.17.24-59.jpg">
+    return <HomeLayout headerImageSrc="Hannah-Jack-ENG-AKP-6.17.24-196.jpg">
         <Story/>
     </HomeLayout>;
 }

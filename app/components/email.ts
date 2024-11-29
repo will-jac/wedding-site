@@ -69,6 +69,7 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         .map((a) => 
             a.first_name + ' ' + a.last_name + '; ' + 
             (a.diet ? 'diet: ' + a.diet + '; ' : '')  + 
+            (a.song ? 'song: ' + a.song + '; ' : '')  + 
             (a.is_attending ? 'attending' : 'not attending')
         )
         .join('</li><li>') + '</li>'
@@ -77,6 +78,7 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
         .map((a) => '* ' + 
             a.first_name + ' ' + a.last_name + '; ' + 
             (a.diet ? 'diet: ' + a.diet + '; ' : '')  + 
+            (a.song ? 'song: ' + a.song + '; ' : '')  + 
             (a.is_attending ? 'attending' : 'not attending')
         )
         .join('\n')
