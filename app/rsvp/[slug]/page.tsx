@@ -30,7 +30,10 @@ export default function RSVPPage({ params }: { params: { slug: string } }) {
                         <Button href="/faq">Next, check out the FAQ</Button>
                     </div>
                 </Stack>
-                : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} result={result} setResult={setResult} />
+                : <RsvpForm 
+                    attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} clearAttendeeGroup={null}
+                    result={result} setResult={setResult}
+                />
     }
 
     </HomeLayout>;

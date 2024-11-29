@@ -130,7 +130,9 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
     <ThemeProvider theme={ButtonTheme}>
     <div className="flex justify-between items-center py-5">
         <h1 className="text-2xl pt-2 text-[#879b88]">RSVP</h1>
-        <Button  variant='outlined' onClick={() => props.clearAttendeeGroup()}>Back</Button>
+        {props.clearAttendeeGroup ?? 
+            <Button  variant='outlined' onClick={() => props.clearAttendeeGroup()}>Back</Button>
+        }
     </div>
     <Stack spacing={1} className='py-5'>
         
