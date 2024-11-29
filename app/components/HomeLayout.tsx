@@ -2,6 +2,8 @@ import bg from "../../public/background2.png";
 import Title from './title';
 import Menu from './menu';
 import { Link } from "@mui/material";
+import Image from "next/image";
+import { landscapeLoader } from '../components/gallery/views';
 
 function Layout(props: {isGalleryWidth?: boolean, children: any}) {
     const width = props.isGalleryWidth 
@@ -30,8 +32,45 @@ function Background(props: any) {
     );
 }
 
+function HeaderImage(props: {src: string, width?: number, height?: number, loader?: any}) {
+    'use client';
+    return (
+        <div className="flex justify-center">
+            <Image
+                src={props.src}
+                width={props.width ?? 1024}
+                height={props.height ?? 720}
+                alt="Picture of Hannah and Jack"
+                className="object-cover"
+                loader={props.loader ?? landscapeLoader}
+            />
+        </div>
+    );
+}
 
-export default function HomeLayout(props: {noShowMenu?: boolean, isGalleryWidth?: boolean, children: any}) {
+function FooterImage() {
+    'use client';
+    return (
+        <div className="flex justify-center py-10">
+            <Image
+                src="Hannah-Jack-ENG-AKP-6.17.24-24.jpg"
+                width={720}
+                height={420}
+                alt="Picture of Hannah and Jack"
+                className="object-cover w-2/3"
+                loader={landscapeLoader}
+            />
+        </div>
+    );
+}
+
+
+export default function HomeLayout(props: {
+    noShowMenu?: boolean, 
+    isGalleryWidth?: boolean, noShowFooterImage?: boolean, 
+    headerImageSrc?: string, headerImageWidth?: number, headerImageHeight?: number, headerImageLoader?: any,
+    children: any
+}) {
 
     return <Background>
         <Layout isGalleryWidth={props.isGalleryWidth}>
@@ -41,9 +80,11 @@ export default function HomeLayout(props: {noShowMenu?: boolean, isGalleryWidth?
                 </Link>
             </div>
             {props.noShowMenu ? null : <Menu />}
-            <div className="px-5 pb-52">
+            <div className="px-5">
+                {props.headerImageSrc ? <HeaderImage src={props.headerImageSrc} width={props.headerImageWidth} height={props.headerImageHeight} loader={props.headerImageLoader} /> : null}
                 {props.children}
             </div>
+            {props.noShowFooterImage ? null : <FooterImage /> }
             <footer className="flex justify-end bg-[#879b88]" id="about">
                 <div className="mx-20 my-5">
                 <p>Made by Jack</p>

@@ -1,5 +1,7 @@
 'use server';
 import Image from "next/image";
+import { baseCloudflareLoader } from '../components/gallery/views';
+
 import banner from "../images/banner2.jpg";
 
 import HomeLayout from '../components/HomeLayout';
@@ -7,6 +9,13 @@ import HomeLayout from '../components/HomeLayout';
 export default async function Travel() {
 
     return <HomeLayout>
+        <Image
+            src="Hannah-Jack-ENG-AKP-6.17.24-196.jpg"
+            width={720}
+            alt="Picture of Hannah and Jack"
+            className="object-cover"
+            loader={baseCloudflareLoader}
+        />
         <div className="p-5 flex flex-col items-center justify-center">
             <Image
                 src={banner}
@@ -23,7 +32,7 @@ export default async function Travel() {
             <li><b>Hilton Garden Inn Madison Downtown</b> - 770 Regent St, Madison, WI 53715</li>
             <li>A hotel on the East side of Madison</li>
         </ul>
-        <p>The Hilton Garden in is downtown, perfect for exploring Madison and hanging out with others before the wedding. Unamed Hotel #2 is closer to the airport and the venue, and is a bit cheaper.</p>
+        <p>The Hilton Garden in is downtown, perfect for exploring Madison and hanging out with others before the wedding. The Doubletree is closer to the airport and the venue, and is a bit cheaper.</p>
         <p>We don't currently have bookable links--check back again soon! We'll also send you an email when we have it.</p>
         
         <h3 id="travel" className="pt-5 text-1xl font-extrabold text-[#879b88]">Getting to Madison</h3>

@@ -1,6 +1,6 @@
 'use client';
-import {isMobile} from 'react-device-detect';
-import {useEffect, useState} from "react";
+import { isMobile, useMobileOrientation } from 'react-device-detect';
+import { useEffect, useState } from "react";
 import { Suspense } from 'react'
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -13,22 +13,18 @@ import Modal from "../components/gallery/modal";
 import { ImageProps } from "../components/gallery/utils/types";
 
 function Photos() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  // const photoId = searchParams.get('photoId');
+  // const { isLandscape } = useMobileOrientation()
+  const isLandscape = false;
 
   const [images, setImages] = useState([] as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
-  const [prefix, setPrefix] = useState('');
+
   const [view, setView] = useState(isMobile ? 'gallery' : 'grid');
 
 
   function changePhotoId(newIndex: number) {
     if (newIndex < 0 || newIndex >= images.length) return;
     setIndex(newIndex);
-    // router.push(
-    //   `/photos?photoId=${images[newIndex]}`,
-    // );
   }
 
   function setPhotoId(id: string) {
@@ -37,7 +33,6 @@ function Photos() {
   }
 
   function onClose() {
-    // router.push("/photos");
     setIndex(null);
     console.log('closing');
   }
@@ -73,8 +68,11 @@ function Photos() {
           color="primary"
           value={view}
           exclusive
-          onChange={(_, x) => setView(x)}
-          aria-label="View type"
+          onChange={(_, x) => {
+            if (x !== null) {
+              setView(x)
+            }
+          }}
         >
           <ToggleButton value="grid">Grid</ToggleButton>
           <ToggleButton value="gallery">Gallery</ToggleButton>

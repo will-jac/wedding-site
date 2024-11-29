@@ -1,6 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react';
 
+import Image from 'next/image';
+import { landscapeLoader } from '../components/gallery/views';
+
 import HomeLayout from '../components/HomeLayout';
 import RsvpForm from './attendeeForm';
 import RsvpSearch from './attendeeSearch';
@@ -24,7 +27,12 @@ export default function RSVPPage() {
         }
     }, [attendeeGroup]);
 
-    return <HomeLayout>
+    function clearAttendeeGroup() {
+        setAttendeeGroup(null);
+        window.localStorage.removeItem('AttendeeGroup');
+    }
+
+    return <HomeLayout noShowFooterImage={true}>
     {result === 'success'
         ? <Stack spacing={2}>
             <p>Thank you for RSVP'ing!</p>
@@ -35,7 +43,17 @@ export default function RSVPPage() {
         </Stack>
         : attendeeGroup === null
             ? <RsvpSearch foundReservation={(ag: AttendeeGroup) => setAttendeeGroup(ag)}/>
-            : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} result={result} setResult={setResult} />
+            : <RsvpForm attendeeGroup={attendeeGroup} setAttendeeGroup={setAttendeeGroup} clearAttendeeGroup={clearAttendeeGroup} result={result} setResult={setResult} />
     }
+    <div className="flex justify-center py-10">
+        <Image
+            src="Hannah-Jack-ENG-AKP-6.17.24-6.jpg"
+            width={720}
+            height={1024}
+            alt="Picture of Hannah and Jack"
+            className="object-cover w-2/3"
+            loader={landscapeLoader}
+        />
+    </div>
     </HomeLayout>;
 }

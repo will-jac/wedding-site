@@ -70,7 +70,7 @@ export default function RsvpSearch(props: any) {
             ? <p>No matching name was found on the list. Please try again, or <a href="mailto:jackawilliams13@gmail.com">contact us.</a></p> 
             : <>
                 <Divider flexItem className='pb-5'/>
-                <p>Reservation found:</p>
+                <p>Found:</p>
                 <Stack spacing={1}>
                     {attendeeGroups.map((ag) => 
                         <div key={ag.id}>

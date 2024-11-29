@@ -105,7 +105,7 @@ function SubmitButton(props: {form: AttendeeGroup, setResult: any}) {
     </Button>
 }
 
-export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttendeeGroup: any, result: string, setResult: any}) {
+export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttendeeGroup: any, clearAttendeeGroup: any, result: string, setResult: any}) {
     const {attendeeGroup, setAttendeeGroup, result, setResult} = props;
     const {id, email, comment, hotel, shuttle, attendees} = attendeeGroup;
 
@@ -130,7 +130,7 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
     <ThemeProvider theme={ButtonTheme}>
     <div className="flex justify-between items-center py-5">
         <h1 className="text-2xl pt-2 text-[#879b88]">RSVP</h1>
-        <Button  variant='outlined' onClick={() => setAttendeeGroup(null)}>Back</Button>
+        <Button  variant='outlined' onClick={() => props.clearAttendeeGroup()}>Back</Button>
     </div>
     <Stack spacing={1} className='py-5'>
         
@@ -161,13 +161,13 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
             }}
         >
             <FormControlLabel value="Hilton Downtown" control={<Radio />} label="Hilton Garden Inn Madison Downtown" />
-            <FormControlLabel value="East Side" control={<Radio />} label="East side hotel" />
+            <FormControlLabel value="Doubletree" control={<Radio />} label="Doubletree by Hilton" />
             <FormControlLabel value="Other" control={<Radio />} label="I live in Madison or am getting my own lodging" />
         </RadioGroup>
 
         <Divider flexItem/>
 
-        <p>What are your plans for <Link href="/faq#shuttle">getting to and from the venue? We're likely going to have a shuttle running from the two hotels to the venue</Link></p>
+        <p>What are your plans for <Link href="/faq#shuttle">getting to and from the venue?</Link> We're likely going to have a shuttle running from the two hotels to the venue.</p>
         <RadioGroup 
             aria-label="shuttle" name="shuttle" value={shuttle}
             onChange={(e) => {

@@ -233,7 +233,7 @@ export default function SharedModal(props: SharedModalProps) {
         <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
           {loaded && <Buttons {...props} currentImage={currentImage} navigation={navigation}/>}
           {/* Bottom Nav bar */}
-          <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>
+          {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>}
         </div>
         <MainImage {...props} setLoaded={setLoaded} />
       </div>
