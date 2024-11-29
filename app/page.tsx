@@ -1,4 +1,4 @@
-'use server';
+'use client';
 import Image from "next/image";
 import banner from "./images/banner.jpg";
 
@@ -24,7 +24,7 @@ function RSVPButton(props: any) {
 }
 
 
-export default async function Main() {
+export default function Main() {
   return <div>
   <HomeLayout>
     <div className="p-5 flex flex-col items-center justify-center">

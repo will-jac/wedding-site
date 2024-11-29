@@ -1,37 +1,22 @@
-'use server';
-import Image from "next/image";
-import { baseCloudflareLoader } from '../components/gallery/views';
-
-import banner from "../images/banner2.jpg";
-
+'use client';
 import HomeLayout from '../components/HomeLayout';
 
-export default async function Travel() {
+export default function Travel() {
 
-    return <HomeLayout>
-        <Image
-            src="Hannah-Jack-ENG-AKP-6.17.24-196.jpg"
-            width={720}
-            alt="Picture of Hannah and Jack"
-            className="object-cover"
-            loader={baseCloudflareLoader}
-        />
-        <div className="p-5 flex flex-col items-center justify-center">
-            <Image
-                src={banner}
-                width={500}
-                alt="Picture of Hannah and Jack Kissing :)"
-                className="object-cover pb-10"
-                priority
-            />
-        </div>
-        <h2 className="text-2xl font-extrabold text-[#879b88]">Travel</h2>
+    return <HomeLayout headerImageSrc="Hannah-Jack-ENG-AKP-6.17.24-144.jpg">
+
+        <h2 className="pt-5 text-2xl font-extrabold text-[#879b88]">Travel</h2>
         <h3 id="lodging" className="pt-5 text-1xl font-extrabold text-[#879b88]">Lodging</h3>
         <p>We have booked a block of rooms at two hotels:</p>
-        <ul>
-            <li><b>Hilton Garden Inn Madison Downtown</b> - 770 Regent St, Madison, WI 53715</li>
-            <li>A hotel on the East side of Madison</li>
-        </ul>
+        <a href="https://www.hilton.com/en/hotels/msnmugi-hilton-garden-inn-madison-downtown/">
+            <p><b>Hilton Garden Inn Madison Downtown</b></p>
+        </a>
+        <p className="indent-8">770 Regent St, Madison, WI</p>
+        <a href="https://www.hilton.com/en/hotels/msnmadt-doubletree-madison-east/">
+            <p><b>Doubletree by Hilton East Madison</b></p>
+        </a>
+        <p className="indent-8">4402 E Washington Ave, Madison, WI</p>
+        
         <p>The Hilton Garden in is downtown, perfect for exploring Madison and hanging out with others before the wedding. The Doubletree is closer to the airport and the venue, and is a bit cheaper.</p>
         <p>We don't currently have bookable links--check back again soon! We'll also send you an email when we have it.</p>
         
