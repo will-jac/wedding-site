@@ -24,6 +24,7 @@ export default function RsvpSearch(props: any) {
             return;
         }
         setSearchStatus('done');
+        console.log({'attendeeGroups': ag});
         setAttendeeGroups(ag);
     }
 
@@ -31,7 +32,11 @@ export default function RsvpSearch(props: any) {
     <ThemeProvider theme={ButtonTheme}>
 
         {process.env.NODE_ENV === 'production' ? null 
-            : <Button onClick={() => uploadAttendeesFromFile()}>
+            : <Button onClick={() => {
+                if (window.confirm('warning: will overwrite. are you sure?')) {
+                    uploadAttendeesFromFile();
+                }
+            }}>
                 Upload Attendees to Database (WARNING WILL OVERWRITE)
             </Button>
         }

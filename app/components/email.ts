@@ -7,11 +7,11 @@ import { SESClient } from "@aws-sdk/client-ses";
 const email_html = `<div dir="ltr">Congratulations __name__, you've successfully RSVP'd!!
 <br><br>We can't wait to see you at our wedding. In the meantime:<br>
 <ul>
-<li><a href="http://jackhannahwedding.com/travel" target="_blank">
+<li><a href="http://hannahjackwedding.com/travel" target="_blank">
     Book your hotel</a></li>
-<li><a href="http://jackhannahwedding.com/travel#madison" target="_blank">
+<li><a href="http://hannahjackwedding.com/travel#madison" target="_blank">
     Check out things to do in Madison</a></li>
-<li><a href="http://jackhannahwedding.com/registry" target="_blank">
+<li><a href="http://hannahjackwedding.com/registry" target="_blank">
     Browse our registry</a></li>
 </ul>
 <br><br>Here's a copy of your RSVP for your reference:<br>
@@ -20,7 +20,7 @@ const email_html = `<div dir="ltr">Congratulations __name__, you've successfully
 <br>Lodging: __hotel__<br>
 <br>Shuttle: __shuttle__<br>
 <br>Comment: __comment__<br>
-<br><br>Need to make a change? Just <a href="http://jackhannahwedding.com/rsvp/__rsvpId__" target="_blank">RSVP again</a>.
+<br><br>Need to make a change? Just <a href="http://hannahjackwedding.com/rsvp/__rsvpId__" target="_blank">RSVP again</a>.
 <br>See you soon!<br>
 <div>- Hannah and Jack</div>
 <div><br></div>
@@ -42,7 +42,7 @@ Lodging: __hotel__
 Shuttle: __shuttle__
 Comment: __comment__
 
-Need to make a change? Just RSVP again at http://jackhannahwedding.com/rsvp/__rsvpId__
+Need to make a change? Just RSVP again at http://hannahjackwedding.com/rsvp/__rsvpId__
 
 See you soon!
 -Hannah and Jack
@@ -55,10 +55,10 @@ Unsubscribe`;
 // Create SES service object.
 const sesClient = new SESClient({});
 
-const fromAddress = "noreply@jackwilliams.dev";
-const bccAddresses = [
+const fromAddress = "noreply@hannahjackwedding.com";
+const ccAddresses = [
     "jackawilliams13@gmail.com",
-    // "hannah.nc.10@gmail.com"
+    "hannah.nc.10@gmail.com"
 ];
 
 
@@ -99,8 +99,7 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
 
     let command = new SendEmailCommand({
         Destination: {
-            BccAddresses: bccAddresses,
-            CcAddresses: [fromAddress],
+            CcAddresses: ccAddresses,
             ToAddresses: [attendeeGroup.email],
         },
         Message: {
