@@ -2,6 +2,7 @@
 import { kv } from "@vercel/kv";
 import { writeFileSync } from "fs";
 import { sendEmail } from './email';
+import { hash } from "crypto";
 
 
 export interface Attendee {
@@ -14,7 +15,7 @@ export interface Attendee {
   is_plus_one: boolean | null
 }
 export interface AttendeeGroup {
-  id: number,
+  id: string,
   attendees: Attendee[],
   email: string,
   comment: string,
@@ -26,7 +27,7 @@ export interface AttendeeGroup {
 interface AttendeeMapEntry {
   first_name: string,
   last_name: string,
-  groupId: number
+  groupId: string
 }
 
 async function getAttendeeMap() {
@@ -34,12 +35,13 @@ async function getAttendeeMap() {
 }
 
 async function buildAttendeeMap() {
+  console.log('building attendee map')
   let key_cursor = "0";
   let attendeeGroups = [] as AttendeeGroup[];
   
   while (true) {
     const resp = await kv.scan(key_cursor, {match: "attendees:*", count: 1000});
-    console.log('found:', resp);
+    // console.log('found:', resp);
     key_cursor = resp[0]; // probably won't need to iterate but you never know
     // technically should stop the search after we find a hit but I'm not optimizing this yet
     attendeeGroups = attendeeGroups.concat(await Promise.all(
@@ -121,7 +123,7 @@ export async function getAttendees(first_name: string, last_name: string, passwo
   let attendeeGroups = [] as AttendeeGroup[];
 
   const am = await getAttendeeMap();
-  console.log('fetched attendee map', am);
+  console.log('fetched attendee map');
   const matches = am.filter(a => 
     a.first_name.startsWith(first_name) && a.last_name.startsWith(last_name)
   );
@@ -139,15 +141,16 @@ export async function getAttendees(first_name: string, last_name: string, passwo
   let key_cursor = "0";
   
   while (true) {
+    console.log('really searching')
     // technically this could have 
     const resp = await kv.scan(key_cursor, {match: "attendees:*", count: 1000});
-    console.log('found:', resp);
+    // console.log('found:', resp);
     key_cursor = resp[0]; // probably won't need to iterate but you never know
     // technically should stop the search after we find a hit but I'm not optimizing this yet
     attendeeGroups = attendeeGroups.concat(await Promise.all(
       resp[1].map(async (k) => await kv.get(k) as AttendeeGroup)
     ));
-    console.log('attendeeGroups:', attendeeGroups.map((ag) => ag.attendees.map((a) => a.first_name + ' ' + a.last_name)));
+    // console.log('attendeeGroups:', attendeeGroups.map((ag) => ag.attendees.map((a) => a.first_name + ' ' + a.last_name)));
     // find the matching attendee group, if one exists
     const matching_ags = attendeeGroups.filter((ag) => 
       ag.attendees.some((a) => 
@@ -156,11 +159,12 @@ export async function getAttendees(first_name: string, last_name: string, passwo
     );
 
     if (matching_ags.length > 0) {
+      console.log('returning found search match')
       return matching_ags;
     }
     if (key_cursor === "0") {
       if (first_name === process.env.ADMIN_PASSWORD) {
-        console.log(attendeeGroups);
+        console.log('admin!')
         return attendeeGroups;
       }
       // full loop
@@ -182,7 +186,7 @@ async function readAttendeeGroupsFromFile() {
       i += 1;
       return {
         ...ag,
-        id: i,
+        id: ag.id ?? hash("sha1", String(j)),
         attendees: ag.attendees.map((a) => {
           j += 1;
           return {
@@ -206,17 +210,45 @@ async function uploadAttendee(ag: AttendeeGroup) {
   updateAttendeeMap(ag);
 }
 
+async function clearAttendees() {  
+  console.log('clearing...');
+  await kv.del('attendeeMap');
+  await kv.del('attendeeMap:lock');
+  await kv.del('attendeeMap:dirty');
+  let key_cursor = "0";
+    
+  const resp = await kv.scan(key_cursor, {match: "attendees:*", count: 1000});
+  console.log('found:', resp);
+  key_cursor = resp[0]; // probably won't need to iterate but you never know
+  if (key_cursor !== "0") {
+    throw Error('uh oh, did not fully delete everything');
+  }
+  // technically should stop the search after we find a hit but I'm not optimizing this yet
+  return Promise.all(
+    resp[1].map(async (k) => {
+      console.log('del', k)
+      let res = await kv.del(k);
+      if (res != 1) {
+        console.log(res, k);
+      }
+    })
+  );
+}
+
 async function uploadAttendees(attendeeGroups: AttendeeGroup[]) {  
   console.log('uploading: ', JSON.stringify(attendeeGroups));
   attendeeGroups.map((ag) => kv.set(`attendees:${ag.id}`, JSON.stringify(ag)));
   const am = await buildAttendeeMap();
-  console.log('am:', am);
+  console.log('build attendeemap:');
+  // console.log('am:', am);
   kv.set('attendeeMap', am);
   kv.set('attendeeMap:lock', 0);
   kv.set('attendeeMap:dirty', 0);
 }
 
 export async function uploadAttendeesFromFile() {
+  await clearAttendees();
+  console.log('uploading...')
   uploadAttendees(await readAttendeeGroupsFromFile());
 }
 
