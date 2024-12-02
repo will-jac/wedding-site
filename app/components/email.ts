@@ -55,7 +55,8 @@ Unsubscribe`;
 // Create SES service object.
 const sesClient = new SESClient({});
 
-const fromAddress = "noreply@hannahjackwedding.com";
+// const fromAddress = "noreply@hannahjackwedding.com";
+const fromAddress = "noreply@jackwilliams.dev";
 const ccAddresses = [
     "jackawilliams13@gmail.com",
     "hannah.nc.10@gmail.com"
