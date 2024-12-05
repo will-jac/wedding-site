@@ -107,7 +107,7 @@ function SubmitButton(props: {form: AttendeeGroup, setResult: any}) {
 
 export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttendeeGroup: any, clearAttendeeGroup: any, result: string, setResult: any}) {
     const {attendeeGroup, setAttendeeGroup, result, setResult} = props;
-    const {id, email, comment, hotel, shuttle, attendees} = attendeeGroup;
+    const {id, email, comment, hotel, shuttle, party, attendees} = attendeeGroup;
 
 
     function updateAttendee(id: number) {
@@ -181,6 +181,18 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
             <FormControlLabel value="Car" control={<Radio />} label="I'll drive myself or get a ride from someone" />
         </RadioGroup>
 
+        <p>Are you planning on coming to the <Link href="/#schedule">welcome party on Saturday?</Link></p>
+        <RadioGroup 
+            aria-label="party" name="party" value={party}
+            onChange={(e) => {
+                setAttendeeGroup({...attendeeGroup, party: e.target.value});
+            }}
+        >
+            <FormControlLabel value="yes" control={<Radio />} label="Yes!" />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
+        </RadioGroup>
+
+
         <Divider flexItem/>
 
         <p>Feel free to leave us a nice comment (or tell us that something isn't working!)</p>
@@ -197,6 +209,7 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
                 comment: comment,
                 hotel: hotel,
                 shuttle: shuttle,
+                party: party,
                 num_attendees: attendees.length
             }}
             setResult={setResult}

@@ -21,6 +21,7 @@ export interface AttendeeGroup {
   comment: string,
   hotel: string,
   shuttle: string,
+  party: string,
   num_attendees: number
 }
 
