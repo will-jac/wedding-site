@@ -143,7 +143,7 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
             onChange={(e) => setAttendeeGroup({...attendeeGroup, email: e.target.value})}
         />
 
-        <p>Now, for each attendee, please fill out their name and dietary preferrences (or leave blank if you have none), and let us know if they'll be attending:</p>
+        <p>Now, for each attendee, please fill out their name and dietary preferences (or leave blank if you have none), and let us know if they'll be attending:</p>
         <Divider flexItem className='pb-5'/>
         {attendees.map((a) => {
             return <AttendeeForm
