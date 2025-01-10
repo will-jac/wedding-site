@@ -16,7 +16,7 @@ function loaderFactory(params: string[]) {
   }
 }
 
-const gridCloudflareLoader = loaderFactory(['fit=crop', 'height=720', 'width=720']);
+export const gridCloudflareLoader = loaderFactory(['fit=crop', 'height=720', 'width=720']);
 export const baseCloudflareLoader = loaderFactory(['width=720']);
 const navBarCloudflareLoader = loaderFactory(['width=240']);
 
@@ -51,7 +51,7 @@ function ImageComponent(props: { image: ImageProps, imageLoader: any, quality?: 
       style={{ transform: "translate3d(0, 0, 0)" }}
       width={720}
       height={480}
-      quality={props.quality ?? 75}
+      quality={props.quality ?? 50}
       sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
       alt={"An engagement photo of Jack and Hannah"}
       loader={props.imageLoader}
@@ -96,4 +96,19 @@ export function CaroselView(props: {
     navBarLoader={navBarCloudflareLoader}
     navigation={props.navigation}
   />
+}
+
+export function CaptionView(props: {
+  images: ImageProps[]
+}) {
+  return <div className="mx-auto max-w-[1960px] p-4">
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+
+    {props.images.map((image, index) => (
+      <div key={index}>
+        <ImageComponent  image={image} imageLoader={baseCloudflareLoader} setPhotoId={() => {}}/>
+        {image.caption}
+      </div>
+    ))}
+  </div></div>
 }

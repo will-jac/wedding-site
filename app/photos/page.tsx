@@ -40,6 +40,7 @@ function Photos() {
   // TODO: cache the image list in the cookies or somehow tell the network not to fetch it again
   useEffect(() => {
     getImages().then((images) => {
+      // console.log(images);
       setImages(images);
     });
   }, []);
@@ -54,41 +55,41 @@ function Photos() {
   // TODO: let people like photos and have that affect the sorting?
 
   return <HomeLayout isGalleryWidth={true}>
-      <div className="flex justify-between items-center py-5">
-        <h1>Click on a photo to open it in a higher resolution</h1>
-        
-        {process.env.NODE_ENV === 'production' ? null 
-            : <Button onClick={() => {
-              getImagesFromCloudflare('photos').then((images) => setImages(images));
-            }}>
-                Refresh Image List
-            </Button>
-        }
-        <ToggleButtonGroup
-          color="primary"
-          value={view}
-          exclusive
-          onChange={(_, x) => {
-            if (x !== null) {
-              setView(x)
-            }
-          }}
-        >
-          <ToggleButton value="grid">Grid</ToggleButton>
-          <ToggleButton value="gallery">Gallery</ToggleButton>
-        </ToggleButtonGroup>
-      </div>
-
-      {view === 'grid' &&     <GridView images={images} setPhotoId={setPhotoId} />}
-      {view === 'gallery' &&  <GalleryView images={images} setPhotoId={setPhotoId} />}
-      {index != null && <CaroselView 
-        images={images} 
-        index={index} 
-        setIndex={changePhotoId} onClose={onClose}
-        navigation={!isMobile}
-      />}
+    <div className="flex justify-between items-center py-5">
+      <h1>Click on a photo to open it in a higher resolution</h1>
       
-    </HomeLayout>
+      {process.env.NODE_ENV === 'production' ? null 
+          : <Button onClick={() => {
+            getImagesFromCloudflare('photos').then((images) => setImages(images));
+          }}>
+              Refresh Image List
+          </Button>
+      }
+      <ToggleButtonGroup
+        color="primary"
+        value={view}
+        exclusive
+        onChange={(_, x) => {
+          if (x !== null) {
+            setView(x)
+          }
+        }}
+      >
+        <ToggleButton value="grid">Grid</ToggleButton>
+        <ToggleButton value="gallery">Gallery</ToggleButton>
+      </ToggleButtonGroup>
+    </div>
+
+    {view === 'grid' &&     <GridView images={images} setPhotoId={setPhotoId} />}
+    {view === 'gallery' &&  <GalleryView images={images} setPhotoId={setPhotoId} />}
+    {index != null && <CaroselView 
+      images={images} 
+      index={index} 
+      setIndex={changePhotoId} onClose={onClose}
+      navigation={!isMobile}
+    />}
+      
+  </HomeLayout>
 }
 
 // todo: wrap this in a more inner scope

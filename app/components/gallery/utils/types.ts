@@ -2,6 +2,7 @@
 export interface ImageProps {
     key: string;
     portrait: boolean;
+    caption?: any
     // public_id: string;
     // format: string;
     // blurDataUrl: string;

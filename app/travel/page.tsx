@@ -1,4 +1,5 @@
 'use client';
+import { Link } from '@mui/material';
 import HomeLayout from '../components/HomeLayout';
 
 export default function Travel() {
@@ -9,7 +10,9 @@ export default function Travel() {
         <h3 id="lodging" className="pt-5 text-1xl font-extrabold text-[#879b88]">Lodging</h3>
         <p>We have booked a block of rooms at two hotels:</p>
         <a href="https://www.hilton.com/en/hotels/msnmugi-hilton-garden-inn-madison-downtown/">
-            <p><b>Hilton Garden Inn Madison Downtown</b></p>
+            <p><b>Hilton Garden Inn Madison Downtown</b>— 
+            <Link href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=MSNMUGI&groupCode=90L&arrivaldate=2025-05-31&departuredate=2025-06-02&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT">Booking Link</Link>
+            </p>
         </a>
         <p className="indent-8">770 Regent St, Madison, WI</p>
         <a href="https://www.hilton.com/en/hotels/msnmadt-doubletree-madison-east/">
@@ -18,10 +21,10 @@ export default function Travel() {
         <p className="indent-8">4402 E Washington Ave, Madison, WI</p>
         
         <p>The Hilton Garden in is downtown, perfect for exploring Madison and hanging out with others before the wedding. The Doubletree is closer to the airport and the venue, and is a bit cheaper.</p>
-        <p>We don't currently have bookable links--check back again soon! We'll also send you an email when we have it.</p>
+        <p>We don't currently have bookable links—check back again soon! We'll also send you an email when we have it.</p>
         
         <h3 id="travel" className="pt-5 text-1xl font-extrabold text-[#879b88]">Getting to Madison</h3>
-        <p>We recommend flying into the Madison airport (MSN). It can sometimes be cheaper to fly into Chicago, Rockford, or Milwaukee and rent a car from there or take a bus to Madison--if you do, the bus runs of a regular schedule and tickets are valid for 1 year after purchase, so don't worry if you get delayed and have to take a later bus. The bus drops off in downtown Madison, so you'll need to take a taxi or rideshare to your hotel from there.
+        <p>We recommend flying into the Madison airport (MSN). It can sometimes be cheaper to fly into Chicago, Rockford, or Milwaukee and rent a car from there or take a bus to Madison—if you do, the bus runs of a regular schedule and tickets are valid for 1 year after purchase, so don't worry if you get delayed and have to take a later bus. The bus drops off in downtown Madison, so you'll need to take a taxi or rideshare to your hotel from there.
         </p>
         
         <h3 id="madison" className="pt-5 text-1xl font-extrabold text-[#879b88]">Things to do in Madison</h3>
