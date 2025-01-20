@@ -30,31 +30,30 @@ export default function Travel() {
         <h3 id="madison" className="pt-5 text-1xl font-extrabold text-[#879b88]">Things to do in Madison</h3>
         <p>Some of our favorite things to do in Madison:</p>
         <ul className="list-disc pl-5">
-            <li>Visit the Wisconsin State Capitol</li>
-            <li>Explore the University of Wisconsin-Madison Campus--the Memorial Union Terrace has free live music on the lake most days!</li>
-            <li>Go to the Olbrich Botanical Gardens</li>
-            <li>Get a beer and enjoy the lake at the Olbrich Biergarten</li>
-            <li>Check out the Madison Museum of Contemporary Art</li>
+            <li>Visit the <Link href="https://legis.wisconsin.gov/about/visit">Wisconsin State Capitol</Link></li>
+            <li>Explore the University of Wisconsin-Madison Campus--the <Link href="https://union.wisc.edu/visit/terrace-at-the-memorial-union/">Memorial Union Terrace</Link> has free live music on the lake most days!</li>
+            <li>Go to the <Link href="https://www.olbrich.org/">Olbrich Botanical Gardens</Link></li>
+            <li>Get a beer and enjoy the lake at the <Link href="https://www.olbrichbiergarten.com/">Olbrich Biergarten</Link></li>
+            <li>Check out the <Link href="https://chazen.wisc.edu/">Chazen Museum of Art</Link></li>
             <li>Walk or bike around Lake Monona</li>
-            <li>Visit the Henry Vilas Zoo (free!)</li>
-            <li>Go to the Dane County Farmers' Market on Saturday morning, on the Capital square. It's the biggest producure-only farmer's market in the nation!</li>
-            <li>Enjoy the UW Arboretum (it's where we had our first date in Madison!)</li>
-            <li>Visit the Chazen Museum of Art</li>
+            <li>Visit the <Link href="https://www.henryvilaszoo.gov/">Henry Vilas Zoo</Link> (free!)</li>
+            <li>Go to the <Link href="https://dcfm.org/">Dane County Farmers' Market</Link> on Saturday morning, on the Capital square. It's the biggest producure-only farmer's market in the nation!</li>
+            <li>Enjoy the <Link href="https://uwarboretum.org/">UW Arboretum</Link> (it's where we had our first date in Madison!)</li>
+            <li>Visit the <Link href="https://www.mmoca.org/">Madison Museum of Contemporary Art</Link></li>
             <li>Take a brewery tour</li>
         </ul>
 
         <h3 id="food" className="pt-5 text-1xl font-extrabold text-[#879b88]">Some of our favorite restaurants</h3>
         <ul className="list-disc pl-5">
-            <li>Fabiolas</li>
-            <li>Everly</li>
-            <li>Graze</li>
-            <li>Bar Corallini</li>
-            <li>Green Owl</li>
-            <li>Maharani</li>
-            <li>Ian's Pizza</li>
-            <li>Ahan</li>
-            <li>Ha Long Bay</li>
-            <li>Sardine</li>
+            <li><Link href="https://www.fabiolasmadison.com/">Fabiolas</Link></li>
+            <li><Link href="https://www.everlymadison.com/">Everly</Link></li>
+            <li><Link href="https://www.grazemadison.com/">Graze</Link></li>
+            <li><Link href="https://www.barcorallini.com/">Bar Corallini</Link></li>
+            <li><Link href="https://greenowlcafe.com/">Green Owl</Link></li>
+            <li><Link href="https://ordermaharani.com/">Maharani</Link></li>
+            <li><Link href="https://ianspizza.com/">Ian's Pizza</Link></li>
+            <li><Link href="https://ahanmadison.com/">Ahan</Link></li>
+            <li><Link href="http://sardinemadison.com/">Sardine</Link></li>
         </ul>
         
         
