@@ -15,7 +15,7 @@ interface Person {
 
 const brideppl: Person[] = [
     { 
-        key: "Emily-crop.png", portrait: true,
+        key: "Emily-crop.PNG", portrait: true,
         fname: "Emily", lname: "Curtis",
         bio: "Emily is currently living in Seattle, WA and working as a Scrum Master (kind of like a technical project manager) for Sports Reference - an online sports data company!",
         memory: "As Hannah's older sister Emily has millions of sweet memories, from creating their own secret written language, to tons of summer nights spent playing outside together (with Maggie, too!) More recently, one of her favorite memories with both Han and Jack was when they visited Nafis and Emily in Seattle. On a bus ride home Jack suggested the four of us share what they love about each other - and there was a lot to share!"
