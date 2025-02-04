@@ -156,7 +156,7 @@ export default function RsvpForm(props: {attendeeGroup: AttendeeGroup, setAttend
         {/* <AddAttendeeButton attendees={attendees} setAttendees={(a: Attendee[]) => setAttendeeGroup({...attendeeGroup, attendees:a})}/> */}
 
         <p>What are your plans for <Link href="/faq#lodging">lodging?</Link></p>
-        <p>Note that we don't have booking links for the Doubletree yet-we will email you when we do!</p>
+        <p>(we'll email you the booking link)</p>
         <RadioGroup 
             aria-label="hotel" name="hotel" value={hotel}
             onChange={(e) => {

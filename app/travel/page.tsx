@@ -16,7 +16,9 @@ export default function Travel() {
         </a>
         <p className="indent-8">770 Regent St, Madison, WI</p>
         <a href="https://www.hilton.com/en/hotels/msnmadt-doubletree-madison-east/">
-            <p><b>Doubletree by Hilton East Madison</b></p>
+            <p><b>Doubletree by Hilton East Madison</b>— 
+            <Link href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=MSNMADT&groupCode=CDT90J&arrivaldate=2025-05-31&departuredate=2025-06-02&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT">Booking Link</Link>
+            </p>
         </a>
         <p className="indent-8">4402 E Washington Ave, Madison, WI</p>
         
