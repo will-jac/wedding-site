@@ -74,7 +74,7 @@ const groomppl: Person[] = [
         key: "Clark-crop.jpg", portrait: true,
         fname: "Clark", lname: "Barrus",
         bio: "Clark Barrus is an OU grad and software developer in Madison, Wisconsin. He enjoys petting cats, playing D&D, and cooking on camping trips. He met and got to know Jack as an intern at Epic during their weekly intern potlucks and while playing volleyball. After carpooling back to OU together, He got to meet Hannah and work with Jack on classes and projects throughout the rest of the year. It was a lucky start to a long friendship that has gotten to span states.",
-        memory: "A Fun memory with Jack is a tie between the many wonderful events Jack and Hannah have put on—whether they were board game nights, a hot ones contest, or taste tests between the worst beers we could get our hands on.",
+        memory: "A fun memory with Jack is all of the many wonderful events Jack and Hannah have put on—whether they were board game nights, a hot ones contest, or taste tests between the worst beers we could get our hands on.",
     },
     { 
         key: "Sadie-crop.jpg", portrait: true,
