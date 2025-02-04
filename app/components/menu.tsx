@@ -20,6 +20,7 @@ export default function Menu() {
       <ThemeProvider theme={ButtonTheme}>
         <Button href="photos">Photos</Button>
         <Button href="travel">Travel</Button>
+        <Button href="wedding-party">Wedding Party</Button>
       </ThemeProvider>
     </Stack>
   </Stack>

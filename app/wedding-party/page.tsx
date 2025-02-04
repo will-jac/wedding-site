@@ -47,39 +47,39 @@ const brideppl: Person[] = [
 ];
 const groomppl: Person[] = [
     { 
-        key: "HJ-Sneak-2.jpg", portrait: true,
+        key: "Henry.jpg", portrait: true,
         fname: "Henry", lname: "Williams",
-        bio: "",
-        memory: ""
+        bio: "Henry is a PhD student studying solar energy and agriculture at Cornell University in Ithaca, New York. He runs a startup company in his spare time is a passionate hobby jogger in his spare spare time. He is Jack's twin brother.",
+        memory: "I was visiting Jack and Hannah in Madison when Jack and I teamed up in an impromptu debate against the local dinosaur deniers at the farmers’ market. I think we lost. But only time will tell.",
     },
     { 
-        key: "HJ-Sneak-2.jpg", portrait: true,
+        key: "Max.jpg", portrait: true,
         fname: "Max", lname: "Williams",
-        bio: "",
-        memory: ""
+        bio: "Ben is a senior at the University of Kansas studying Civil Engineering. He is Jack’s youngest brother",
+        memory: "Max loved visitng Jack and Hannah in Madison two summers ago, and playing disc golf with Jack!"
     },
     { 
-        key: "HJ-Sneak-2.jpg", portrait: true,
+        key: "Ben.jpg", portrait: true,
         fname: "Ben", lname: "Curtis",
-        bio: "",
-        memory: ""
+        bio: "Ben is a student at UCO in Edmond, Oklahoma. He is majoring in music education and plays trombone in various jazz bands, as well as teaching private lessons. As Hannah's younger brother, he has known her his whole life, and is excited to welcome Jack as a brother-in-law.",
+        memory: "A fun memory he has with Jack is calling him by the wrong name (Andrew) from the first time they met through the first several months they knew each other. Since learning Jack's name, he has bonded with him over video games and disc golf]"
     },
     { 
-        key: "nafis.png", portrait: true,
+        key: "Nafis.png", portrait: true,
         fname: "Nafis", lname: "Zaman",
         bio: "Nafis works as a software engineer at Microsoft. He lives in Seattle with his wife, Emily, and their dog, Norman. Nafis is married to the maid of honor, Emily, and is Hannah’s brother-in-law. They’ve been married since Hannah and Jack started dating, so he already feels like a brother to Jack too!",
         memory: "His fun memory is hiking with Jack and Hannah at Glacier National Park after the rental car broke down, where they hiked to all the waterfalls and then got soaked in the giant one at the end 🙂"
     },
     { 
-        key: "HJ-Sneak-2.jpg", portrait: true,
+        key: "Clark.jpg", portrait: true,
         fname: "Clark", lname: "Barrus",
-        bio: "",
-        memory: ""
+        bio: "Clark Barrus is an OU grad and software developer in Madison, Wisconsin. He enjoys petting cats, playing D&D, and cooking on camping trips. He met and got to know Jack as an intern at Epic during their weekly intern potlucks and while playing volleyball. After carpooling back to OU together, He got to meet Hannah and work with Jack on classes and projects throughout the rest of the year. It was a lucky start to a long friendship that has gotten to span states.",
+        memory: "A Fun memory with Jack is a tie between the many wonderful events Jack and Hannah have put on—whether they were board game nights, a hot ones contest, or taste tests between the worst beers we could get our hands on.",
     },
     { 
-        key: "HJ-Sneak-2.jpg", portrait: true,
+        key: "Sadie.jpg", portrait: true,
         fname: "Sadie", lname: "Garber",
-        bio: "Sadie is a software dev in Madison. They like birdwatching, bouldering, and playing with Pesto and Moka (Hannah and Jack's cats)",
+        bio: "Sadie is a software dev in Madison. They like birdwatching, bouldering, and playing with Pesto and Moka (Hannah and Jack's cats). They met Jack when they were interns together at Epic.",
         memory: "I moved to a very cycling-focused city in my twenties without knowing how to ride a bike. Jack very patiently spent a week teaching me how to go downhill without screaming, and Jack and Hannah joined me on my first ride through the city after getting a bike - the first of many lovely rides with them!"
     },
 ];
