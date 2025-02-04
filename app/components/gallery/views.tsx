@@ -102,7 +102,7 @@ export function CaptionView(props: {
   images: ImageProps[]
 }) {
   return <div className="mx-auto max-w-[1960px] p-4">
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
 
     {props.images.map((image, index) => (
       <div key={index}>
