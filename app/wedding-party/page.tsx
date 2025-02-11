@@ -89,8 +89,8 @@ export default function Travel() {
     const b: ImageProps[] = brideppl.map(p => {
         return {
             caption: <div>
-                <b>{p.fname} {p.lname}</b><i><i/>
-                <p>{p.bio}</p>
+                <b>{p.fname} {p.lname}</b><i>{p.title}</i>
+                <p>{p.bio}</p><br/>
                 <p>{p.memory}</p>
             </div>, 
             ...p
@@ -98,7 +98,11 @@ export default function Travel() {
     });
     const g: ImageProps[] = groomppl.map(p => {
         return {
-            caption: <div><b>{p.fname} {p.lname}</b><p>{p.bio}</p><p>{p.memory}</p></div>, 
+            caption: <div>
+                <b>{p.fname} {p.lname}</b><i>{p.title}</i>
+                <p>{p.bio}</p><br/>
+                <p>{p.memory}</p>
+            </div>, 
             ...p
         } as ImageProps;
     });
