@@ -90,7 +90,7 @@ export default function Travel() {
         return {
             caption: <div>
                 <b>{p.fname} {p.lname}</b><i>{p.title}</i>
-                <p>{p.bio}</p>
+                <p>{p.bio}</p><br/>
                 <p>{p.memory}</p>
             </div>, 
             ...p
@@ -100,7 +100,7 @@ export default function Travel() {
         return {
             caption: <div>
                 <b>{p.fname} {p.lname}</b><i>{p.title}</i>
-                <p>{p.bio}</p>
+                <p>{p.bio}</p><br/>
                 <p>{p.memory}</p>
             </div>, 
             ...p
