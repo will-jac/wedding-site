@@ -12,7 +12,7 @@ export default function FAQ() {
 <div className="px-5">
     
 <Question id="rsvp-deadline" question="What is the deadline to RSVP?">
-    <p>Please do so by March 15!</p>
+    <p>Please do so by April 1st!</p>
 </Question>
 <Question id="plus-one" question="Can I bring a date?">
     <p>We'll only be able to accommodate those who were directly invited. If there are any concerns or questions, please reach out to us.</p>
