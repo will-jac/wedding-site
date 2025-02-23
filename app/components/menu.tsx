@@ -14,6 +14,7 @@ export default function Menu() {
         <Button href="rsvp">RSVP</Button>
         <Button href="story">Story</Button>
         <Button href="faq">FAQ</Button>
+        <Button href="registry">Registry</Button>
       </ThemeProvider>
     </Stack>
     <Stack className="justify-center" direction="row" spacing={0}>

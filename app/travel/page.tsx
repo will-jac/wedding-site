@@ -4,23 +4,20 @@ import HomeLayout from '../components/HomeLayout';
 
 export default function Travel() {
 
-    return <HomeLayout headerImageSrc="Hannah-Jack-ENG-AKP-6.17.24-144.jpg">
+    return <HomeLayout>
 
         <h2 className="pt-5 text-2xl font-extrabold text-[#879b88]">Travel</h2>
         <h3 id="lodging" className="pt-5 text-1xl font-extrabold text-[#879b88]">Lodging</h3>
         <p>We have booked a block of rooms at two hotels:</p>
-        <a href="https://www.hilton.com/en/hotels/msnmugi-hilton-garden-inn-madison-downtown/">
-            <p><b>Hilton Garden Inn Madison Downtown</b>— 
-            <Link href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=MSNMUGI&groupCode=90L&arrivaldate=2025-05-31&departuredate=2025-06-02&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT">Booking Link</Link>
-            </p>
-        </a>
+        <p><b>Hilton Garden Inn Madison Downtown</b></p>
         <p className="indent-8">770 Regent St, Madison, WI</p>
-        <a href="https://www.hilton.com/en/hotels/msnmadt-doubletree-madison-east/">
-            <p><b>Doubletree by Hilton East Madison</b>— 
-            <Link href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=MSNMADT&groupCode=CDT90J&arrivaldate=2025-05-31&departuredate=2025-06-02&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT">Booking Link</Link>
-            </p>
-        </a>
-        <p className="indent-8">4402 E Washington Ave, Madison, WI</p>
+        <p className="indent-8"><Link href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=MSNMUGI&groupCode=90L&arrivaldate=2025-05-31&departuredate=2025-06-02&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT">Booking Link</Link></p>
+
+        <p><b>Doubletree by Hilton East Madison</b></p>
+        <div className="ml-8">
+            <p>4402 E Washington Ave, Madison, WI</p>
+        </div>
+        <p className="indent-8"><Link href="https://www.hilton.com/en/book/reservation/deeplink/?ctyhocn=MSNMADT&groupCode=CDT90J&arrivaldate=2025-05-31&departuredate=2025-06-02&cid=OM,WW,HILTONLINK,EN,DirectLink&fromId=HILTONLINKDIRECT">Booking Link</Link></p>
         
         <p>The Hilton Garden in is downtown, perfect for exploring Madison and hanging out with others before the wedding. The Doubletree is closer to the airport and the venue, and is a bit cheaper.</p>
         

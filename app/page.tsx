@@ -3,12 +3,8 @@ import Image from "next/image";
 import banner from "./images/banner.jpg";
 
 import HomeLayout from './components/HomeLayout';
-import FAQ from "./components/faq";
-import Story from "./components/story";
 import Schedule from "./components/schedule";
 import Location from "./components/location";
-import Hotel from "./components/hotel";
-import Travel from "./components/travel";
 
 import { ThemeProvider } from '@mui/material/styles';
 import { ButtonTheme } from './styles';
