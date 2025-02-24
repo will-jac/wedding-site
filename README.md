@@ -23,7 +23,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [ ] make it possible to show only some images for a given page using prefixes/metadata/a worker
 - [x] make the gallery work with portrait mode photos
 - [x] figure out why the carosel is constantly re-loading photos and is kinda slow
-~~- [ ] make Cloudflare worker respond with the image metadata on image list~~
+- [ ] ~~make Cloudflare worker respond with the image metadata on image list~~
 - [x] load images in pages so we don't overwhelm the server
 
 ## Getting Started
