@@ -19,6 +19,7 @@ const email_html = `<div dir="ltr">Congratulations __name__, you've successfully
 <br>
 <br>Lodging: __hotel__<br>
 <br>Shuttle: __shuttle__<br>
+<br>Welcome Party: __party__<br>
 <br>Comment: __comment__<br>
 <br><br>Need to make a change? Just <a href="http://hannahjackwedding.com/rsvp/__rsvpId__" target="_blank">RSVP again</a>.
 <br>See you soon!<br>
@@ -40,6 +41,7 @@ __rsvp__
 
 Lodging: __hotel__
 Shuttle: __shuttle__
+Welcome Party: __party__
 Comment: __comment__
 
 Need to make a change? Just RSVP again at http://hannahjackwedding.com/rsvp/__rsvpId__
@@ -94,6 +96,7 @@ export async function sendEmail(attendeeGroup: AttendeeGroup)
     [ local_email_text, local_email_html]  = replace("__name__", attendeeGroup.attendees[0].first_name); 
     [ local_email_text, local_email_html]  = replace("__hotel__", attendeeGroup.hotel);
     [ local_email_text, local_email_html]  = replace("__shuttle__", attendeeGroup.shuttle);
+    [ local_email_text, local_email_html]  = replace("__party__", attendeeGroup.party);
     [ local_email_text, local_email_html]  = replace("__email__", attendeeGroup.email);
     [ local_email_text, local_email_html]  = replace("__comment__", attendeeGroup.comment);
     [ local_email_text, local_email_html]  = replace("__rsvpId__", String(attendeeGroup.id));
