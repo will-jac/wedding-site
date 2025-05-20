@@ -16,7 +16,7 @@ function Photos() {
   // const { isLandscape } = useMobileOrientation()
   const isLandscape = false;
 
-  const [images, setImages] = useState([] as ImageProps[]);
+  const [images, setImages] = useState(Array(20).fill({}) as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
 
   const [view, setView] = useState(isMobile ? 'gallery' : 'grid');
@@ -39,7 +39,7 @@ function Photos() {
 
   // TODO: cache the image list in the cookies or somehow tell the network not to fetch it again
   useEffect(() => {
-    getImages().then((images) => {
+    getImages("engagement/").then((images) => {
       // console.log(images);
       setImages(images);
     });
@@ -58,13 +58,13 @@ function Photos() {
     <div className="flex justify-between items-center py-5">
       <h1>Click on a photo to open it in a higher resolution</h1>
       
-      {process.env.NODE_ENV === 'production' ? null 
+      {/* {process.env.NODE_ENV === 'production' ? null 
           : <Button onClick={() => {
             getImagesFromCloudflare('photos').then((images) => setImages(images));
           }}>
               Refresh Image List
           </Button>
-      }
+      } */}
       <ToggleButtonGroup
         color="primary"
         value={view}

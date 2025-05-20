@@ -136,7 +136,7 @@ function MainImage(props: any) {
   const { index, images, setLoaded, direction, landscapeLoader, portraitLoader, navigation } = props;
 
   return <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-      {images[index].portrait 
+      {images[index].portrait ?? true
         ? <div className="absolute flex items-center h-full object-contain">
           <Image 
               src={images[index].key} 
