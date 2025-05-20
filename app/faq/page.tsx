@@ -5,7 +5,7 @@ import FAQ from "../components/faq";
 
 export default function Travel() {
 
-    return <HomeLayout headerImageSrc="Hannah-Jack-ENG-AKP-6.17.24-59.jpg">
+    return <HomeLayout headerImageSrc="engagement/Hannah-Jack-ENG-AKP-6.17.24-59.jpg">
         <FAQ/>
     </HomeLayout>;
 }

@@ -74,7 +74,7 @@ export async function getImagesFromWorker(prefix: string = "") {
     return imgList
 }
 
-export default async function getImages(prefix="") {
+export default async function getImages(prefix="engagement") {
     // let images = await getImagesFromKV(bucket)
     // if (images == null || images.length == 0)
     // {
