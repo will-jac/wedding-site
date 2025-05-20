@@ -68,11 +68,18 @@ export async function getImagesFromKV(bucket: string) {
     return images;
 }
 
-export default async function getImages(bucket = "photos") {
-    let images = await getImagesFromKV(bucket)
-    if (images == null || images.length == 0)
-    {
-        return getImagesFromCloudflare(bucket);
-    }
+export async function getImagesFromWorker(prefix: string = "") {
+    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev/?prefix=" + prefix)
+    const imgList: ImageProps[] = await resp.json();
+    return imgList
+}
+
+export default async function getImages(prefix="") {
+    // let images = await getImagesFromKV(bucket)
+    // if (images == null || images.length == 0)
+    // {
+    //     return getImagesFromCloudflare(bucket);
+    // }
+    const images = getImagesFromWorker(prefix)
     return images;
 }
