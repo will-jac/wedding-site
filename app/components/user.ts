@@ -22,6 +22,8 @@ export async function createAccount(userName: string, email: string): Promise<Us
     if (!response.ok) {
         throw new Error(`Failed to create account: ${response.statusText}`);
     }
+    console.log("got response:");
+    console.log(response);
     const user: User = await response.json();
 
     return user;
