@@ -24,7 +24,7 @@ export async function createAccount(userName: string, email: string): Promise<Us
     }
     console.log("got response:");
     console.log(response);
-    const user: User = await response.json();
-
-    return user;
+    const body = await response.json();
+    console.log(body);
+    return body as User;
 }
