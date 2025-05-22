@@ -14,6 +14,8 @@ export default function CreateAccount(props: {user: User|null, setUser: any}) {
     e.preventDefault();
     try {
       const u = createAccount(name, email);
+      console.log("got user");
+      console.log(u)
       if (u == null) {
         setMessage('Failed to create account. Please try again.');
         return;
