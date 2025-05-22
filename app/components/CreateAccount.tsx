@@ -13,7 +13,7 @@ export default function CreateAccount(props: {user: User|null, setUser: any}) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const u = createAccount(name, email);
+      const u = await createAccount(name, email);
       console.log("got user");
       console.log(u)
       if (u == null) {
