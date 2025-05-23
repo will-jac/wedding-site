@@ -70,7 +70,7 @@ export async function getImagesFromKV(bucket: string) {
 
 export async function getImagesFromWorker(prefix: string = "") {
     console.log("calling fetch");
-    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev?prefix=" + prefix)
+    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev?prefix=" + prefix, {cache: 'no-store'})
     const imgList: ImageProps[] = (await resp.json()).map((obj: any) => ({ caption: obj?.customMetadata?.caption ?? "", ...obj }));
     return imgList
 }
@@ -81,6 +81,5 @@ export default async function getImages(prefix="engagement") {
     // {
     //     return getImagesFromCloudflare(bucket);
     // }
-    const images = getImagesFromWorker(prefix)
-    return images;
+    return await getImagesFromWorker(prefix)
 }
