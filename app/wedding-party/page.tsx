@@ -68,7 +68,7 @@ const groomppl: Person[] = [
     { 
         key: "Nafis-crop.png", portrait: true,
         fname: "Nafis", lname: "Zaman",
-        bio: "Nafis works as a software engineer at Microsoft and lives in Seattle, Washington. Nafis is married to the maid of honor, Emily, and is Hannah’s brother-in-law. They’ve been married since Hannah and Jack started dating, so he already feels like a brother to Jack too!",
+        bio: "Nafis works as a handsome software engineer at Microsoft and lives in Seattle, Washington. Nafis is married to the maid of honor, Emily, and is Hannah’s brother-in-law. They’ve been married since Hannah and Jack started dating, so he already feels like a brother to Jack too!",
         memory: "His fun memory is hiking with Jack and Hannah at Glacier National Park after the rental car broke down, where they hiked to all the waterfalls and then got soaked in the giant one at the end!"
     },
     { 
