@@ -64,8 +64,8 @@ function Photos() {
 
   return <HomeLayout isGalleryWidth={true}>
     <div className="flex justify-between items-center py-5">
-      <h1>Click on a photo to open it in a higher resolution</h1>
-      <div className="flex gap-2 items-center">
+      {/* <h1>Click on a photo to open it in a higher resolution</h1> */}
+      {/* <div className="flex gap-2 items-center">
         <Button
           variant={folder === 'engagement' ? 'contained' : 'outlined'}
           onClick={() => setFolder('engagement')}
@@ -91,7 +91,7 @@ function Photos() {
           <ToggleButton value="grid">Grid</ToggleButton>
           <ToggleButton value="gallery">Gallery</ToggleButton>
         </ToggleButtonGroup>
-      </div>
+      </div> */}
     </div>
 
     {view === 'grid' &&     <GridView images={images} setPhotoId={setPhotoId} />}
