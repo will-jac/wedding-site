@@ -134,7 +134,7 @@ function Buttons(props: any) {
 
 function MainImage(props: any) {
   const { index, images, setLoaded, direction, landscapeLoader, portraitLoader, navigation } = props;
-
+  const caption = images[index]?.caption;
   return <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
       {images[index].portrait ?? true
         ? <div className="absolute flex items-center h-full object-contain">
@@ -147,12 +147,17 @@ function MainImage(props: any) {
               quality={100}
               priority
               sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
-              alt={"An engagement photo of Jack and Hannah"}
+              alt={caption || "An engagement photo of Jack and Hannah"}
               loader={images[index].portrait ? portraitLoader : landscapeLoader}
               placeholder="blur"
               blurDataURL={rgbDataURL(135, 155, 136)}
               onLoad={() => setLoaded(true)}
-          /> 
+          />
+          {caption && (
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 py-2 bg-black bg-opacity-70 text-white text-sm text-center z-50">
+              {caption}
+            </div>
+          )}
           </div>
         : <div className="absolute flex items-center w-full">
           <Image 
@@ -163,13 +168,17 @@ function MainImage(props: any) {
               height={images[index].portrait ? 853 : 1280}
               quality={100}
               priority
-              // sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, (max-width: 1536px) 33vw, 25vw"
-              alt={"An engagement photo of Jack and Hannah"}
+              alt={caption || "An engagement photo of Jack and Hannah"}
               loader={images[index].portrait ? portraitLoader : landscapeLoader}
               placeholder="blur"
               blurDataURL={rgbDataURL(135, 155, 136)}
               onLoad={() => setLoaded(true)}
-          /> 
+          />
+          {caption && (
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 py-2 bg-black bg-opacity-70 text-white text-sm text-center z-50">
+              {caption}
+            </div>
+          )}
         </div>
       }
   </div>

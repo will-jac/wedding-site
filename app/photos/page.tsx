@@ -18,9 +18,9 @@ function Photos() {
 
   const [images, setImages] = useState(Array(20).fill({}) as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
-
   const [view, setView] = useState(isMobile ? 'gallery' : 'grid');
-
+  const [folder, setFolder] = useState<'engagement' | 'gallery'>('engagement');
+  const searchParams = useSearchParams();
 
   function changePhotoId(newIndex: number) {
     if (newIndex < 0 || newIndex >= images.length) return;
@@ -39,11 +39,19 @@ function Photos() {
 
   // TODO: cache the image list in the cookies or somehow tell the network not to fetch it again
   useEffect(() => {
-    getImages("engagement/").then((images) => {
-      // console.log(images);
+    getImages(folder).then((images) => {
+      console.log(images);
       setImages(images);
     });
-  }, []);
+  }, [folder]);
+
+  useEffect(() => {
+    // Set view from ?tab= param if present
+    const tab = searchParams.get('tab');
+    if (tab === 'gallery' || tab === 'engagement') {
+      setFolder(tab);
+    }
+  }, [searchParams]);
 
   // useEffect(() => {
   //   if (images !== null && images.length > 0) {
@@ -57,27 +65,33 @@ function Photos() {
   return <HomeLayout isGalleryWidth={true}>
     <div className="flex justify-between items-center py-5">
       <h1>Click on a photo to open it in a higher resolution</h1>
-      
-      {/* {process.env.NODE_ENV === 'production' ? null 
-          : <Button onClick={() => {
-            getImagesFromCloudflare('photos').then((images) => setImages(images));
-          }}>
-              Refresh Image List
-          </Button>
-      } */}
-      <ToggleButtonGroup
-        color="primary"
-        value={view}
-        exclusive
-        onChange={(_, x) => {
-          if (x !== null) {
-            setView(x)
-          }
-        }}
-      >
-        <ToggleButton value="grid">Grid</ToggleButton>
-        <ToggleButton value="gallery">Gallery</ToggleButton>
-      </ToggleButtonGroup>
+      <div className="flex gap-2 items-center">
+        <Button
+          variant={folder === 'engagement' ? 'contained' : 'outlined'}
+          onClick={() => setFolder('engagement')}
+        >
+          Engagement
+        </Button>
+        <Button
+          variant={folder === 'gallery' ? 'contained' : 'outlined'}
+          onClick={() => setFolder('gallery')}
+        >
+          Gallery
+        </Button>
+        <ToggleButtonGroup
+          color="primary"
+          value={view}
+          exclusive
+          onChange={(_, x) => {
+            if (x !== null) {
+              setView(x)
+            }
+          }}
+        >
+          <ToggleButton value="grid">Grid</ToggleButton>
+          <ToggleButton value="gallery">Gallery</ToggleButton>
+        </ToggleButtonGroup>
+      </div>
     </div>
 
     {view === 'grid' &&     <GridView images={images} setPhotoId={setPhotoId} />}

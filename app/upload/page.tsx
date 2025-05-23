@@ -3,15 +3,16 @@ import { useState, useEffect } from 'react';
 import HomeLayout from '../components/HomeLayout';
 import { User } from '../components/user';
 import CreateAccount from '../components/CreateAccount';
+import { useRouter } from 'next/navigation';
 
 const url = "https://r2-worker.jackawilliams13.workers.dev/"
 
 export default function AddPhotoPage() {
+  const router = useRouter();
   const [user, setUser] = useState<User|null>(null);
   const [photos, setPhotos] = useState<File[]>([]);
+  const [captions, setCaptions] = useState<string[]>([]);
   const [message, setMessage] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
 
   useEffect(() => {
     // Try to load account from localStorage
@@ -27,6 +28,15 @@ export default function AddPhotoPage() {
     }
   }, []);
 
+  // Update captions array when photos change
+  useEffect(() => {
+    setCaptions((prev) => photos.map((_, i) => prev[i] || ''));
+  }, [photos]);
+
+  const handleCaptionChange = (idx: number, value: string) => {
+    setCaptions((prev) => prev.map((c, i) => (i === idx ? value : c)));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -38,6 +48,7 @@ export default function AddPhotoPage() {
     const formData = new FormData();
     photos.forEach((photo, index) => {
       formData.append(`photo_${index}`, photo);
+      formData.append(`caption_${index}`, captions[index] || '');
     });
 
     try {
@@ -52,6 +63,9 @@ export default function AddPhotoPage() {
       if (response.ok) {
         setMessage('Photos uploaded successfully!');
         setPhotos([]);
+        setCaptions([]);
+        // Redirect to gallery page, set to gallery tab
+        router.push('/photos?tab=gallery');
       } else {
         setMessage('Failed to upload photos. Please try again.');
       }
@@ -78,6 +92,29 @@ export default function AddPhotoPage() {
               className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
               required
             />
+            {/* Thumbnails preview */}
+            <div className="flex flex-wrap gap-2 mt-2">
+              {photos.map((file, idx) => {
+                const url = URL.createObjectURL(file);
+                return (
+                  <div key={idx} className="flex flex-col items-center">
+                    <img
+                      src={url}
+                      alt={file.name}
+                      className="w-20 h-20 object-cover rounded border"
+                      onLoad={() => URL.revokeObjectURL(url)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Add a caption"
+                      value={captions[idx] || ''}
+                      onChange={e => handleCaptionChange(idx, e.target.value)}
+                      className="mt-1 w-20 text-xs p-1 border rounded"
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <button
             type="submit"
