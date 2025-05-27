@@ -4,7 +4,7 @@ export default function Schedule() {
         <p className="indent-10"><b>Saturday, May 31:</b></p>
         <ul>
             <li>9:00 AM - Optional walk through the UW Arboretum (all are welcome!)</li>
-            <li>5:30 PM - Rehearsal dinner (wedding party and immediate family only)</li>
+            <li>5:00 PM - Rehearsal dinner (wedding party and immediate family only)</li>
             <li>7:00 PM - Welcome party at Vilas Park (all are welcome!)</li>
         </ul>
         <br></br>
