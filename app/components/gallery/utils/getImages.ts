@@ -69,12 +69,14 @@ export async function getImagesFromKV(bucket: string) {
 }
 
 export async function getImagesFromWorker(prefix: string = "") {
-    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev?prefix=" + prefix, {cache: 'no-store'})
+    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev?prefix=" + prefix, {cache: 'no-store'});
+    console.log(resp);
     const imgList: ImageProps[] = (await resp.json()).map((obj: any) => (
         { 
             caption: obj?.customMetadata?.caption ?? "", 
             userId: obj?.customMetadata?.userId ?? "",
-            ...obj }
+            ...obj 
+        }
     ));
     return imgList
 }
