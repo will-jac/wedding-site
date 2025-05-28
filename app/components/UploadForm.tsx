@@ -4,7 +4,7 @@ import { User } from './user';
 import CreateAccount from './CreateAccount';
 import { useRouter } from 'next/navigation';
 
-const url = "https://r2-worker.jackawilliams13.workers.dev/";
+const url = "https://r2-worker.hannahjackwedding.com/";
 
 export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
   const router = useRouter();

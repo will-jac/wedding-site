@@ -69,7 +69,7 @@ export async function getImagesFromKV(bucket: string) {
 }
 
 export async function getImagesFromWorker(prefix: string = "") {
-    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev?prefix=" + prefix, {cache: 'no-store'});
+    const resp = await fetch("https://r2-worker.hannahjackwedding.com?prefix=" + prefix, {cache: 'no-store'});
     console.log(resp);
     const imgList: ImageProps[] = (await resp.json()).map((obj: any) => (
         { 
@@ -82,7 +82,7 @@ export async function getImagesFromWorker(prefix: string = "") {
 }
 
 export async function getUsers() {
-    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev/users");
+    const resp = await fetch("https://r2-worker.hannahjackwedding.com/users");
     if (resp.status != 200) {
         console.log("resp was not 200")
         return {};
