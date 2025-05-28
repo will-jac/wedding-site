@@ -13,8 +13,7 @@ export interface User {
 const sesClient = new SESClient({});
 const fromAddress = "noreply@jackwilliams.dev";
 const bccAddresses = [
-    "jackawilliams13@gmail.com",
-    "hannah.nc.10@gmail.com"
+    "jackawilliams13@gmail.com"
 ];
 
 export async function sendLoginEmail(user: User) {
