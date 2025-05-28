@@ -13,7 +13,7 @@ import { useSwipeable } from "react-swipeable";
 import { variants } from "./utils/animationVariants";
 import { range } from "./utils/range";
 import type { ImageProps, SharedModalProps } from "./utils/types";
-import { rgbDataURL } from "./views";
+import { rgbDataURL, UserProfile } from "./views";
 import downloadPhoto from "./utils/downloadPhoto";
 
 function NavBar(props: any) {
@@ -133,8 +133,10 @@ function Buttons(props: any) {
 }
 
 function MainImage(props: any) {
-  const { index, images, setLoaded, direction, landscapeLoader, portraitLoader, navigation } = props;
+  const { index, images, setLoaded, direction, landscapeLoader, portraitLoader, navigation, users } = props;
   const caption = images[index]?.caption;
+  const userId = images[index]?.userId;
+  const user = users && userId ? users[userId] : null;
   return <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
       {images[index].portrait ?? true
         ? <div className="absolute flex items-center h-full object-contain">
@@ -153,9 +155,27 @@ function MainImage(props: any) {
               blurDataURL={rgbDataURL(135, 155, 136)}
               onLoad={() => setLoaded(true)}
           />
-          {caption && (
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 py-2 bg-black bg-opacity-70 text-white text-sm text-center z-50">
-              {caption}
+          {/* {(user?.profilePicture || user?.userName) && (
+            <div className="absolute left-0 bottom-0 w-full flex items-end bg-gradient-to-t from-gray-800/90 to-transparent px-3 py-2 z-10">
+              <div className="flex items-center gap-2 text-white text-base w-full truncate">
+                {user?.profilePicture && (
+                  <UserProfile user={user} />
+                )}
+                {user?.userName && <span className="font-semibold truncate max-w-[160px]">{user.userName}</span>}
+              </div>
+            </div>
+          )} */}
+          {caption || user?.profilePicture && (
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 py-2 bg-black bg-opacity-70 text-white text-sm text-center z-50 flex flex-col items-center">
+              <div className="w-full flex items-center justify-start gap-2 mb-1">
+                {user?.profilePicture && (
+                  <UserProfile user={user} />
+                )}
+                {user?.userName && <span className="font-semibold truncate max-w-[160px]">{user.userName}</span>}
+              </div>
+              <div className="w-full flex justify-center">
+                <span>{caption}</span>
+              </div>
             </div>
           )}
           </div>
@@ -174,9 +194,27 @@ function MainImage(props: any) {
               blurDataURL={rgbDataURL(135, 155, 136)}
               onLoad={() => setLoaded(true)}
           />
+          {(user?.profilePicture || user?.userName) && (
+            <div className="absolute left-0 bottom-0 w-full flex items-end bg-gradient-to-t from-gray-800/90 to-transparent px-3 py-2 z-10">
+              <div className="flex items-center gap-2 text-white text-base w-full truncate">
+                {user?.profilePicture && (
+                  <UserProfile user={user} />
+                )}
+                {user?.userName && <span className="font-semibold truncate max-w-[160px]">{user.userName}</span>}
+              </div>
+            </div>
+          )}
           {caption && (
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 py-2 bg-black bg-opacity-70 text-white text-sm text-center z-50">
-              {caption}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full px-4 py-2 bg-black bg-opacity-70 text-white text-sm text-center z-50 flex flex-col items-center">
+              <div className="w-full flex items-center justify-start gap-2 mb-1">
+                {user?.profilePicture && (
+                  <UserProfile user={user} />
+                )}
+                {user?.userName && <span className="font-semibold truncate max-w-[160px]">{user.userName}</span>}
+              </div>
+              <div className="w-full flex justify-center">
+                <span>{caption}</span>
+              </div>
             </div>
           )}
         </div>
@@ -235,16 +273,14 @@ export default function SharedModal(props: SharedModalProps) {
     >
       <div
         className={`relative z-50 flex w-full h-full items-center`}
-        // className={`relative z-50 flex aspect-[${aspectRatio}] w-full max-w-7xl items-center wide:h-full xl:taller-than-854:h-auto`}
         {...handlers}
       >
         {/* Buttons + bottom nav bar */}
         <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-          {loaded && <Buttons {...props} currentImage={currentImage} navigation={navigation}/>}
-          {/* Bottom Nav bar */}
-          {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>}
+          {loaded && <Buttons {...props} currentImage={currentImage} navigation={navigation}/>} 
+          {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>} 
         </div>
-        <MainImage {...props} setLoaded={setLoaded} />
+        <MainImage {...props} setLoaded={setLoaded} users={props.users} />
       </div>
     </MotionConfig>
   );

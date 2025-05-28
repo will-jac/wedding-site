@@ -1,14 +1,15 @@
+import { User } from "../../user";
+
 /* eslint-disable no-unused-vars */
 export interface ImageProps {
   key: string;
   portrait?: boolean;
-  caption?: any
-  // public_id: string;
-  // format: string;
-  // blurDataUrl: string;
+  caption?: any;
+  userId?: string; // ID of the user who submitted the photo
 }
   
 export interface SharedModalProps {
+  users?: Record<string, User>;
   index: number;
   images: ImageProps[];
   currentPhoto?: string;

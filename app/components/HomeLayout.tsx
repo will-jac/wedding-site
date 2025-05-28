@@ -6,8 +6,10 @@ import Image from "next/image";
 import { landscapeLoader } from '../components/gallery/views';
 
 function Layout(props: {isGalleryWidth?: boolean, children: any}) {
+    // Use a wider layout if isGalleryWidth and phone is in landscape
+    // Tailwind: add max-w-full for landscape on small screens
     const width = props.isGalleryWidth 
-        ? "max-w-xs sm:max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-7xl" 
+        ? "max-w-full md:max-w-2x lg:max-w-4xl xl:max-w-6xl"
         : "max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl";
     return (
         <div className="flex justify-center items-center">
@@ -72,6 +74,9 @@ export default function HomeLayout(props: {
     children: any
 }) {
 
+    // Use a narrower gutter (px-2) if isGalleryWidth is true (photo page), else default (px-5)
+    const contentPadding = props.isGalleryWidth ? 'px-0' : 'px-5';
+
     return <Background>
         <Layout isGalleryWidth={props.isGalleryWidth}>
             <div className='top-0 pt-8 px-5 md:px-10 xl:px-20 text-center bg-white'>
@@ -80,7 +85,7 @@ export default function HomeLayout(props: {
                 </Link>
             </div>
             {props.noShowMenu ? null : <Menu />}
-            <div className="px-5">
+            <div className={contentPadding}>
                 {props.headerImageSrc ? <HeaderImage src={props.headerImageSrc} width={props.headerImageWidth} height={props.headerImageHeight} loader={props.headerImageLoader} /> : null}
                 {props.children}
             </div>

@@ -3,6 +3,7 @@ import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 import { ImageProps } from './types';
 import { kv } from "@vercel/kv";
 import pLimit from 'p-limit';
+import { User } from '../../user';
 
 // TODO: use the cloudflare worker to get the images
 
@@ -63,16 +64,35 @@ export async function getImagesFromCloudflare(bucket: string) {
 
 // TODO: figure out edge caching so this doesn't need to be recomputed
 export async function getImagesFromKV(bucket: string) {
-    console.log("getting all images from KV ($)");
     const images = await kv.get(`photos:${bucket}`) as ImageProps[];
     return images;
 }
 
 export async function getImagesFromWorker(prefix: string = "") {
-    console.log("calling fetch");
     const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev?prefix=" + prefix, {cache: 'no-store'})
-    const imgList: ImageProps[] = (await resp.json()).map((obj: any) => ({ caption: obj?.customMetadata?.caption ?? "", ...obj }));
+    const imgList: ImageProps[] = (await resp.json()).map((obj: any) => (
+        { 
+            caption: obj?.customMetadata?.caption ?? "", 
+            userId: obj?.customMetadata?.userId ?? "",
+            ...obj }
+    ));
     return imgList
+}
+
+export async function getUsers() {
+    const resp = await fetch("https://r2-worker.jackawilliams13.workers.dev/users");
+    if (resp.status != 200) {
+        console.log("resp was not 200")
+        return {};
+    }
+    const r = await resp.json() as Record<string, User>;
+    console.log(r);
+    return r
+    //     try {
+    // }
+    // catch {
+    //     return {};
+    // }
 }
 
 export default async function getImages(prefix="engagement") {
@@ -81,5 +101,8 @@ export default async function getImages(prefix="engagement") {
     // {
     //     return getImagesFromCloudflare(bucket);
     // }
+    if (prefix == "wedding") {
+        prefix = "gallery";
+    }
     return await getImagesFromWorker(prefix)
 }

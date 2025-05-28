@@ -6,14 +6,16 @@ import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import SharedModal from "./shared_modal";
 import { ImageProps } from "./utils/types";
+import { User } from "../user";
 
 export default function Modal(props: {
   images: ImageProps[]; index: number; navigation: boolean;
   setIndex: (n: number) => void, onClose: () => void;
   portraitLoader: any, landscapeLoader: any; navBarLoader: any;
+  users?: Record<string, User>;
 }) {
   const {
-    images, index, navigation, setIndex, onClose, portraitLoader, landscapeLoader, navBarLoader
+    images, users, index, navigation, setIndex, onClose, portraitLoader, landscapeLoader, navBarLoader
   } = props;
 
   let overlayRef = useRef<HTMLDivElement>(null);
@@ -56,6 +58,7 @@ export default function Modal(props: {
       >
         <SharedModal
           index={index}
+          users={users}
           direction={direction}
           images={images}
           setIndex={setIndex}
