@@ -30,8 +30,8 @@ export async function createAccountWithProfilePic(user: User, profilePicFile?: F
   return body as User;
 }
 
-export default function CreateAccount(props: {user: User, setUser: any, onSuccess?: () => void}) {
-  const {user, setUser, onSuccess} = props;
+export default function CreateAccount(props: {user: User, setUser: any, onSuccess?: () => void, isEditing?: boolean}) {
+  const {user, setUser, onSuccess, isEditing} = props;
 
   const [message, setMessage] = useState('');
 
@@ -71,7 +71,11 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
   };
 
   return <div>
-    <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
+    {isEditing 
+    ? <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
+    : <h2 className="text-2xl font-bold mb-4">Edit your Account</h2>
+    }
+    
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="username" className="block text-sm font-medium text-gray-700">Your Name</label>
