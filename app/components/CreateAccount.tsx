@@ -4,7 +4,8 @@ import { useState, useRef } from 'react';
 import { User, sendLoginEmail } from './user';
 
 export async function createAccountWithProfilePic(user: User, profilePicFile?: File): Promise<User> {
-  const url = "https://r2-worker.jackawilliams13.workers.dev/createAccount";
+  // const url = "https://r2-worker.jackawilliams13.workers.dev/createAccount";
+  const url = "https://r2-worker.hannahjackwedding.com/createAccount";
   const formData = new FormData();
   formData.append('userName', user.userName);
   formData.append('email', user.email);

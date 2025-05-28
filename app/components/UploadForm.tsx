@@ -79,7 +79,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
   return (
     <div className="p-5 max-w-md mx-auto">
       { !userLoaded
-        ? <CreateAccount user={user} setUser={setUser}/>
+        ? <CreateAccount user={user} setUser={setUser} onSuccess={() => setUserLoaded(true)}/>
         : <>
         <h1 className="text-2xl font-bold mb-4">Add Your Photos</h1>
         {isLoading && <div className="text-center text-indigo-600">Uploading...</div>}

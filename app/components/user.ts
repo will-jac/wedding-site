@@ -41,7 +41,7 @@ export async function sendLoginEmail(user: User) {
 }
 
 export async function getUser(userId: string, userKey: string) {
-  const url = "https://r2-worker.jackawilliams13.workers.dev/account";
+  const url = "https://r2-worker.hannahjackwedding.com/account";
   const response = await fetch(url, {
       method: 'GET',
       headers: {
