@@ -14,7 +14,7 @@ function LoginHandler() {
     if (userId && userKey) {
       (async () => {
         // fetch the full user from the remote db
-        const user = await getUser(userKey);
+        const user = await getUser(userId, userKey);
         // Save credentials to localStorage for future use
         localStorage.setItem('HannahJackWeddingUser', JSON.stringify(user));
         // Optionally, redirect to the upload page or show a success message

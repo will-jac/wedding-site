@@ -40,13 +40,14 @@ export async function sendLoginEmail(user: User) {
     await sesClient.send(command);
 }
 
-export async function getUser(userKey: string) {
+export async function getUser(userId: string, userKey: string) {
   const url = "https://r2-worker.jackawilliams13.workers.dev/account";
   const response = await fetch(url, {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
-          'x-hjwedding-userKey': userKey
+          'x-hjwedding-userKey': userKey,
+          'x-hjwedding-userId': userId ?? ""
       }
   });
   if (!response.ok) {

@@ -34,6 +34,7 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
   const {user, setUser, onSuccess, isEditing} = props;
 
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,10 +42,12 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const u = await createAccountWithProfilePic(JSON.parse(JSON.stringify(user)), profilePicFile || undefined);
       if (u == null) {
         setMessage('Failed to create account. Please try again.');
+        setIsLoading(false);
         return;
       }
       localStorage.setItem('HannahJackWeddingUser', JSON.stringify(u));
@@ -53,6 +56,8 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
     } catch (error) {
       setMessage('An error occurred. Please try again. If this persists, please check your email for a login link');
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,7 +80,7 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
     ? <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
     : <h2 className="text-2xl font-bold mb-4">Edit your Account</h2>
     }
-    
+    {isLoading && <div className="text-center text-indigo-600">Loading...</div>}
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="username" className="block text-sm font-medium text-gray-700">Your Name</label>
@@ -116,8 +121,9 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
       <button
         type="submit"
         className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        disabled={isLoading}
       >
-        Submit
+        {isLoading ? 'Submitting...' : 'Submit'}
       </button>
     </form>
     {message}
