@@ -62,9 +62,9 @@ export async function getUser(userId: string, userKey: string) {
       }
   });
   if (!response.ok) {
-      console.log(response);
+    //   console.log(response);
       const body = await response.text()
-      console.log(body);
+    //   console.log(body);
       throw new Error(`Failed to get account: ${response.statusText}`);
   }
   return await response.json() as User;

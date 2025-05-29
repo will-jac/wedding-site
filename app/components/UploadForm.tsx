@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { User } from './user';
 import CreateAccount from './CreateAccount';
 import { useRouter } from 'next/navigation';
+import imageCompression from 'browser-image-compression';
+import { gzip } from 'pako';
 
 const url = "https://r2-worker.hannahjackwedding.com/";
 
@@ -43,31 +45,68 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       return;
     }
     setIsLoading(true);
-    const formData = new FormData();
-    photos.forEach((photo, index) => {
-      formData.append(`photo_${index}`, photo);
-      formData.append(`caption_${index}`, captions[index] || '');
-    });
+    console.log("starting form....")
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'x-hjwedding-userKey': user?.userKey ?? "",
-          'x-hjwedding-userId': user?.userId ?? ""
-        },
-        body: formData,
-      });
-      if (response.ok) {
-        setMessage('Photos uploaded successfully!');
-        setPhotos([]);
-        setCaptions([]);
-        if (onUpload) {
-            onUpload();
+      // Compress each photo before encoding
+      const fileNames = photos.map(f => f.name);
+      const compressedPhotos = await Promise.all(
+        photos.map(photo => imageCompression(photo, {
+          maxSizeMB: 1, // adjust as needed
+          maxWidthOrHeight: 1920, // adjust as needed
+          useWebWorker: true,
+        }))
+      );
+      const formData = new FormData();
+      compressedPhotos.forEach((photo, index) => {
+        formData.append(`photo_${index}`, photo);
+        formData.append(`caption_${index}`, captions[index] || '');
+        formData.append(`name_${index}`, fileNames[index]);
+      });  
+      // Read all compressed photos as base64 strings
+      // const photoData = await Promise.all(
+      //   compressedPhotos.map(photo => new Promise<string>((resolve, reject) => {
+      //     const reader = new FileReader();
+      //     reader.onload = () => resolve(reader.result as string);
+      //     reader.onerror = reject;
+      //     reader.readAsDataURL(photo);
+      //   }))
+      // );
+      // const payload = {
+      //   photos: compressedPhotos,
+      //   captions: captions,
+      //   names: photos.map(p => p.name),
+      //   types: photos.map(p => p.type)
+      // };
+      // const jsonString = JSON.stringify(payload);
+      // const gzipped = gzip(jsonString);
+      try {
+        console.log("calling fetch....")
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'x-hjwedding-userKey': user?.userKey ?? "",
+            'x-hjwedding-userId': user?.userId ?? "",
+            // 'Content-Type': 'application/json',
+            // 'Content-Encoding': 'gzip'
+          },
+          body: formData,
+        });
+        if (response.ok) {
+          setMessage('Photos uploaded successfully!');
+          setPhotos([]);
+          setCaptions([]);
+          if (onUpload) {
+              onUpload();
+          } else {
+              router.push('/photos?tab=wedding');
+          }
         } else {
-            router.push('/photos?tab=wedding');
+          setMessage('Failed to upload photos. Please try again.');
         }
-      } else {
-        setMessage('Failed to upload photos. Please try again.');
+      } catch (error) {
+        setMessage('An error occurred. Please try again.');
+      } finally {
+        setIsLoading(false);
       }
     } catch (error) {
       setMessage('An error occurred. Please try again.');

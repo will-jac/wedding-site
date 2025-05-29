@@ -70,7 +70,7 @@ export async function getImagesFromKV(bucket: string) {
 
 export async function getImagesFromWorker(prefix: string = "") {
     const resp = await fetch("https://r2-worker.hannahjackwedding.com?prefix=" + prefix, {cache: 'no-store'});
-    console.log(resp);
+    // console.log(resp);
     const imgList: ImageProps[] = (await resp.json()).map((obj: any) => (
         { 
             caption: obj?.customMetadata?.caption ?? "", 

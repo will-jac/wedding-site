@@ -101,7 +101,7 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
         />
       </div>
       <div>
-        <label htmlFor="profilePic" className="block text-sm font-medium text-gray-700">Profile Picture</label>
+        <label htmlFor="profilePic" className="block text-sm font-medium text-gray-700">Profile Picture (optional)</label>
         <input
           type="file"
           id="profilePic"

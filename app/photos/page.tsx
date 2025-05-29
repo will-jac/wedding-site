@@ -43,13 +43,22 @@ function Photos() {
     setIndex(null);
   }
 
-  // TODO: cache the image list in the cookies or somehow tell the network not to fetch it again
   useEffect(() => {
     console.log("getting images " + folder);
-    getImages(folder).then((images) => {
-      console.log(images);
-      setImages(images);
-    });
+    let isMounted = true;
+    const fetchImages = () => {
+      getImages(folder).then((images) => {
+        if (isMounted) setImages(images);
+      });
+    };
+    fetchImages();
+
+    const interval = setInterval(fetchImages, 30000); // fetch every 30 seconds
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
   }, [folder]);
 
   useEffect(() => {
@@ -83,6 +92,18 @@ function Photos() {
     fetchUser();
     
   }, []);
+
+  // Prevent background scroll when upload modal is open
+  useEffect(() => {
+    if (showUpload && showWeddingPhotos) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showUpload, showWeddingPhotos]);
 
   // useEffect(() => {
   //   if (images !== null && images.length > 0) {
@@ -192,7 +213,7 @@ function Photos() {
         onClick={() => setShowUpload(false)}
       >
         <div
-          className="bg-white rounded-lg shadow-lg p-4 max-w-md w-full relative"
+          className="bg-white rounded-lg shadow-lg p-4 max-w-md w-full relative max-h-[90vh] overflow-y-auto"
           onClick={e => e.stopPropagation()}
         >
           <button
