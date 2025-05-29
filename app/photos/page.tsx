@@ -115,7 +115,7 @@ function Photos() {
           >
             &times;
           </button>
-          <CreateAccount user={user} setUser={setUser} onSuccess={() => setShowAccount(false)} isEditing={true} />
+          <CreateAccount user={user} setUser={setUser} onSuccess={() => setShowAccount(false)} />
         </div>
       </div>
     )}

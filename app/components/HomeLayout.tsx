@@ -92,11 +92,9 @@ export default function HomeLayout(props: {
             {props.noShowFooterImage ? null : <FooterImage /> }
             <footer className="flex justify-end bg-[#879b88]" id="about">
                 <div className="mx-20 my-5">
-                <p>Made by Jack</p>
-                <Link 
-                    href="https://github.com/will-jac/wedding-site" 
-                    // className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-                    rel="noopener noreferrer">Source Code</Link>
+                    <p>Made by Jack</p>
+                    <p><Link href="https://github.com/will-jac/wedding-site" rel="noopener noreferrer">Source Code</Link></p>
+                    <p><Link href="/account">Your Account</Link></p>
                 </div>
             </footer>
         </Layout>

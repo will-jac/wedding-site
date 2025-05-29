@@ -3,36 +3,10 @@
 import { useState, useRef } from 'react';
 import { User, sendLoginEmail } from './user';
 
-export async function createAccountWithProfilePic(user: User, profilePicFile?: File): Promise<User> {
-  // const url = "https://r2-worker.jackawilliams13.workers.dev/createAccount";
-  const url = "https://r2-worker.hannahjackwedding.com/createAccount";
-  const formData = new FormData();
-  formData.append('userName', user.userName);
-  formData.append('email', user.email);
-  formData.append('userId', user.userId ?? "");
-  formData.append('userKey', user.userKey ?? "");
+const url = "https://r2-worker.hannahjackwedding.com/createAccount";
 
-  if (profilePicFile) {
-      formData.append('profilePicture', profilePicFile);
-  }
-  const response = await fetch(url, {
-      method: 'POST',
-      body: formData,
-  });
-  if (!response.ok) {
-      throw new Error(`Failed to create account: ${response.statusText}`);
-  }
-  const body = await response.json();
-
-  if (!user.userKey) {
-    await sendLoginEmail(body as User);
-  }
-  
-  return body as User;
-}
-
-export default function CreateAccount(props: {user: User, setUser: any, onSuccess?: () => void, isEditing?: boolean}) {
-  const {user, setUser, onSuccess, isEditing} = props;
+export default function CreateAccount(props: {user: User, setUser: any, onSuccess?: () => void, showLogout?: boolean}) {
+  const {user, setUser, onSuccess, showLogout} = props;
 
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -44,18 +18,39 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
+    const formData = new FormData();
+    formData.append('userName', user.userName);
+    formData.append('email', user.email);
+    formData.append('userId', user.userId ?? "");
+    formData.append('userKey', user.userKey ?? "");
+
+    if (profilePicFile) {
+        formData.append('profilePicture', profilePicFile);
+    }
+
     try {
-      const u = await createAccountWithProfilePic(JSON.parse(JSON.stringify(user)), profilePicFile || undefined);
-      if (u == null) {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+      setIsLoading(false);
+      if (!response.ok) {
+        if (response.status == 409) {
+          setMessage('An account with that email already exists. Check your email for a login link!');
+          await sendLoginEmail(user as User);
+          return;
+        } 
         setMessage('Failed to create account. Please try again.');
-        setIsLoading(false);
         return;
-      }
+      } 
+      const u = (await response.json()) as User;
       localStorage.setItem('HannahJackWeddingUser', JSON.stringify(u));
       setUser(u);
       if (onSuccess) onSuccess(); // Close modal on success
+
     } catch (error) {
-      setMessage('An error occurred. Please try again. If this persists, please check your email for a login link');
+      setMessage('An unknown error occurred. Please try again. If this persists, please check your email for a login link');
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -77,9 +72,9 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
   };
 
   return <div>
-    {isEditing 
-    ? <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
-    : <h2 className="text-2xl font-bold mb-4">Edit your Account</h2>
+    {user.userKey != null && user.userKey != "" 
+    ? <h2 className="text-2xl font-bold mb-4">Edit your account</h2>
+    : <h2 className="text-2xl font-bold mb-4">Create an Account</h2>
     }
     {isLoading && <div className="text-center text-indigo-600">Loading...</div>}
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -128,5 +123,17 @@ export default function CreateAccount(props: {user: User, setUser: any, onSucces
       </button>
     </form>
     {message}
+    {user.userKey != null && user.userKey != "" && showLogout && (
+      <button
+        type="button"
+        className="w-full mt-4 bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+        onClick={() => {
+          localStorage.removeItem('HannahJackWeddingUser');
+          setUser({userName: "", email: ""});
+        }}
+      >
+        Log out
+      </button>
+    )}
   </div>
 }
