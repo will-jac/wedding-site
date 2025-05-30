@@ -62,6 +62,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
             headers: {
               'x-hjwedding-userKey': user?.userKey ?? "",
               'x-hjwedding-userId': user?.userId ?? "",
+              'x-hjwedding-userName': user?.userName ?? "",
               'caption': captions[index] || '',
               'name': fileNames[index]
             },
@@ -110,6 +111,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
             headers: {
               'x-hjwedding-userKey': user?.userKey ?? "",
               'x-hjwedding-userId': user?.userId ?? "",
+              'x-hjwedding-userName': user?.userName ?? "",
               'caption': captions[index] || '',
               'name': fileNames[index]
             },
