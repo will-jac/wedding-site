@@ -100,6 +100,61 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
     }
   };
 
+
+  const handleSubmit2 = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (photos.length === 0) {
+      setMessage('Please select at least one photo to upload.');
+      return;
+    }
+    setIsLoading(true);
+    setMessage('');
+    try {
+      const fileNames = photos.map(f => f.name);
+      console.log(`uploading   ${Date()}`);
+      // Submit each photo in parallel
+      const responses = await Promise.all(
+        photos.map(async (photo, index) => {
+          const p = await imageCompression(photo, {
+            maxSizeMB: 1, // adjust as needed
+            maxWidthOrHeight: 1920, // adjust as needed
+            useWebWorker: true,
+          });
+          return fetch(url, {
+            method: 'PUT',
+            headers: {
+              'x-hjwedding-userKey': user?.userKey ?? "",
+              'x-hjwedding-userId': user?.userId ?? "",
+              'caption': captions[index] || '',
+              'name': fileNames[index]
+            },
+            body: p,
+          });
+        })
+      );
+      // const responses = await Promise.all(uploadPromises);
+      console.log(`done        ${Date()}`);
+      const allOk = responses.every(r => r.ok);
+      if (allOk) {
+        setMessage('Photos uploaded successfully!');
+        setPhotos([]);
+        setCaptions([]);
+        if (onUpload) {
+          onUpload();
+        } else {
+          router.push('/photos?tab=wedding');
+        }
+      } else {
+        setMessage('Failed to upload one or more photos. Please try again.');
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   return (
     <div className="p-5 max-w-md mx-auto">
       { !userLoaded
@@ -152,7 +207,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
               {isLoading ? 'Uploading...' : 'Submit'}
             </button>
             <button
-              onClick={(e) => handleSubmit(e, false)}
+              onClick={(e) => handleSubmit2(e)}
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               disabled={isLoading}
             >
