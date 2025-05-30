@@ -118,15 +118,21 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
           const { url, key } = await resp.json() // Get URL and the final object key
           console.log(`Received presigned URL for key: ${key}`)
       
+          const p = await imageCompression(photo, {
+            maxSizeMB: 1, // adjust as needed
+            maxWidthOrHeight: 1920, // adjust as needed
+            useWebWorker: true,
+          });
+
           return await fetch(url, {
             method: 'PUT',
-            body: photo,
+            body: p,
             headers: {
               // Content-Type must match what was used to generate the presigned URL if specified
-              'Content-Type': photo.type,
+              'Content-Type': p.type,
               // You might not need 'Content-Length' as fetch often handles it,
               // but some S3-compatible services might require it.
-              'Content-Length': photo.size.toString(),
+              'Content-Length': p.size.toString(),
             },
           });
         })
