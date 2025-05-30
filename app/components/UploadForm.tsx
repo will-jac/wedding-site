@@ -51,7 +51,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       console.log(`uploading   ${Date()}`);
       // Submit each photo in parallel
       const responses = await Promise.all(
-        photos.map(async (photo, index) => {
+        photos.map(async (photo, index) => {          
           const p = await imageCompression(photo, {
             maxSizeMB: 1, // adjust as needed
             maxWidthOrHeight: 1920, // adjust as needed
@@ -106,16 +106,28 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       // Submit each photo in parallel
       const responses = await Promise.all(
         photos.map(async (photo, index) => {
-          return fetch(url, {
+          const resp = await fetch(
+            `https://r2-worker.hannahjackwedding.com/upload?filename=${encodeURIComponent(photo.name)}&contentType=${encodeURIComponent(photo.type)}`,
+            {headers: {'x-hjwedding-userId': user?.userId ?? ""}}
+          )
+          if (!resp.ok) {
+            const errorData = await resp.json()
+            throw new Error(`Failed to get upload URL: ${errorData.error || resp.statusText}`)
+          }
+      
+          const { url, key } = await resp.json() // Get URL and the final object key
+          console.log(`Received presigned URL for key: ${key}`)
+      
+          return await fetch(url, {
             method: 'PUT',
-            headers: {
-              'x-hjwedding-userKey': user?.userKey ?? "",
-              'x-hjwedding-userId': user?.userId ?? "",
-              'x-hjwedding-userName': user?.userName ?? "",
-              'caption': captions[index] || '',
-              'name': fileNames[index]
-            },
             body: photo,
+            headers: {
+              // Content-Type must match what was used to generate the presigned URL if specified
+              'Content-Type': photo.type,
+              // You might not need 'Content-Length' as fetch often handles it,
+              // but some S3-compatible services might require it.
+              'Content-Length': photo.size.toString(),
+            },
           });
         })
       );
