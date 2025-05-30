@@ -38,70 +38,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
     setCaptions((prev) => prev.map((c, i) => (i === idx ? value : c)));
   };
 
-  const handleSubmit = async (e: React.FormEvent, doCompression: boolean = true) => {
-    e.preventDefault();
-    if (photos.length === 0) {
-      setMessage('Please select at least one photo to upload.');
-      return;
-    }
-    setIsLoading(true);
-    setMessage('');
-    try {
-      console.log(`compressing ${Date()}`);
-      // Compress each photo before encoding
-      const fileNames = photos.map(f => f.name);
-      let compressedPhotos = photos;
-      if (doCompression) {
-        compressedPhotos = await Promise.all(
-          photos.map(photo => imageCompression(photo, {
-            maxSizeMB: 1, // adjust as needed
-            maxWidthOrHeight: 1920, // adjust as needed
-            useWebWorker: true,
-          }))
-        );
-      }
-
-      console.log(`uploading   ${Date()}`);
-      // Submit each photo in parallel
-      const uploadPromises = compressedPhotos.map((photo, index) => {
-        const formData = new FormData();
-        formData.append('photo_0', photo);
-        formData.append('caption_0', captions[index] || '');
-        formData.append('name_0', fileNames[index]);
-
-        return fetch(url, {
-          method: 'POST',
-          headers: {
-            'x-hjwedding-userKey': user?.userKey ?? "",
-            'x-hjwedding-userId': user?.userId ?? "",
-          },
-          body: formData,
-        });
-      });
-      const responses = await Promise.all(uploadPromises);
-      console.log(`done        ${Date()}`);
-      const allOk = responses.every(r => r.ok);
-      if (allOk) {
-        setMessage('Photos uploaded successfully!');
-        setPhotos([]);
-        setCaptions([]);
-        if (onUpload) {
-          onUpload();
-        } else {
-          router.push('/photos?tab=wedding');
-        }
-      } else {
-        setMessage('Failed to upload one or more photos. Please try again.');
-      }
-    } catch (error) {
-      setMessage('An error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-
-  const handleSubmit2 = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (photos.length === 0) {
       setMessage('Please select at least one photo to upload.');
@@ -129,6 +66,54 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
               'name': fileNames[index]
             },
             body: p,
+          });
+        })
+      );
+      // const responses = await Promise.all(uploadPromises);
+      console.log(`done        ${Date()}`);
+      const allOk = responses.every(r => r.ok);
+      if (allOk) {
+        setMessage('Photos uploaded successfully!');
+        setPhotos([]);
+        setCaptions([]);
+        if (onUpload) {
+          onUpload();
+        } else {
+          router.push('/photos?tab=wedding');
+        }
+      } else {
+        setMessage('Failed to upload one or more photos. Please try again.');
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit2 = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (photos.length === 0) {
+      setMessage('Please select at least one photo to upload.');
+      return;
+    }
+    setIsLoading(true);
+    setMessage('');
+    try {
+      const fileNames = photos.map(f => f.name);
+      console.log(`uploading   ${Date()}`);
+      // Submit each photo in parallel
+      const responses = await Promise.all(
+        photos.map(async (photo, index) => {
+          return fetch(url, {
+            method: 'PUT',
+            headers: {
+              'x-hjwedding-userKey': user?.userKey ?? "",
+              'x-hjwedding-userId': user?.userId ?? "",
+              'caption': captions[index] || '',
+              'name': fileNames[index]
+            },
+            body: photo,
           });
         })
       );
