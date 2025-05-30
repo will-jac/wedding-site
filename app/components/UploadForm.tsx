@@ -92,6 +92,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
           body: formData,
           // body: gzipped,
         });
+        console.log(`resp............. ${Date()}`)
         if (response.ok) {
           setMessage('Photos uploaded successfully!');
           setPhotos([]);
@@ -135,23 +136,18 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
           useWebWorker: true,
         }))
       );
-      const formData = new FormData();
-      compressedPhotos.forEach((photo, index) => {
-        formData.append(`photo_${index}`, photo);
-        formData.append(`caption_${index}`, captions[index] || '');
-        formData.append(`name_${index}`, fileNames[index]);
-      });  
       // Read all compressed photos as base64 strings
       const photoData = await Promise.all(
         compressedPhotos.map(photo => new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
+          reader.onload = () => resolve(window.btoa(reader.result as string));
+          // reader.onload = () => resolve((reader.result as string).split(',')[1]); // Only base64 part
           reader.onerror = reject;
           reader.readAsDataURL(photo);
         }))
       );
       const payload = {
-        photos: compressedPhotos,
+        photos: photoData,
         captions: captions,
         names: photos.map(p => p.name),
         types: photos.map(p => p.type)
@@ -168,10 +164,11 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
             'Content-Type': 'application/json',
             'Content-Encoding': 'gzip'
           },
-          // body: formData,
-          body: gzipped,
+          body: gzipped, // Send as Uint8Array
         });
+        console.log(`resp............. ${Date()}`)
         if (response.ok) {
+          console.log(response.json());
           setMessage('Photos uploaded successfully!');
           setPhotos([]);
           setCaptions([]);
