@@ -45,7 +45,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       return;
     }
     setIsLoading(true);
-    console.log("starting form....")
+    console.log(`starting form.... ${Date()}`)
     try {
       // Compress each photo before encoding
       const fileNames = photos.map(f => f.name);
@@ -62,7 +62,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
         formData.append(`caption_${index}`, captions[index] || '');
         formData.append(`name_${index}`, fileNames[index]);
       });  
-      // Read all compressed photos as base64 strings
+      // // Read all compressed photos as base64 strings
       // const photoData = await Promise.all(
       //   compressedPhotos.map(photo => new Promise<string>((resolve, reject) => {
       //     const reader = new FileReader();
@@ -80,7 +80,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       // const jsonString = JSON.stringify(payload);
       // const gzipped = gzip(jsonString);
       try {
-        console.log("calling fetch....")
+        console.log(`calling fetch.... ${Date()}`)
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -90,6 +90,86 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
             // 'Content-Encoding': 'gzip'
           },
           body: formData,
+          // body: gzipped,
+        });
+        if (response.ok) {
+          setMessage('Photos uploaded successfully!');
+          setPhotos([]);
+          setCaptions([]);
+          if (onUpload) {
+              onUpload();
+          } else {
+              router.push('/photos?tab=wedding');
+          }
+        } else {
+          setMessage('Failed to upload photos. Please try again.');
+        }
+      } catch (error) {
+        setMessage('An error occurred. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setMessage('An error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  const handleSubmit2 = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (photos.length === 0) {
+      setMessage('Please select at least one photo to upload.');
+      return;
+    }
+    setIsLoading(true);
+    console.log(`starting form.... ${Date()}`)
+    try {
+      // Compress each photo before encoding
+      const fileNames = photos.map(f => f.name);
+      const compressedPhotos = await Promise.all(
+        photos.map(photo => imageCompression(photo, {
+          maxSizeMB: 1, // adjust as needed
+          maxWidthOrHeight: 1920, // adjust as needed
+          useWebWorker: true,
+        }))
+      );
+      const formData = new FormData();
+      compressedPhotos.forEach((photo, index) => {
+        formData.append(`photo_${index}`, photo);
+        formData.append(`caption_${index}`, captions[index] || '');
+        formData.append(`name_${index}`, fileNames[index]);
+      });  
+      // Read all compressed photos as base64 strings
+      const photoData = await Promise.all(
+        compressedPhotos.map(photo => new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(photo);
+        }))
+      );
+      const payload = {
+        photos: compressedPhotos,
+        captions: captions,
+        names: photos.map(p => p.name),
+        types: photos.map(p => p.type)
+      };
+      const jsonString = JSON.stringify(payload);
+      const gzipped = gzip(jsonString);
+      try {
+        console.log(`calling fetch.... ${Date()}`)
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'x-hjwedding-userKey': user?.userKey ?? "",
+            'x-hjwedding-userId': user?.userId ?? "",
+            'Content-Type': 'application/json',
+            'Content-Encoding': 'gzip'
+          },
+          // body: formData,
+          body: gzipped,
         });
         if (response.ok) {
           setMessage('Photos uploaded successfully!');
@@ -165,6 +245,13 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
               disabled={isLoading}
             >
               {isLoading ? 'Uploading...' : 'Submit'}
+            </button>
+            <button
+              onClick={(e) => handleSubmit2(e)}
+              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Uploading...' : 'Submit (v2)'}
             </button>
           </form>
         </>

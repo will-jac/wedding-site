@@ -69,8 +69,9 @@ function NavBar(props: any) {
 }
 
 function Buttons(props: any) {
-  const { navigation, index, images, setIndex, closeModal, currentImage } = props;
-  
+  const { navigation, index, images, setIndex, closeModal, currentImage, users, user, onDelete } = props;
+  const isUploader = user && images[index]?.userId && user.userId === images[index].userId;
+
   return <div className="relative h-full w-full">
   {/* return <div className="relative aspect-[3/2] max-h-full w-full"> */}
     {navigation && (
@@ -106,18 +107,26 @@ function Buttons(props: any) {
             >
                 <OpenInNew className="h-5 w-5" />
             </a>
-        <button
-            onClick={() => downloadPhoto(
-                `https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index].key}`,
-                // `https://r2-worker.jackawilliams13.workers.dev/?key=${images[index].key}`,
-                images[index].key
-              )
-            }
-            className="z-40 rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
-            title="Download fullsize version"
-        >
-            <ArrowDownward  className="h-5 w-5" />
-        </button>
+            <button
+                onClick={() => downloadPhoto(
+                    `https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index].key}`,
+                    images[index].key
+                  )
+                }
+                className="z-40 rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
+                title="Download fullsize version"
+            >
+                <ArrowDownward  className="h-5 w-5" />
+            </button>
+            {isUploader && (
+              <button
+                onClick={() => onDelete(images[index].key)}
+                className="z-40 rounded-full bg-red-600/80 p-2 text-white/90 backdrop-blur-lg transition hover:bg-red-700 hover:text-white"
+                title="Delete this photo"
+              >
+                Delete
+              </button>
+            )}
         </div>
     )}
 
@@ -222,7 +231,7 @@ function MainImage(props: any) {
   </div>
 }
 
-export default function SharedModal(props: SharedModalProps) {
+export default function SharedModal(props: SharedModalProps & { user?: any, onDelete?: (key: string) => void }) {
   const { 
       index,
       images,
@@ -277,7 +286,7 @@ export default function SharedModal(props: SharedModalProps) {
       >
         {/* Buttons + bottom nav bar */}
         <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-          {loaded && <Buttons {...props} currentImage={currentImage} navigation={navigation}/>} 
+          {loaded && <Buttons {...props} currentImage={currentImage} navigation={navigation} user={props.user} onDelete={props.onDelete} />} 
           {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>} 
         </div>
         <MainImage {...props} setLoaded={setLoaded} users={props.users} />

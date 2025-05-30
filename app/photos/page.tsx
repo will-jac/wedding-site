@@ -114,6 +114,30 @@ function Photos() {
   // TODO: show a selected photo in a modal with more resolution
   // TODO: let people like photos and have that affect the sorting?
 
+  async function handleDeletePhoto(photoKey: string) {
+    if (!user?.userId || !user?.userKey) return;
+    if (!window.confirm('Are you sure you want to delete this photo? This cannot be undone.')) return;
+    try {
+      const resp = await fetch('https://r2-worker.hannahjackwedding.com/', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-hjwedding-userKey': user.userKey,
+          'x-hjwedding-userId': user.userId,
+        },
+        body: JSON.stringify({ key: photoKey, folder }),
+      });
+      if (resp.ok) {
+        setIndex(null);
+        getImages(folder).then(setImages);
+      } else {
+        alert('Failed to delete photo.');
+      }
+    } catch (e) {
+      alert('Error deleting photo.');
+    }
+  }
+
   return <HomeLayout isGalleryWidth={true}>
     {/* User icon at top right */}
     <div className="flex justify-end items-center px-5 pt-2">
