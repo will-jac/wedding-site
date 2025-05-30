@@ -243,13 +243,13 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
             >
               {isLoading ? 'Uploading...' : 'Submit'}
             </button>
-            <button
+            {/* <button
               onClick={(e) => handleSubmit2(e)}
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               disabled={isLoading}
             >
               {isLoading ? 'Uploading...' : 'Submit (v2)'}
-            </button>
+            </button> */}
           </form>
         </>
       }
