@@ -38,7 +38,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
     setCaptions((prev) => prev.map((c, i) => (i === idx ? value : c)));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, doCompression: boolean = true) => {
     e.preventDefault();
     if (photos.length === 0) {
       setMessage('Please select at least one photo to upload.');
@@ -50,13 +50,17 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       console.log(`compressing ${Date()}`);
       // Compress each photo before encoding
       const fileNames = photos.map(f => f.name);
-      const compressedPhotos = await Promise.all(
-        photos.map(photo => imageCompression(photo, {
-          maxSizeMB: 1, // adjust as needed
-          maxWidthOrHeight: 1920, // adjust as needed
-          useWebWorker: true,
-        }))
-      );
+      let compressedPhotos = photos;
+      if (doCompression) {
+        compressedPhotos = await Promise.all(
+          photos.map(photo => imageCompression(photo, {
+            maxSizeMB: 1, // adjust as needed
+            maxWidthOrHeight: 1920, // adjust as needed
+            useWebWorker: true,
+          }))
+        );
+      }
+
       console.log(`uploading   ${Date()}`);
       // Submit each photo in parallel
       const uploadPromises = compressedPhotos.map((photo, index) => {
@@ -147,13 +151,13 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
             >
               {isLoading ? 'Uploading...' : 'Submit'}
             </button>
-            {/* <button
-              onClick={(e) => handleSubmit2(e)}
+            <button
+              onClick={(e) => handleSubmit(e, false)}
               className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               disabled={isLoading}
             >
               {isLoading ? 'Uploading...' : 'Submit (v2)'}
-            </button> */}
+            </button>
           </form>
         </>
       }
