@@ -254,7 +254,7 @@ function Photos() {
     {index != null && <CaroselView 
       images={images} 
       users={users}
-      userId={user.userId}
+      userId={user?.userId ?? ""}
       index={index} 
       setIndex={changePhotoId} onClose={onClose}
       navigation={!isMobile}
