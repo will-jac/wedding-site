@@ -118,8 +118,8 @@ function Photos() {
     if (!user?.userId || !user?.userKey) return;
     if (!window.confirm('Are you sure you want to delete this photo? This cannot be undone.')) return;
     try {
-      const resp = await deleteImage(photoKey, user.userId, user.userKey);
-      if (resp.ok) {
+      const isDeleted = await deleteImage(photoKey, user.userId ?? "", user.userKey ?? "");
+      if (isDeleted) {
         setIndex(null);
         getImages(folder).then(setImages);
       } else {
@@ -127,6 +127,7 @@ function Photos() {
       }
     } catch (e) {
       alert('Error deleting photo.');
+      console.log(e);
     }
   }
 
