@@ -19,14 +19,14 @@ function Photos() {
   const [images, setImages] = useState(Array(20).fill({}) as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
   const [view, setView] = useState<'gallery' | 'grid'>('gallery');
-  const [folder, setFolder] = useState<'engagement' | 'wedding'>('engagement');
+  const [folder, setFolder] = useState<'engagement' | 'wedding'>('wedding');
   const [showUpload, setShowUpload] = useState(false);
   const [showAccount, setShowAccount] = useState(false); // NEW: modal for account
   const [user, setUser] = useState<User>({userName: "", email: ""});
   const [users, setUsers] = useState<Record<string, User>>({});
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [showWeddingPhotos, setShowWeddingPhotos] = useState(false);
+  const [showWeddingPhotos, setShowWeddingPhotos] = useState(true);
 
   function changePhotoId(newIndex: number) {
     if (newIndex < 0 || newIndex >= images.length) return;
