@@ -70,6 +70,7 @@ export default function Solutions() {
                     </div>
                 </Fragment>
             ))}
+            <p>We are very grateful to Chris Curtis, Ben Curtis, and Nafis Zaman for creating and testing these fantastic puzzles! We hope you enjoyed them as much as we did.</p>
         </HomeLayout>
     );
 }
