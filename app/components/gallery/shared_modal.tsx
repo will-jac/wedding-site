@@ -69,8 +69,8 @@ function NavBar(props: any) {
 }
 
 function Buttons(props: any) {
-  const { navigation, index, images, setIndex, closeModal, currentImage, users, user, onDelete } = props;
-  const isUploader = user && images[index]?.userId && user.userId === images[index].userId;
+  const { navigation, index, images, setIndex, closeModal, currentImage, userId, onDelete } = props;
+  const isUploader = userId && images[index]?.userId;
 
   return <div className="relative h-full w-full">
   {/* return <div className="relative aspect-[3/2] max-h-full w-full"> */}
@@ -231,7 +231,7 @@ function MainImage(props: any) {
   </div>
 }
 
-export default function SharedModal(props: SharedModalProps & { user?: any, onDelete?: (key: string) => void }) {
+export default function SharedModal(props: SharedModalProps & { userId: string, onDelete?: (key: string) => void }) {
   const { 
       index,
       images,
@@ -243,6 +243,7 @@ export default function SharedModal(props: SharedModalProps & { user?: any, onDe
       landscapeLoader,
       portraitLoader,
       navBarLoader,
+      onDelete,
   } = props;
 
   const [loaded, setLoaded] = useState(false);
@@ -286,7 +287,10 @@ export default function SharedModal(props: SharedModalProps & { user?: any, onDe
       >
         {/* Buttons + bottom nav bar */}
         <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center">
-          {loaded && <Buttons {...props} currentImage={currentImage} navigation={navigation} user={props.user} onDelete={props.onDelete} />} 
+          {loaded && <Buttons {...props} 
+            currentImage={currentImage} navigation={navigation} userId={props.userId} 
+            onDelete={props.onDelete} 
+          />} 
           {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>} 
         </div>
         <MainImage {...props} setLoaded={setLoaded} users={props.users} />

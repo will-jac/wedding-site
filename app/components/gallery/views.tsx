@@ -148,9 +148,9 @@ export function GalleryView(props: { images: ImageProps[], setPhotoId: (id: stri
 export function CaroselView(props: {
   images: ImageProps[]; index: number; navigation: boolean,
   setIndex: (n: number) => void; onClose: () => void; onDelete: (photoKey: string) => void;
-  users?: Record<string,User>;
+  users?: Record<string,User>; userId: string;
 }) {
-  const { images, index, navigation, setIndex, onClose, onDelete, users } = props;
+  const { images, index, navigation, setIndex, onClose, onDelete, users, userId } = props;
   const image = images[index];
 
   return (
@@ -158,6 +158,7 @@ export function CaroselView(props: {
       <Modal
         images={images}
         users={users}
+        userId={userId}
         index={index}
         setIndex={setIndex}
         onClose={onClose}
