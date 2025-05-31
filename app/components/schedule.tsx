@@ -1,9 +1,11 @@
+import { Link } from "@mui/material";
+
 export default function Schedule() {
     return <section id="schedule" className="pt-5">
         <h3 className="text-2xl font-extrabold text-[#879b88]">Schedule of Events</h3>
         <p className="indent-10"><b>Saturday, May 31:</b></p>
         <ul>
-            <li>9:00 AM - Optional walk through the UW Arboretum (all are welcome!)</li>
+            <li>9:00 AM - Optional walk through the <Link href="https://maps.app.goo.gl/aAgrJAFJ7D298wi59">UW Arboretum</Link> (all are welcome!)</li>
             <li>5:00 PM - Rehearsal dinner (wedding party and immediate family only)</li>
             <li>7:00 PM - Welcome party at Vilas Park (all are welcome!)</li>
         </ul>
