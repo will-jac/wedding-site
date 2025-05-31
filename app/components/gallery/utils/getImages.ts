@@ -110,7 +110,7 @@ export default async function getImages(prefix="engagement") {
 }
 
 export async function deleteImage(imageKey: string, userId: string, userKey: string) {
-    console.log(`deleting ${imageKey} ${userId} ${userKey}`);
+    // console.log(`deleting ${imageKey} ${userId} ${userKey}`);
     const resp = await fetch(`https://r2-worker.hannahjackwedding.com/${imageKey}`,
         {
             method: "DELETE",
@@ -120,6 +120,6 @@ export async function deleteImage(imageKey: string, userId: string, userKey: str
             }
         }
     )
-    console.log(resp);
+    // console.log(resp);
     return resp.ok;
 }
