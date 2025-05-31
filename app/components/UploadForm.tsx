@@ -167,6 +167,7 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
         ? <CreateAccount user={user} setUser={setUser} onSuccess={() => setUserLoaded(true)}/>
         : <>
         <h1 className="text-2xl font-bold mb-4">Add Your Photos</h1>
+        <div className="mb-2 text-sm text-gray-500 text-center">Be patient! For best results, please upload no more than 10 photos at a time.</div>
         {isLoading && <div className="text-center text-indigo-600">Uploading...</div>}
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>

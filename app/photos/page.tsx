@@ -15,12 +15,10 @@ import CreateAccount from '../components/CreateAccount';
 import { getUser, User } from '../components/user';
 
 function Photos() {
-  // const { isLandscape } = useMobileOrientation()
-  const isLandscape = false;
 
   const [images, setImages] = useState(Array(20).fill({}) as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
-  const [view, setView] = useState('gallery');
+  const [view, setView] = useState<'gallery' | 'grid'>('gallery');
   const [folder, setFolder] = useState<'engagement' | 'wedding'>('engagement');
   const [showUpload, setShowUpload] = useState(false);
   const [showAccount, setShowAccount] = useState(false); // NEW: modal for account
@@ -64,8 +62,12 @@ function Photos() {
   useEffect(() => {
     // Set view from ?tab= param if present
     const tab = searchParams.get('tab');
+    const v = searchParams.get('view');
     if (tab === 'wedding' || tab === 'engagement') {
       setFolder(tab);
+    }
+    if (v === 'grid' || v === 'gallery') {
+      setView(v);
     }
   }, [searchParams]);
 
@@ -209,19 +211,20 @@ function Photos() {
       <div className="flex gap-1 items-center ml-auto">
         <Button
           variant={view === 'grid' ? 'contained' : 'outlined'}
-          onClick={() => setView('grid')}
+          onClick={() => {
+            setView('grid');
+            router.replace(`?tab=${folder}&view=grid`, { scroll: false });
+          }}
           sx={{ minWidth: 24, padding: 0.5, textTransform: 'none' }}
         >
           <GridIcon />
-          {/* <span role="img" aria-label="grid">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-grid" viewBox="0 0 18 18">
-              <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
-            </svg>
-          </span> */}
         </Button>
         <Button
           variant={view === 'gallery' ? 'contained' : 'outlined'}
-          onClick={() => setView('gallery')}
+          onClick={() => {
+            setView('gallery');
+            router.replace(`?tab=${folder}&view=gallery`, { scroll: false });
+          }}
           sx={{ minWidth: 24, padding: 1, textTransform: 'none' }}
         >
           <span role="img" aria-label="gallery">
