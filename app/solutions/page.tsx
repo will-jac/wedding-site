@@ -18,7 +18,7 @@ export default function Solutions() {
 
     const puzzleSolutions: PuzzleSolution[] = [
         {
-            title: 'Down the Aisle',
+            title: 'Matri-Mini Crossword',
             image: solutionMini,
         },
         {
