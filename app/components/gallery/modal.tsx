@@ -10,7 +10,7 @@ import { User } from "../user";
 
 export default function Modal(props: {
   images: ImageProps[]; index: number; navigation: boolean;
-  setIndex: (n: number) => void, onClose: () => void; onDelete: () => void;
+  setIndex: (n: number) => void, onClose: () => void; onDelete: (photoKey: string) => void;
   portraitLoader: any, landscapeLoader: any; navBarLoader: any;
   users?: Record<string, User>;
 }) {

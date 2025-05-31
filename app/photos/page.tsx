@@ -257,7 +257,7 @@ function Photos() {
       index={index} 
       setIndex={changePhotoId} onClose={onClose}
       navigation={!isMobile}
-      onDelete={handleDeletePhoto}
+      onDelete={(key) => handleDeletePhoto(key)}
     />}
       
   </HomeLayout>

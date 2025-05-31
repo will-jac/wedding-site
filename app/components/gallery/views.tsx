@@ -147,7 +147,7 @@ export function GalleryView(props: { images: ImageProps[], setPhotoId: (id: stri
 
 export function CaroselView(props: {
   images: ImageProps[]; index: number; navigation: boolean,
-  setIndex: (n: number) => void; onClose: () => void; onDelete: () => void;
+  setIndex: (n: number) => void; onClose: () => void; onDelete: (photoKey: string) => void;
   users?: Record<string,User>;
 }) {
   const { images, index, navigation, setIndex, onClose, onDelete, users } = props;
