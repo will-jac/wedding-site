@@ -108,3 +108,15 @@ export default async function getImages(prefix="engagement") {
     }
     return await getImagesFromWorker(prefix)
 }
+
+export async function deleteImage(imageKey: string, userId: string, userKey: string) {
+    return await fetch(`https://r2-worker.hannahjackwedding.com/${imageKey}`,
+        {
+            method: "DELETE",
+            headers: {
+                "x-hjwedding-userId": userId,
+                "x-hjwedding-userKey": userKey
+            }
+        }
+    )
+}

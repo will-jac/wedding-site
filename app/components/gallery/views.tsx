@@ -147,12 +147,11 @@ export function GalleryView(props: { images: ImageProps[], setPhotoId: (id: stri
 
 export function CaroselView(props: {
   images: ImageProps[]; index: number; navigation: boolean,
-  setIndex: (n: number) => void; onClose: () => void;
-  users?: Record<string,User>
+  setIndex: (n: number) => void; onClose: () => void; onDelete: () => void;
+  users?: Record<string,User>;
 }) {
-  const { images, index, navigation, setIndex, onClose, users } = props;
+  const { images, index, navigation, setIndex, onClose, onDelete, users } = props;
   const image = images[index];
-  const user = users && image.userId ? users[image.userId] : null;
 
   return (
     <div className="relative">
@@ -162,6 +161,7 @@ export function CaroselView(props: {
         index={index}
         setIndex={setIndex}
         onClose={onClose}
+        onDelete={onDelete}
         portraitLoader={portraitLoader}
         landscapeLoader={landscapeLoader}
         navBarLoader={navBarCloudflareLoader}

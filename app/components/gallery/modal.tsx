@@ -10,12 +10,12 @@ import { User } from "../user";
 
 export default function Modal(props: {
   images: ImageProps[]; index: number; navigation: boolean;
-  setIndex: (n: number) => void, onClose: () => void;
+  setIndex: (n: number) => void, onClose: () => void; onDelete: () => void;
   portraitLoader: any, landscapeLoader: any; navBarLoader: any;
   users?: Record<string, User>;
 }) {
   const {
-    images, users, index, navigation, setIndex, onClose, portraitLoader, landscapeLoader, navBarLoader
+    images, users, index, navigation, setIndex, onClose, onDelete, portraitLoader, landscapeLoader, navBarLoader
   } = props;
 
   let overlayRef = useRef<HTMLDivElement>(null);
@@ -63,6 +63,7 @@ export default function Modal(props: {
           images={images}
           setIndex={setIndex}
           closeModal={onClose}
+          onDelete={onDelete}
           navigation={navigation}
           portraitLoader={portraitLoader}
           landscapeLoader={landscapeLoader}

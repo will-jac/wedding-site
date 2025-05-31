@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 import { Button, ToggleButton, ToggleButtonGroup, Select, MenuItem } from "@mui/material";
 import { useSearchParams, useRouter } from 'next/navigation';
 
-import getImages, { getImagesFromCloudflare, getImagesFromKV, getUsers } from "../components/gallery/utils/getImages";
+import getImages, { getImagesFromCloudflare, getImagesFromKV, getUsers, deleteImage } from "../components/gallery/utils/getImages";
 import HomeLayout from '../components/HomeLayout';
 import { GridView, GalleryView, CaroselView, GridIcon, UserProfile } from "../components/gallery/views";
 
@@ -118,15 +118,7 @@ function Photos() {
     if (!user?.userId || !user?.userKey) return;
     if (!window.confirm('Are you sure you want to delete this photo? This cannot be undone.')) return;
     try {
-      const resp = await fetch('https://r2-worker.hannahjackwedding.com/', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-hjwedding-userKey': user.userKey,
-          'x-hjwedding-userId': user.userId,
-        },
-        body: JSON.stringify({ key: photoKey, folder }),
-      });
+      const resp = await deleteImage(photoKey, user.userId, user.userKey);
       if (resp.ok) {
         setIndex(null);
         getImages(folder).then(setImages);
@@ -265,6 +257,7 @@ function Photos() {
       index={index} 
       setIndex={changePhotoId} onClose={onClose}
       navigation={!isMobile}
+      onDelete={handleDeletePhoto}
     />}
       
   </HomeLayout>
