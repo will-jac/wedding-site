@@ -8,13 +8,14 @@ import {
 } from "@mui/icons-material";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "./utils/animationVariants";
 import { range } from "./utils/range";
 import type { ImageProps, SharedModalProps } from "./utils/types";
 import { rgbDataURL, UserProfile } from "./views";
 import downloadPhoto from "./utils/downloadPhoto";
+import { canDelete } from "./utils/getImages";
 
 function NavBar(props: any) {
   const { index, images, setPhotoId, navBarLoader, filteredImages } = props;
@@ -70,7 +71,13 @@ function NavBar(props: any) {
 
 function Buttons(props: any) {
   const { navigation, index, images, setIndex, closeModal, currentImage, userId, onDelete } = props;
-  const isUploader = userId && images[index]?.userId;
+  const [showDelete, setShowDelete] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setShowDelete(await canDelete(images[index]?.userId, userId));
+    })();
+  }, [userId]);
 
   return <div className="relative h-full w-full">
   {/* return <div className="relative aspect-[3/2] max-h-full w-full"> */}
@@ -118,7 +125,7 @@ function Buttons(props: any) {
             >
                 <ArrowDownward  className="h-5 w-5" />
             </button>
-            {isUploader && (
+            {showDelete && (
               <button
                 onClick={() => onDelete(images[index].key)}
                 className="z-40 rounded-full bg-red-600/80 p-2 text-white/90 backdrop-blur-lg transition hover:bg-red-700 hover:text-white"

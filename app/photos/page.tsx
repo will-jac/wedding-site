@@ -12,7 +12,7 @@ import { GridView, GalleryView, CaroselView, GridIcon, UserProfile } from "../co
 import { ImageProps } from "../components/gallery/utils/types";
 import UploadForm from '../components/UploadForm';
 import CreateAccount from '../components/CreateAccount';
-import { User } from '../components/user';
+import { getUser, User } from '../components/user';
 
 function Photos() {
   // const { isLandscape } = useMobileOrientation()
@@ -20,7 +20,7 @@ function Photos() {
 
   const [images, setImages] = useState(Array(20).fill({}) as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
-  const [view, setView] = useState(isMobile ? 'gallery' : 'grid');
+  const [view, setView] = useState('gallery');
   const [folder, setFolder] = useState<'engagement' | 'wedding'>('engagement');
   const [showUpload, setShowUpload] = useState(false);
   const [showAccount, setShowAccount] = useState(false); // NEW: modal for account
@@ -74,7 +74,6 @@ function Photos() {
     if (stored) {
       try {
         setUser(JSON.parse(stored));
-        console.log("set user");
         setShowWeddingPhotos(true);
       } catch {
         console.log("failed to fetch user");
@@ -83,11 +82,20 @@ function Photos() {
       console.log("failed to fetch user");
     }
 
-    const fetchUser = async () => {
+    const fetchUsers = async () => {
       const users = await getUsers();
-      console.log("users:");
-      console.log(users);
       setUsers(users);
+    };
+    fetchUsers();
+
+    const fetchUser = async () => {
+      if (user.userId != null && user.userKey != null) {
+        const u = await getUser(user.userId, user.userKey);
+        if (u) {
+          setUser(u);
+          localStorage.setItem('HannahJackWeddingUser', JSON.stringify(u));
+        }
+      }
     };
     fetchUser();
     

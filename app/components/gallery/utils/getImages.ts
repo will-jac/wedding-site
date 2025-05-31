@@ -123,3 +123,7 @@ export async function deleteImage(imageKey: string, userId: string, userKey: str
     // console.log(resp);
     return resp.ok;
 }
+
+export async function canDelete(imageUserId: string, userId: string) {
+    return (userId === imageUserId) || (userId == process.env.ADMIN_ID);
+}
