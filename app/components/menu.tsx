@@ -22,6 +22,7 @@ export default function Menu() {
         <Button href="photos">Photos</Button>
         <Button href="travel">Travel</Button>
         <Button href="wedding-party">Wedding Party</Button>
+        <Button href="honeymoon">Honeymoon</Button>
       </ThemeProvider>
     </Stack>
   </Stack>
