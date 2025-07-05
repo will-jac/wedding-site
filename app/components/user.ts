@@ -29,7 +29,7 @@ export async function sendLoginEmail(user: User) {
         }
     )).json();
 
-    const loginUrl = `https://hannahjackwedding.com/login?userId=${encodeURIComponent(userToSendTo.userId ?? "")}&userKey=${encodeURIComponent(user.userKey ?? "")}`;
+    const loginUrl = `https://hannahjackwedding.com/login?userId=${encodeURIComponent(userToSendTo.userId ?? "")}&userKey=${encodeURIComponent(userToSendTo.userKey ?? "")}`;
     const subject = "Hannah & Jack Wedding Login Link";
     const html = `<div>Hi ${user.userName},<br/><br/>Thank you for creating an account!<br/><br/>You can upload your photos at any time using this link:<br/><a href='${loginUrl}'>Login Link</a><br/><br/>If you did not request this, you can ignore this email.<br/><br/>- Hannah & Jack</div>`;
     const text = `Hi ${user.userName},\n\nThank you for creating an account!\n\nYou can upload your photos at any time using this link:\n${loginUrl}\n\nIf you did not request this, you can ignore this email.\n\n- Hannah & Jack`;
