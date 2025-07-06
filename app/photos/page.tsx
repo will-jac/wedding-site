@@ -93,7 +93,7 @@ function Photos() {
     } else if (storedSecret) {
       setSecretKey(storedSecret);
       setShowWeddingPhotos(true);
-      document.cookie = `x-hjwedding-photoKey = ${storedSecret}; Secure; domain=hannahjackwedding.com`;
+      document.cookie = `x-hjwedding-photos = ${storedSecret}; Secure; domain=hannahjackwedding.com`;
     } else {
       setShowWeddingPhotos(false);
     }
@@ -169,6 +169,7 @@ function Photos() {
       const data = await res.json();
       if (data.success && data.secretKey) {
         localStorage.setItem('HannahJackWeddingPhotosSecretKey', data.secretKey);
+        document.cookie = `x-hjwedding-photos = ${data.secretKey}; Secure; domain=hannahjackwedding.com`;
         setSecretKey(data.secretKey);
         setShowWeddingPhotos(true);
       } else {
