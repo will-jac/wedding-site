@@ -5,6 +5,7 @@ const SECRET_KEY = process.env.PHOTOS_SECRET_KEY || '';
 
 export async function POST(req: NextRequest) {
   const { password } = await req.json();
+  console.log(`got: ${password}, compare: ${PASSWORD}`);
   if (password === PASSWORD) {
     return NextResponse.json({ success: true, secretKey: SECRET_KEY });
   } else {

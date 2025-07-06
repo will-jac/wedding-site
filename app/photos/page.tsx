@@ -79,7 +79,7 @@ function Photos() {
 
   useEffect(() => {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('HannahJackWeddingUser') : null;
-    const storedSecret = typeof window !== 'undefined' ? localStorage.getItem('HannahJackWweddingPhotosSecretKey') : null;
+    const storedSecret = typeof window !== 'undefined' ? localStorage.getItem('HannahJackWeddingPhotosSecretKey') : null;
     if (stored) {
       try {
         let user: User = JSON.parse(stored);
@@ -168,7 +168,7 @@ function Photos() {
       });
       const data = await res.json();
       if (data.success && data.secretKey) {
-        localStorage.setItem('HJW_PhotosSecretKey', data.secretKey);
+        localStorage.setItem('HannahJackWeddingPhotosSecretKey', data.secretKey);
         setSecretKey(data.secretKey);
         setShowWeddingPhotos(true);
       } else {
