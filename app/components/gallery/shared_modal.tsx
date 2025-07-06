@@ -298,7 +298,7 @@ export default function SharedModal(props: SharedModalProps & { userId: string, 
             currentImage={currentImage} navigation={navigation} userId={props.userId} 
             onDelete={props.onDelete} 
           />} 
-          {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>} 
+          {/* {navigation && <NavBar {...props} filteredImages={filteredImages} setPhotoId={setPhotoId}/>}  */}
         </div>
         <MainImage {...props} setLoaded={setLoaded} users={props.users} />
       </div>

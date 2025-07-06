@@ -17,9 +17,11 @@ import { getUser, User } from '../components/user';
 function Photos() {
 
   const [images, setImages] = useState(Array(20).fill({}) as ImageProps[]);
+  // const [gridImages, setGridImages] = useState(Array(20).fill({}) as ImageProps[]);
+  // const [fullsizeImages, setFullSizeImages] = useState(Array(20).fill({}) as ImageProps[]);
   const [index, setIndex] = useState(null as number | null); // currently selected photo
   const [view, setView] = useState<'gallery' | 'grid'>('gallery');
-  const [folder, setFolder] = useState<'engagement' | 'wedding'>('wedding');
+  const [folder, setFolder] = useState<'engagement' | 'gallery' | 'wedding'>('wedding');
   const [showUpload, setShowUpload] = useState(false);
   const [showAccount, setShowAccount] = useState(false); // NEW: modal for account
   const [user, setUser] = useState<User>({userName: "", email: ""});
@@ -27,6 +29,10 @@ function Photos() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [showWeddingPhotos, setShowWeddingPhotos] = useState(true);
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [password, setPassword] = useState('');
+  const [secretKey, setSecretKey] = useState<string | null>(null);
 
   function changePhotoId(newIndex: number) {
     if (newIndex < 0 || newIndex >= images.length) return;
@@ -63,7 +69,7 @@ function Photos() {
     // Set view from ?tab= param if present
     const tab = searchParams.get('tab');
     const v = searchParams.get('view');
-    if (tab === 'wedding' || tab === 'engagement') {
+    if (tab === 'gallery' || tab === 'engagement' || tab === 'wedding') {
       setFolder(tab);
     }
     if (v === 'grid' || v === 'gallery') {
@@ -73,15 +79,23 @@ function Photos() {
 
   useEffect(() => {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('HannahJackWeddingUser') : null;
+    const storedSecret = typeof window !== 'undefined' ? localStorage.getItem('HannahJackWweddingPhotosSecretKey') : null;
     if (stored) {
       try {
-        setUser(JSON.parse(stored));
+        let user: User = JSON.parse(stored);
+        setUser(user);
         setShowWeddingPhotos(true);
+        document.cookie = `x-hjwedding-userId = ${user.userId}; Secure; domain=hannahjackwedding.com`;
+        document.cookie = `x-hjwedding-userKey = ${user.userKey}; Secure; domain=hannahjackwedding.com`;
       } catch {
         console.log("failed to fetch user");
       }
+    } else if (storedSecret) {
+      setSecretKey(storedSecret);
+      setShowWeddingPhotos(true);
+      document.cookie = `x-hjwedding-photoKey = ${storedSecret}; Secure; domain=hannahjackwedding.com`;
     } else {
-      console.log("failed to fetch user");
+      setShowWeddingPhotos(false);
     }
 
     const fetchUsers = async () => {
@@ -141,6 +155,61 @@ function Photos() {
     }
   }
 
+  // Password auth handler
+  async function handlePasswordSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      const res = await fetch('/api/photos-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      const data = await res.json();
+      if (data.success && data.secretKey) {
+        localStorage.setItem('HJW_PhotosSecretKey', data.secretKey);
+        setSecretKey(data.secretKey);
+        setShowWeddingPhotos(true);
+      } else {
+        setAuthError('Invalid password');
+      }
+    } catch (err) {
+      setAuthError('Server error');
+    } finally {
+      setAuthLoading(false);
+    }
+  }
+
+  if (!showWeddingPhotos) {
+    return (
+      <HomeLayout isGalleryWidth={true}>
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <form onSubmit={handlePasswordSubmit} className="bg-white p-6 rounded shadow max-w-xs w-full">
+            <h2 className="text-lg font-bold mb-4">Enter Password to View Photos</h2>
+            <input
+              type="password"
+              className="border rounded px-3 py-2 w-full mb-2"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              disabled={authLoading}
+              required
+            />
+            {authError && <div className="text-red-500 text-sm mb-2">{authError}</div>}
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+              disabled={authLoading}
+            >
+              {authLoading ? 'Verifying...' : 'Submit'}
+            </button>
+          </form>
+        </div>
+      </HomeLayout>
+    );
+  }
+
   return <HomeLayout isGalleryWidth={true}>
     {/* User icon at top right */}
     <div className="flex justify-end items-center px-5 pt-2">
@@ -173,7 +242,7 @@ function Photos() {
           <Select
             value={folder}
             onChange={(e) => {
-              const value = e.target.value as 'engagement' | 'wedding';
+              const value = e.target.value as 'engagement' | 'wedding' | 'gallery';
               setFolder(value);
               router.replace(`?tab=${value}`, { scroll: false });
             }}
@@ -182,8 +251,9 @@ function Photos() {
           >
             <MenuItem value="engagement" sx={{ fontSize: 14, minHeight: 32 }}>Engagement</MenuItem>
             <MenuItem value="wedding" sx={{ fontSize: 14, minHeight: 32 }}>Wedding</MenuItem>
+            <MenuItem value="gallery" sx={{ fontSize: 14, minHeight: 32 }}>Gallery</MenuItem>
           </Select>
-          {folder === 'wedding' 
+          {folder === 'gallery' 
             ? <>
               <Button
                 variant={showUpload ? 'contained' : 'outlined'}

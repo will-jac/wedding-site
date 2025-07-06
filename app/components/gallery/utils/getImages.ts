@@ -68,8 +68,16 @@ export async function getImagesFromKV(bucket: string) {
     return images;
 }
 
-export async function getImagesFromWorker(prefix: string = "") {
-    const resp = await fetch("https://r2-worker.hannahjackwedding.com?prefix=" + prefix, {cache: 'no-store'});
+export async function getImagesFromWorker(prefix: string = "", cache=true) {
+    const resp = await fetch(
+        "https://r2-worker.hannahjackwedding.com?prefix=" + prefix,
+        {
+            cache: cache ? "default" : "no-cache",
+            headers: {
+                "x-hjwedding-admin": process.env.ADMIN_API_KEY ?? ""
+            }
+        }
+    );
     // console.log(resp);
     const imgList: ImageProps[] = (await resp.json()).map((obj: any) => (
         { 
@@ -98,14 +106,6 @@ export async function getUsers() {
 }
 
 export default async function getImages(prefix="engagement") {
-    // let images = await getImagesFromKV(bucket)
-    // if (images == null || images.length == 0)
-    // {
-    //     return getImagesFromCloudflare(bucket);
-    // }
-    if (prefix == "wedding") {
-        prefix = "gallery";
-    }
     return await getImagesFromWorker(prefix)
 }
 
@@ -125,5 +125,7 @@ export async function deleteImage(imageKey: string, userId: string, userKey: str
 }
 
 export async function canDelete(imageUserId: string, userId: string) {
-    return (userId === imageUserId) || (userId == process.env.ADMIN_ID);
+    return (imageUserId != null && imageUserId != "") && 
+        (userId != null && userId != "") && 
+        ((userId === imageUserId) || (userId == process.env.ADMIN_ID));
 }

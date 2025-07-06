@@ -24,6 +24,8 @@ export default function UploadForm({ onUpload }: { onUpload?: () => void }) {
       try {
         setUser(JSON.parse(stored));
         setUserLoaded(true);
+        document.cookie = `x-hjwedding-userId = ${user.userId}; Secure; domain=hannahjackwedding.com`;
+        document.cookie = `x-hjwedding-userKey = ${user.userKey}; Secure; domain=hannahjackwedding.com`;
       } catch {
         console.log("error loading user" + stored)
       }

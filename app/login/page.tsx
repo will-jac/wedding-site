@@ -17,6 +17,8 @@ function LoginHandler() {
         const user = await getUser(userId, userKey);
         // Save credentials to localStorage for future use
         localStorage.setItem('HannahJackWeddingUser', JSON.stringify(user));
+        document.cookie = `x-hjwedding-userId = ${user.userId}; Secure; domain=hannahjackwedding.com`;
+        document.cookie = `x-hjwedding-userKey = ${user.userKey}; Secure; domain=hannahjackwedding.com`;
         // Optionally, redirect to the upload page or show a success message
         router.replace('/upload');
       })();
