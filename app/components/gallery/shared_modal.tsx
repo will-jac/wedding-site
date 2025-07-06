@@ -106,7 +106,7 @@ function Buttons(props: any) {
     {currentImage == null ? null :  (
         <div className="z-40 absolute top-0 right-0 flex items-center gap-2 p-3 text-white">
             <a
-                href={`https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index].key}`}
+                href={`https://photos.hannahjackwedding.com/${images[index].key}`}
                 className="rounded-full bg-black/50 p-2 text-white/75 backdrop-blur-lg transition hover:bg-black/75 hover:text-white"
                 target="_blank"
                 title="Open fullsize version"
@@ -116,7 +116,7 @@ function Buttons(props: any) {
             </a>
             <button
                 onClick={() => downloadPhoto(
-                    `https://photos.hannahjackwedding.com/cdn-cgi/image//${images[index].key}`,
+                    `https://photos.hannahjackwedding.com/${images[index].key}`,
                     images[index].key
                   )
                 }

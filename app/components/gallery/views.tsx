@@ -35,33 +35,24 @@ function weddingLoaderFactory(prefix: string = '') {
   ) =>{
     if (!src || !src.includes("/"))
     {
-      return `https://r2-worker.hannahjackwedding.com/?key=${src}`;
+      return `https://r2-worker.hannahjackwedding.com/${src}`;
     }
     let src_prefix = src.slice(0,src.indexOf("/"));
     if (src_prefix === "gallery")
     {
-      return `https://r2-worker.hannahjackwedding.com/?key=${src}`;
+      return `https://r2-worker.hannahjackwedding.com/${src}`;
     }
     src = src.slice(src.indexOf("/")+1);
 
-    return `https://r2-worker.hannahjackwedding.com/?key=${src_prefix}${prefix}/${src}`;
+    return `https://r2-worker.hannahjackwedding.com/${src_prefix}${prefix}/${src}`;
   }
 }
-
-const gridCloudflareLoader = cloudflareLoaderFactory(['fit=crop', 'height=720', 'width=720']);
-const baseCloudflareLoader = cloudflareLoaderFactory(['width=720']);
-
-const navBarCloudflareLoader = cloudflareLoaderFactory(['width=240']);
-const portraitLoader = cloudflareLoaderFactory(['width=720']);
 
 export const landscapeLoader = cloudflareLoaderFactory(['width=1024']);
 
 export const weddingResizeLoader = weddingLoaderFactory('-resize');
 export const weddingGridLoader = weddingLoaderFactory('-crop');
 export const weddingLoader = weddingLoaderFactory();
-
-export const immichThumbnailLoader = immichLoaderFactory('thumbnail')
-export const immichLoader = immichLoaderFactory('preview')
 
 const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -148,7 +139,7 @@ export function UserProfile(props: {user: User}) {
     // fill={true}
     width={32}
     height={32}
-    loader={gridCloudflareLoader}
+    loader={weddingLoader}
     className="rounded-full border-2 border-white shadow object-cover"
     style={{width: "32px", height: "32px"}}
   /> 
