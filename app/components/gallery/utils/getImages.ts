@@ -70,7 +70,7 @@ export async function getImagesFromKV(bucket: string) {
 
 export async function getImagesFromWorker(prefix: string = "", cache=true) {
     const resp = await fetch(
-        "https://r2-worker.hannahjackwedding.com?prefix=" + prefix,
+        "https://photos.hannahjackwedding.com?prefix=" + prefix,
         {
             cache: cache ? "default" : "no-cache",
             headers: {

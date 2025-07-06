@@ -35,16 +35,16 @@ function weddingLoaderFactory(prefix: string = '') {
   ) =>{
     if (!src || !src.includes("/"))
     {
-      return `https://r2-worker.hannahjackwedding.com/${src}`;
+      return `https://photos.hannahjackwedding.com/${src}`;
     }
     let src_prefix = src.slice(0,src.indexOf("/"));
     if (src_prefix === "gallery")
     {
-      return `https://r2-worker.hannahjackwedding.com/${src}`;
+      return `https://photos.hannahjackwedding.com/${src}`;
     }
     src = src.slice(src.indexOf("/")+1);
 
-    return `https://r2-worker.hannahjackwedding.com/${src_prefix}${prefix}/${src}`;
+    return `https://photos.hannahjackwedding.com/${src_prefix}${prefix}/${src}`;
   }
 }
 
