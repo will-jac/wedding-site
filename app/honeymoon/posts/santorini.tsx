@@ -1,41 +1,7 @@
 'use client'
 import React from 'react';
-import Image from 'next/image';
 
 import { CaptionView } from '../../components/gallery/views';
-
-import Modal from '../../components/gallery/modal';
-import { ImageProps } from '../../components/gallery/utils/types';
-
-// Generic row-with-modal component
-// function ImageRowWithModal({ images, children } : { images: ImageProps[], children: React.ReactNode[] }) {
-//     const [modalIndex, setModalIndex] = React.useState<number | null>(null);
-//     return (
-//         <>
-//             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '24px 0' }}>
-//                 {children.map((child, i) => (
-//                     <div key={i} style={{ cursor: 'pointer', flex: 1, maxWidth: 300 }} onClick={() => setModalIndex(i)}>
-//                         {child}
-//                     </div>
-//                 ))}
-//             </div>
-//             {modalIndex !== null && (
-//                 <Modal
-//                     images={images}
-//                     index={modalIndex}
-//                     setIndex={setModalIndex}
-//                     onClose={() => setModalIndex(null)}
-//                     onDelete={() => {}}
-//                     navigation={true}
-//                     portraitLoader={undefined}
-//                     landscapeLoader={undefined}
-//                     navBarLoader={undefined}
-//                     userId={''}
-//                 />
-//             )}
-//         </>
-//     );
-// }
 
 export default function Santorini() {
 
@@ -207,5 +173,7 @@ export default function Santorini() {
             <li>In most places, grape vines are susceptible to a American pest that can kill the rootstock entirely. To avoid this, almost all vines use a clone of an American grape vine that was found to be resistant to the pest, which saved the French and Italian vineyards. Thus, almost all grape vines are grafts of the desired grape variety onto the resistant root (as are many residential trees!). However, in Santorini, the pest cannot live in the soil due to the lack of moisture, so the vines in Santorini are 100% of whatever variety the grape is (likely Assyrtiko--this amounts for 97% of all grapes grown on the island)!</li>
             <li>Santorini used to have 4x the acres of vineyards as it does today. Tourism has led to more and more growers deciding that building hotels and cottages on their land is more profitable, leading to a decline in grape production.</li>
         </ul>
+
+        <a href="honeymoon/santorini">Permalink to this post</a>
     </div>;
 }

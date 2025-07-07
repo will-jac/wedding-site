@@ -251,7 +251,7 @@ export function CaptionView(props: {
             <ImageComponent image={image} imageLoader={weddingLoader} setPhotoId={setPhotoId} showOverlay={false}/>
           </div>
           <div style={{position: "relative"}}>
-            {image.caption}
+            <span>{image.caption}</span>
           </div>
         </div>
       ))}
