@@ -246,9 +246,13 @@ export function CaptionView(props: {
 
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {props.images.map((image, index) => (
-        <div key={index}>
-          <ImageComponent image={image} imageLoader={weddingLoader} setPhotoId={setPhotoId} showOverlay={false}/>
-          {image.caption}
+        <div key={index} style={{height: "auto"}}>
+          <div>
+            <ImageComponent image={image} imageLoader={weddingLoader} setPhotoId={setPhotoId} showOverlay={false}/>
+          </div>
+          <div style={{position: "relative"}}>
+            {image.caption}
+          </div>
         </div>
       ))}
     </div>

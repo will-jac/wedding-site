@@ -47,7 +47,7 @@ export default function RSVPPage() {
     }
     <div className="flex justify-center py-10">
         <Image
-            src="engagement/Hannah-Jack-ENG-AKP-6.17.24-6.jpg"
+            src="public/engagement/Hannah-Jack-ENG-AKP-6.17.24-6.jpg"
             width={720}
             height={1024}
             alt="Picture of Hannah and Jack"
