@@ -55,7 +55,7 @@ function FooterImage() {
     return (
         <div className="flex justify-center py-10">
             <Image
-                src="public/engagement/Hannah-Jack-ENG-AKP-6.17.24-24.jpg"
+                src="public/Hannah-Jack-ENG-AKP-6.17.24-24.jpg"
                 width={720}
                 height={420}
                 alt="Picture of Hannah and Jack"

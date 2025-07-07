@@ -48,7 +48,7 @@ export default function Solutions() {
     };
 
     return (
-        <HomeLayout headerImageSrc="public/engagement/Hannah-Jack-ENG-AKP-6.17.24-196.jpg">
+        <HomeLayout headerImageSrc="public/Hannah-Jack-ENG-AKP-6.17.24-196.jpg">
             {puzzleSolutions.map((s, index) => (
                 <Fragment key={s.title}>
                     <h1 className="text-2xl font-extrabold text-[#879b88]">{s.title}</h1>
