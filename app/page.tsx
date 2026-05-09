@@ -24,6 +24,9 @@ export default function Main() {
   return <div>
   <HomeLayout>
     <div className="p-5 flex flex-col items-center justify-center">
+      <p>We loved celebrating with you!!</p>
+      <p>Our wedding photos are available here</p>
+      
       <Image
         src={banner}
         width={500}
@@ -34,7 +37,7 @@ export default function Main() {
 
       <p className="text-xl xl:text-3xl font-extrabold text-[#879b88] text-center">Sunday, June 1, 2025</p>
       <p className="text-xl xl:text-3xl font-extrabold text-[#879b88] text-center pb-5">Madison, WI</p>
-      <RSVPButton/>
+      {/* <RSVPButton/> */}
     </div>
 
     <Location/>
